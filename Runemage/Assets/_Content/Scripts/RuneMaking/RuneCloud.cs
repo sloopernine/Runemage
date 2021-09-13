@@ -74,4 +74,16 @@ public class RuneCloud : MonoBehaviour
             //TODO do we want to give feedback on too low threshold?
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        throw new NotImplementedException();
+    }
 }
+
+
