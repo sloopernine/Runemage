@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7924715120287939270}
   - component: {fileID: 5774992287091553337}
   - component: {fileID: 8107353076575102391}
+  - component: {fileID: 7036849470934044780}
   m_Layer: 0
   m_Name: RuneCloud
   m_TagString: Untagged
@@ -44,6 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28324651e18c9240ac29ac3d694ab00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  newPositionThresholdDistance: 0
+  pointCloudList: []
+  spellThreshold: 0
+  fadeTime: 0
 --- !u!120 &8107353076575102391
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -63,7 +68,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: fe9fe0a064948c24c84fa3fc50005dbf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -142,3 +147,16 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!135 &7036849470934044780
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7165554949352084570}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0.5}
