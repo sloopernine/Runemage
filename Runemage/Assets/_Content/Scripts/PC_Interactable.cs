@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PC_Interactable : MonoBehaviour
+public abstract class PC_Interactable : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
+    public abstract void Release(Vector3 force);
+
+    public abstract void Grab(Transform parent);
+
+
+
 }
