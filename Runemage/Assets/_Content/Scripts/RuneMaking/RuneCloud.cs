@@ -45,7 +45,19 @@ public class RuneCloud : MonoBehaviour
 
     public void AddPoint(Vector3 point)
     {
-        pointCloudList.Add(point);
+        Vector3 lastPoint = pointCloudList[pointCloudList.Count - 1];
+        
+        if (Vector3.Distance(point, lastPoint) > newPositionThresholdDistance)
+        {
+            pointCloudList.Add(point);
+            lineRenderer.positionCount = pointCloudList.Count;
+            lineRenderer.SetPosition(pointCloudList.Count - 1, point);
+        }
+        else
+        {
+            lineRenderer.positionCount = pointCloudList.Count;
+            lineRenderer.SetPosition(pointCloudList.Count - 1, point);
+        }
 
         fadeCounter = fadeTime;
     }
