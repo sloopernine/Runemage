@@ -6,6 +6,12 @@ using Valve.VR;
 
 public class RuneMaker : MonoBehaviour
 {
+	private static RuneMaker instance;
+	public static RuneMaker Instance
+	{
+		get => instance;
+	}
+
 	public bool trainingMode;
 
 	public string newGestureName;
@@ -13,6 +19,18 @@ public class RuneMaker : MonoBehaviour
 	
 	public float newPositionThresholdDistance;
 	public List<Vector2> commonPointCloudList = new List<Vector2>();
+	
+	private void Awake()
+	{
+		if (instance == null)
+		{
+			instance = this;
+		}
+		else
+		{
+			Destroy(gameObject);
+		}
+	}
 	
 	private void Start()
 	{
@@ -43,5 +61,12 @@ public class RuneMaker : MonoBehaviour
 			Result result = PointCloudRecognizer.Classify(newGesture, trainingSet.ToArray());
 			Debug.Log(result.GestureClass + " " + result.Score);
 		}
+	}
+
+	public Result Classify(Point[] points)
+	{
+		Gesture newGesture = new Gesture(points);
+		
+		return PointCloudRecognizer.Classify(newGesture, trainingSet.ToArray());
 	}
 }

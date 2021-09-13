@@ -7,10 +7,6 @@ using Valve.VR;
 
 public class RuneHand : MonoBehaviour
 {
-	[SerializeField] RuneMaker runeMaker;
-
-	private LineRenderer lineRenderer;
-
 	public SteamVR_Input_Sources handInput;
 
 	public SteamVR_Action_Boolean grabAction;
@@ -21,14 +17,7 @@ public class RuneHand : MonoBehaviour
 
 	public float newPositionThresholdDistance;
 	public List<Vector3> pointCloudList = new List<Vector3>();
-
-	void Start()
-	{
-
-	lineRenderer = GetComponent<LineRenderer>();
 	
-	}
-
 	void Update() 
 	{
 		bool isPressed = grabAction.GetState(handInput);
@@ -51,9 +40,7 @@ public class RuneHand : MonoBehaviour
 	{	
 		isMoving = true;
 		pointCloudList.Clear();
-		lineRenderer.positionCount = 1;
 		pointCloudList.Add(position);
-		lineRenderer.SetPosition(0, position);
 	}
 
 	private void EndMovement(Vector3 position)
@@ -67,7 +54,6 @@ public class RuneHand : MonoBehaviour
 		}
 
 		//Point cloud sends to RuneMaker without being made into a Gesture.
-		runeMaker.AddPointCloud(pointArray);
 	}
 
 	private void UpdateMovement(Vector3 position)
@@ -77,13 +63,13 @@ public class RuneHand : MonoBehaviour
 		if (Vector3.Distance(position, lastPoint) > newPositionThresholdDistance)
 		{
 			pointCloudList.Add(position);
-			lineRenderer.positionCount = pointCloudList.Count;
-			lineRenderer.SetPosition(pointCloudList.Count - 1, position);
+			// lineRenderer.positionCount = pointCloudList.Count;
+			// lineRenderer.SetPosition(pointCloudList.Count - 1, position);
 		} 
 		else
 		{
-			lineRenderer.positionCount = pointCloudList.Count;
-			lineRenderer.SetPosition(pointCloudList.Count - 1, position);
+			// lineRenderer.positionCount = pointCloudList.Count;
+			// lineRenderer.SetPosition(pointCloudList.Count - 1, position);
 		}
 	}
 }
