@@ -233,6 +233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentSpell: 0
   spellBallPrefab: {fileID: 3681640678213573301, guid: 9f6fcdf7dc75d854e9cf25824550344f, type: 3}
+  castRange: 5
 --- !u!114 &2887287181795608203
 MonoBehaviour:
   m_ObjectHideFlags: 0

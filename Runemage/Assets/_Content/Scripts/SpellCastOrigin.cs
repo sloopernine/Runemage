@@ -2,9 +2,8 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class SpellCastOrigin : MonoBehaviour
+public class SpellCastOrigin : PC_Interactable
 {
-
     public GameObject fireBallPrefab;
     public GameObject RockPrefab;
 
@@ -12,6 +11,8 @@ public class SpellCastOrigin : MonoBehaviour
 
     private MeshRenderer meshRenderer;
     private TextMeshPro tmp;
+
+    [SerializeField] bool destroyOnCast;
 
     private void Start()
     {
@@ -23,15 +24,9 @@ public class SpellCastOrigin : MonoBehaviour
                 SetVisuals(Color.red);
                 tmp.text = "Fire";
                 break;
-            case Spell.Teleport:
-                SetVisuals(Color.magenta);
-                tmp.text = "Teleport";
-
-                break;
             case Spell.CreateRock:
                 SetVisuals(Color.gray);
                 tmp.text = "Rock";
-
                 break;
             default:
                 break;
@@ -53,14 +48,16 @@ public class SpellCastOrigin : MonoBehaviour
             case Spell.Fireball:
                 Fireball(position);
                 break;
-            case Spell.Teleport:
-                Teleport(position);
-                break;
             case Spell.CreateRock:
                 CreateRock(position);
                 break;
             default:
                 break;
+        }
+
+        if (destroyOnCast)
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -72,25 +69,20 @@ public class SpellCastOrigin : MonoBehaviour
 
     }
 
-    private void Teleport(Vector3 position)
-    {
-        RaycastHit hit;
-
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 1000f))
-        {
-            Debug.DrawLine(transform.position, transform.forward * 1000f, Color.red, 3f);
-
-            Vector3 newPosition = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-            transform.position = newPosition;
-
-        }
-        
-    }
-
     private void CreateRock(Vector3 position)
     {
         GameObject obj = Instantiate(RockPrefab);
         obj.transform.position = transform.position + transform.position - position + transform.up;
         
+    }
+
+    public override void Release(Vector3 force)
+    {
+        transform.parent = null;
+    }
+
+    public override void Grab(Transform parent)
+    {
+        transform.SetParent(parent);
     }
 }

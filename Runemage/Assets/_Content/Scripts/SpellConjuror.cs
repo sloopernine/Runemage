@@ -9,6 +9,8 @@ public class SpellConjuror : MonoBehaviour
     public Spell currentSpell;
     public GameObject spellBallPrefab;
 
+    [SerializeField] float castRange = 10f;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -29,31 +31,6 @@ public class SpellConjuror : MonoBehaviour
 
         }
 
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-
-            ToggleHoldSpell();
-        }
-
-    }
-
-    private void ToggleHoldSpell()
-    {
-        SpellCastOrigin spellCastOrigin = TryToFindSpell();
-        if (spellCastOrigin == null)
-        {
-            return;
-        }
-
-        if (spellCastOrigin.transform.IsChildOf(transform))
-        {
-            spellCastOrigin.transform.parent = null;
-            return;
-        }
-
-        spellCastOrigin.transform.SetParent(transform);
-
     }
 
     private void ActivateSpell()
@@ -73,9 +50,10 @@ public class SpellConjuror : MonoBehaviour
         RaycastHit hit;
         SpellCastOrigin spellCastOrigin = null;
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 1000f))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, castRange))
         {
-            Debug.DrawLine(transform.position, transform.forward * 1000f, Color.red, 3f);
+            Debug.DrawLine(transform.position, transform.position + transform.forward * castRange, Color.blue, 1f);
+
 
             spellCastOrigin = hit.transform.GetComponent<SpellCastOrigin>();
 

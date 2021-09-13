@@ -5,22 +5,22 @@ using UnityEngine;
 
 public class SpellThrower : MonoBehaviour
 {
-    
-    void Start()
-    {
-        
-    }
+
+    [SerializeField] float pC_ThrowSpeed;
+    [SerializeField] float grabRange = 10f;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            GrabSpell();
+            ToggleGrabSpell();
+            print(grabRange);
 
         }
+
     }
 
-    private void GrabSpell()
+    private void ToggleGrabSpell()
     {
         PC_Interactable interactable = TryToFindInteractable();
         if (interactable == null)
@@ -31,10 +31,11 @@ public class SpellThrower : MonoBehaviour
         if (interactable.transform.IsChildOf(transform))
         {
             interactable.transform.parent = null;
+            interactable.Release(transform.forward * pC_ThrowSpeed);
             return;
         }
 
-        interactable.transform.SetParent(transform);
+        interactable.Grab(transform);
     }
 
     public PC_Interactable TryToFindInteractable()
@@ -43,9 +44,9 @@ public class SpellThrower : MonoBehaviour
         RaycastHit hit;
         PC_Interactable interactable = null;
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 1000f))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, grabRange))
         {
-            Debug.DrawLine(transform.position, transform.forward * 1000f, Color.red, 3f);
+            Debug.DrawLine(transform.position, transform.position + transform.forward * grabRange, Color.red, 1f);
 
             interactable = hit.transform.GetComponent<PC_Interactable>();
 
