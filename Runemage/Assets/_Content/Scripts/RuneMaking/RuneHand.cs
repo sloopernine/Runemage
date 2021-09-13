@@ -16,27 +16,35 @@ public class RuneHand : MonoBehaviour {
 	public SteamVR_Action_Boolean grabAction;
 
 	public SteamVR_Action_Vector3 handPosition;
-
+	
 	private bool isDrawing;
 
 	private bool inRuneCloud;
-	
-	void Update() 
-	{
 
+	public Transform handTransform;
+	
+	void Update()
+	{
+		transform.position = handPosition[inputSource].axis; //.GetAxis(inputSource);
+		
 		bool isPressed = grabAction.GetState(inputSource);
 
+		Debug.Log("isPressed: " + isPressed);
+		
 		if (!isDrawing && isPressed)
 		{
-			StartMovement(handPosition.GetAxis(inputSource));
+			Debug.Log("START");
+			StartMovement(transform.position);
 		}
 		else if (isDrawing && !isPressed)
 		{
+			Debug.Log("END");
 			EndMovement();
 		}
 		else if (isDrawing && isPressed)
 		{
-			UpdateMovement(handPosition.GetAxis(inputSource));
+			Debug.Log("UPDATE");
+			UpdateMovement(transform.position);
 		}
 	}
 

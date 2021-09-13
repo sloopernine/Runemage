@@ -50,6 +50,10 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/Position",
+      "type": "vector3"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },
