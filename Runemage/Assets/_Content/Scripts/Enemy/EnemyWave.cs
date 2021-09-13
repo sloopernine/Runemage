@@ -8,5 +8,5 @@ public class EnemyWave : ScriptableObject
 {
         public int numberOfSpawners;
         public int numberOfEnemies;
-        public Enemy enemy; 
+        public Enemy enemy;
 }

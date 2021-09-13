@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawnerHandler : MonoBehaviour
 {
-    public EnemyWave testWave;
+    public EnemyWave nextWave;
 
     private EnemySpawner[] enemySpawners;
     private List<EnemySpawner> currentSpawners;
@@ -21,7 +21,7 @@ public class EnemySpawnerHandler : MonoBehaviour
     {
         if (startWave)
         {
-            CreateWave(testWave);
+            CreateWave(nextWave);
         }
     }
 
