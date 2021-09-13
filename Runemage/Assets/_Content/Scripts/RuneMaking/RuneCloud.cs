@@ -9,7 +9,9 @@ public class RuneCloud : MonoBehaviour
     private LineRenderer lineRenderer;
     private SphereCollider trigger;
 
-    public List<Vector3> pointCloudList = new List<Vector3>();
+	public float newPositionThresholdDistance;
+
+	public List<Vector3> pointCloudList = new List<Vector3>();
 
     private Result result;
 
@@ -77,13 +79,17 @@ public class RuneCloud : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        throw new NotImplementedException();
+		if(other.gameObject.HasComponent<RuneHand>())
+		{
+			other.GetComponent<RuneHand>().SetInRuneCloud(this);
+		}
     }
 
     private void OnTriggerExit(Collider other)
     {
-        throw new NotImplementedException();
-    }
+		if (other.gameObject.HasComponent<RuneHand>())
+		{
+			other.GetComponent<RuneHand>().SetOutsideRuneCloud();
+		}
+	}
 }
-
-

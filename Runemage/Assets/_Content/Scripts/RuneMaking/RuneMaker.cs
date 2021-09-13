@@ -17,7 +17,6 @@ public class RuneMaker : MonoBehaviour
 	public string newGestureName;
 	private List<Gesture> trainingSet = new List<Gesture>();
 	
-	public float newPositionThresholdDistance;
 	public List<Vector2> commonPointCloudList = new List<Vector2>();
 	
 	private void Awake()
