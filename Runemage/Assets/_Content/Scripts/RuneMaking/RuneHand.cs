@@ -1,17 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using PDollarGestureRecognizer;
-using System.IO;
 using Valve.VR;
 
 public class RuneHand : MonoBehaviour {
 	
-	private RuneCloud runeCloud;
+	public RuneCloud runeCloud;
 
 	public GameObject prefabRuneCloud;
 	
 	public SteamVR_Input_Sources inputSource;
+	public SteamVR_Action_Pose poseAction = SteamVR_Input.GetAction<SteamVR_Action_Pose>("Pose");
 
 	public SteamVR_Action_Boolean grabAction;
 
@@ -19,31 +16,31 @@ public class RuneHand : MonoBehaviour {
 	
 	private bool isDrawing;
 
-	private bool inRuneCloud;
+	public bool inRuneCloud;
 
 	public Transform handTransform;
 	
 	void Update()
 	{
-		transform.position = handPosition[inputSource].axis; //.GetAxis(inputSource);
+		transform.position = poseAction[inputSource].localPosition;
 		
 		bool isPressed = grabAction.GetState(inputSource);
 
-		Debug.Log("isPressed: " + isPressed);
+		//Debug.Log("isPressed: " + isPressed);
 		
 		if (!isDrawing && isPressed)
 		{
-			Debug.Log("START");
+			//Debug.Log("START");
 			StartMovement(transform.position);
 		}
 		else if (isDrawing && !isPressed)
 		{
-			Debug.Log("END");
+			//Debug.Log("END");
 			EndMovement();
 		}
 		else if (isDrawing && isPressed)
 		{
-			Debug.Log("UPDATE");
+			//Debug.Log("UPDATE");
 			UpdateMovement(transform.position);
 		}
 	}
@@ -55,6 +52,7 @@ public class RuneHand : MonoBehaviour {
 		if (runeCloud == null)
 		{
 			runeCloud = Instantiate(prefabRuneCloud, position, Quaternion.identity).GetComponent<RuneCloud>();
+			inRuneCloud = true;
 		}
 	}
 
@@ -84,6 +82,7 @@ public class RuneHand : MonoBehaviour {
 
 	public void SetOutsideRuneCloud()
 	{
+		this.runeCloud = null;
 		inRuneCloud = false;
 	}
 }
