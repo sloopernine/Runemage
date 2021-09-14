@@ -3,7 +3,7 @@ using Valve.VR;
 
 public class RuneHand : MonoBehaviour {
 	
-	public RuneCloud runeCloud;
+	private RuneCloud runeCloud;
 
 	public GameObject prefabRuneCloud;
 	
@@ -16,10 +16,8 @@ public class RuneHand : MonoBehaviour {
 	
 	private bool isDrawing;
 
-	public bool inRuneCloud;
+	private bool inRuneCloud;
 
-	public Transform handTransform;
-	
 	void Update()
 	{
 		transform.position = poseAction[inputSource].localPosition;

@@ -1,12 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using PDollarGestureRecognizer;
-using Singletons;
 using UnityEngine;
-using UnityEngine.Rendering.UI;
-using UnityEngine.Serialization;
-using Valve.VR;
 
 public class RuneCloud : MonoBehaviour
 {
@@ -15,7 +9,7 @@ public class RuneCloud : MonoBehaviour
 
 	public float newPositionThresholdDistance;
 
-	public List<Vector3> pointCloudList = new List<Vector3>();
+	private List<Vector3> pointCloudList = new List<Vector3>();
 
     private Result result;
 
