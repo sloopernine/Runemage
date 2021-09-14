@@ -45,7 +45,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage
     public void Die()
     {
         audioSource.PlayOneShot(deathSound);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     public void MoveTowardsPoint(Vector3 point)
