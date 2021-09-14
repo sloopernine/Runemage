@@ -6,10 +6,12 @@ public class SpellObject : PC_Interactable , IDealDamage
 {
     public float initialLifeTime;
     public float initialVelocity;
-    private Rigidbody rb;
-    private float aliveTime;
+    protected Rigidbody rb;
+    protected float aliveTime;
     public float baseDamage;
+    [SerializeField] protected float damageRadius;
 
+    public GameObject debugSpherePrefab;
 
 
     void Start()
@@ -29,13 +31,39 @@ public class SpellObject : PC_Interactable , IDealDamage
         }
     }
 
-
     private void OnCollisionEnter(Collision collision)
     {
         ITakeDamage target = collision.gameObject.GetComponent<ITakeDamage>();
-        if (target != null)
+        if (target == null)
         {
-            DealDamage(target, baseDamage);
+            return;
+        }
+
+        DealDamage(target, baseDamage);
+
+        Vector3 impactPoint = collision.GetContact(0).point;
+        AoeDamage(impactPoint, damageRadius, target);
+
+        Destroy(gameObject);
+
+    }
+
+    private void AoeDamage(Vector3 impactPoint, float radius, ITakeDamage ignoreTarget = null)
+    {
+        //GameObject DebugAoe = Instantiate(debugSpherePrefab, impactPoint, Quaternion.identity);
+        //DebugAoe.transform.localScale *= damageRadius;
+
+        Collider[] Aoe = Physics.OverlapSphere(impactPoint, damageRadius);
+
+        foreach (Collider hit in Aoe)
+        {
+            ITakeDamage secondaryTarget = hit.gameObject.GetComponent<ITakeDamage>();
+            if (secondaryTarget == null || secondaryTarget == ignoreTarget)
+            {
+                continue;
+            }
+
+            DealDamage(secondaryTarget, baseDamage / 2f);
         }
     }
 
@@ -44,8 +72,8 @@ public class SpellObject : PC_Interactable , IDealDamage
         float velocity = rb.velocity.sqrMagnitude;
         if (velocity > 10f)
         {
-            target.TakeDamage(baseDamage);
-            print($"Dealt {baseDamage} to Target with {velocity} velocity");
+            target.TakeDamage(damage);
+            //print($"Dealt {damage} to Target with {velocity} velocity");
 
         }
 
@@ -64,5 +92,8 @@ public class SpellObject : PC_Interactable , IDealDamage
         rb.velocity = Vector3.zero;
         rb.isKinematic = true;
         transform.SetParent(parent);
+        transform.position = parent.transform.position;
+        transform.forward = parent.forward;
+
     }
 }
