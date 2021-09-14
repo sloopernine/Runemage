@@ -31,7 +31,7 @@ public class EnemyPool : MonoBehaviour
     {
         for (int i = 0; i < amoutToPool; i++)
         {
-            if(!pooledEnemies[i].isActiveAndEnabled)
+            if(!pooledEnemies[i].gameObject.activeInHierarchy)
             {
                 return pooledEnemies[i];
             }

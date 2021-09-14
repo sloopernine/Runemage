@@ -8,11 +8,12 @@ namespace Data.Enums
         UNPAUSE_GAME,
         
         PLAY_SOUND,
+        OBJECT_INACTIVE,
 
         // DEBUG
         DEBUG_ON,
         DEBUG_OFF,
         SHOW_FPS,
-        HIDE_FPS,
+        HIDE_FPS
     }
 }
