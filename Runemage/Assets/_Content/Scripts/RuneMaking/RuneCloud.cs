@@ -97,22 +97,16 @@ public class RuneCloud : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Enter Trigger");
-
         if (other.tag == "RuneHand")
         {
-            Debug.Log("Send Enter Trigger");
             other.GetComponent<RuneHand>().SetInRuneCloud(this);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("Exit Trigger");
-
         if (other.tag == "RuneHand")
         {
-            Debug.Log("Send Exit Trigger");
             other.GetComponent<RuneHand>().SetOutsideRuneCloud();
         }
     }
