@@ -90,23 +90,30 @@ public class RuneCloud : MonoBehaviour
         }
     }
 
+    private float GetCloudSize()
+    {
+        return 0f;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Enter Trigger");
-		if(other.gameObject.HasComponent<RuneHand>())
-		{
+
+        if (other.tag == "RuneHand")
+        {
             Debug.Log("Send Enter Trigger");
-			other.GetComponent<RuneHand>().SetInRuneCloud(this);
-		}
+            other.GetComponent<RuneHand>().SetInRuneCloud(this);
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         Debug.Log("Exit Trigger");
-		if (other.gameObject.HasComponent<RuneHand>())
-		{
+
+        if (other.tag == "RuneHand")
+        {
             Debug.Log("Send Exit Trigger");
-			other.GetComponent<RuneHand>().SetOutsideRuneCloud();
-		}
-	}
+            other.GetComponent<RuneHand>().SetOutsideRuneCloud();
+        }
+    }
 }

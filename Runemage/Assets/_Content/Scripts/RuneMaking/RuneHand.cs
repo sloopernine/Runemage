@@ -25,22 +25,17 @@ public class RuneHand : MonoBehaviour {
 		transform.position = poseAction[inputSource].localPosition;
 		
 		bool isPressed = grabAction.GetState(inputSource);
-
-		//Debug.Log("isPressed: " + isPressed);
 		
 		if (!isDrawing && isPressed)
 		{
-			//Debug.Log("START");
 			StartMovement(transform.position);
 		}
 		else if (isDrawing && !isPressed)
 		{
-			//Debug.Log("END");
 			EndMovement();
 		}
 		else if (isDrawing && isPressed)
 		{
-			//Debug.Log("UPDATE");
 			UpdateMovement(transform.position);
 		}
 	}
