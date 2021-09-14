@@ -2,8 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using PDollarGestureRecognizer;
+using Singletons;
 using UnityEngine;
 using UnityEngine.Rendering.UI;
+using UnityEngine.Serialization;
+using Valve.VR;
 
 public class RuneCloud : MonoBehaviour
 {
@@ -16,20 +19,24 @@ public class RuneCloud : MonoBehaviour
 
     private Result result;
 
+    public float triggerStartSize;
+    public float triggerSizeModifier;
+    
     public float spellThreshold;
     public float fadeTime;
     private float fadeCounter;
-    
+
     private void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         trigger = GetComponent<SphereCollider>();
-        
+
         lineRenderer.positionCount = 1;
         pointCloudList.Add(transform.position);
         lineRenderer.SetPosition(0, transform.position);
 
         fadeCounter = fadeTime;
+        triggerStartSize = trigger.radius / 2;
     }
 
     private void Update()
@@ -47,6 +54,10 @@ public class RuneCloud : MonoBehaviour
     public void AddPoint(Vector3 point)
     {
         Vector3 lastPoint = pointCloudList[pointCloudList.Count - 1];
+
+        float cloudSize = GetCloudSize();
+        
+        trigger.radius = cloudSize * triggerSizeModifier;
         
         if (Vector3.Distance(point, lastPoint) > newPositionThresholdDistance)
         {
@@ -92,12 +103,34 @@ public class RuneCloud : MonoBehaviour
 
     private float GetCloudSize()
     {
-        return 0f;
+        if (pointCloudList.Count <= 2)
+        {
+            return triggerStartSize;
+        }
+        
+        float distance = 0;
+        Vector3 centroid = Vector3.zero;
+
+        foreach (Vector3 point in pointCloudList)
+        {
+            float newDistance = Vector3.Distance(transform.position, point);
+            centroid += point;
+            
+            if (distance < newDistance)
+            {
+                distance = newDistance;
+            }
+        }
+
+        centroid = centroid / pointCloudList.Count;
+        trigger.center = transform.InverseTransformPoint(centroid);
+        
+        return distance;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "RuneHand")
+        if (other.CompareTag("RuneHand"))
         {
             other.GetComponent<RuneHand>().SetInRuneCloud(this);
         }
@@ -105,7 +138,7 @@ public class RuneCloud : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "RuneHand")
+        if (other.CompareTag("RuneHand"))
         {
             other.GetComponent<RuneHand>().SetOutsideRuneCloud();
         }
