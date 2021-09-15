@@ -25,7 +25,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	private float fadeCounter;
 	
 	private GameManager gameManager = GameManager.Instance;
-	//[Header("Gesture Training")]
+	[Header("Gesture Training")]
 	public string gestureName;
 	
 	private void Start()
