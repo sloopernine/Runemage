@@ -6,13 +6,30 @@ using Valve.VR;
 
 public class RuneMaker : MonoBehaviour
 {
+	private static RuneMaker instance;
+	public static RuneMaker Instance
+	{
+		get => instance;
+	}
+
 	public bool trainingMode;
 
 	public string newGestureName;
 	private List<Gesture> trainingSet = new List<Gesture>();
 	
-	public float newPositionThresholdDistance;
 	public List<Vector2> commonPointCloudList = new List<Vector2>();
+	
+	private void Awake()
+	{
+		if (instance == null)
+		{
+			instance = this;
+		}
+		else
+		{
+			Destroy(gameObject);
+		}
+	}
 	
 	private void Start()
 	{
@@ -49,5 +66,12 @@ public class RuneMaker : MonoBehaviour
 			//But does that become a problem if/when we are training? Seeing as a spell is not returned then?
 			//So, we need to return something here, so you know if the spell is succ or if it should 
 		}
+	}
+
+	public Result Classify(Point[] points)
+	{
+		Gesture newGesture = new Gesture(points);
+		
+		return PointCloudRecognizer.Classify(newGesture, trainingSet.ToArray());
 	}
 }
