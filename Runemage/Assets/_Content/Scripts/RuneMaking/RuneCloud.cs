@@ -1,140 +1,152 @@
 using System.Collections.Generic;
 using PDollarGestureRecognizer;
 using UnityEngine;
+using Data.Interfaces;
+using Singletons;
+using Data.Enums;
+using _Content.Scripts.Data.Containers.GlobalSignal;
 
-public class RuneCloud : MonoBehaviour
+public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 {
-    private LineRenderer lineRenderer;
-    private SphereCollider trigger;
+	private LineRenderer lineRenderer;
+	private SphereCollider trigger;
 
 	public float newPositionThresholdDistance;
 
 	private List<Vector3> pointCloudList = new List<Vector3>();
 
-    private Result result;
+	private Result result;
 
-    public float triggerStartSize;
-    public float triggerSizeModifier;
-    
-    public float spellThreshold;
-    public float fadeTime;
-    private float fadeCounter;
+	public float triggerStartSize;
+	public float triggerSizeModifier;
+	
+	public float spellThreshold;
+	public float fadeTime;
+	private float fadeCounter;
 
-    private void Start()
-    {
-        lineRenderer = GetComponent<LineRenderer>();
-        trigger = GetComponent<SphereCollider>();
+	private void Start()
+	{
+		lineRenderer = GetComponent<LineRenderer>();
+		trigger = GetComponent<SphereCollider>();
 
-        lineRenderer.positionCount = 1;
-        pointCloudList.Add(transform.position);
-        lineRenderer.SetPosition(0, transform.position);
+		lineRenderer.positionCount = 1;
+		pointCloudList.Add(transform.position);
+		lineRenderer.SetPosition(0, transform.position);
 
-        fadeCounter = fadeTime;
-        triggerStartSize = trigger.radius / 2;
-    }
+		fadeCounter = fadeTime;
+		triggerStartSize = trigger.radius / 2;
+	}
 
-    private void Update()
-    {
-        if (fadeCounter > 0)
-        {
-            fadeCounter -= Time.deltaTime;
-        }
-        else
-        {
-            //TODO kill me
-        }
-    }
+	private void Update()
+	{
+		if (fadeCounter > 0)
+		{
+			fadeCounter -= Time.deltaTime;
+		}
+		else
+		{
+			//TODO kill me
+		}
+	}
 
-    public void AddPoint(Vector3 point)
-    {
-        Vector3 lastPoint = pointCloudList[pointCloudList.Count - 1];
+	public void AddPoint(Vector3 point)
+	{
+		Vector3 lastPoint = pointCloudList[pointCloudList.Count - 1];
 
-        float cloudSize = GetCloudSize();
-        
-        trigger.radius = cloudSize * triggerSizeModifier;
-        
-        if (Vector3.Distance(point, lastPoint) > newPositionThresholdDistance)
-        {
-            pointCloudList.Add(point);
-            lineRenderer.positionCount = pointCloudList.Count;
-            lineRenderer.SetPosition(pointCloudList.Count - 1, point);
-        }
-        else
-        {
-            lineRenderer.positionCount = pointCloudList.Count;
-            lineRenderer.SetPosition(pointCloudList.Count - 1, point);
-        }
+		float cloudSize = GetCloudSize();
+		
+		trigger.radius = cloudSize * triggerSizeModifier;
+		
+		if (Vector3.Distance(point, lastPoint) > newPositionThresholdDistance)
+		{
+			pointCloudList.Add(point);
+			lineRenderer.positionCount = pointCloudList.Count;
+			lineRenderer.SetPosition(pointCloudList.Count - 1, point);
+		}
+		else
+		{
+			lineRenderer.positionCount = pointCloudList.Count;
+			lineRenderer.SetPosition(pointCloudList.Count - 1, point);
+		}
 
-        fadeCounter = fadeTime;
-    }
+		fadeCounter = fadeTime;
+	}
 
-    public void EndDraw()
-    {
-        Point[] pointArray = new Point[pointCloudList.Count];
-        
-        for (int i = 0; i < pointArray.Length; i++) 
-        {
-            Vector2 screenPoint = Camera.main.WorldToScreenPoint(pointCloudList[i]);
-            pointArray[i] = new Point(screenPoint.x, screenPoint.y, 0);
-        }
+	public void EndDraw()
+	{
+		Point[] pointArray = new Point[pointCloudList.Count];
+		
+		for (int i = 0; i < pointArray.Length; i++) 
+		{
+			Vector2 screenPoint = Camera.main.WorldToScreenPoint(pointCloudList[i]);
+			pointArray[i] = new Point(screenPoint.x, screenPoint.y, 0);
+		}
 
-        result = RuneMaker.Instance.Classify(pointArray);
-        
-        ValidateSpell();
-    }
+		result = RuneChecker.Instance.Classify(pointArray);
+		
+		ValidateSpell();
+	}
 
-    private void ValidateSpell()
-    {
-        if (result.Score >= spellThreshold)
-        {
-            //TODO instantiate spell
-        }
-        else
-        {
-            //TODO do we want to give feedback on too low threshold?
-        }
-    }
+	private void ValidateSpell()
+	{
+	//TODO: Turn into switch here if use indivudual spellThresholdvalue.
+		if (result.Score >= spellThreshold)
+		{
+			SendGlobal(GlobalEvent.CREATE_SPELL, new RuneData(result, transform.position, transform.eulerAngles, transform.localScale));
 
-    private float GetCloudSize()
-    {
-        if (pointCloudList.Count <= 2)
-        {
-            return triggerStartSize;
-        }
-        
-        float distance = 0;
-        Vector3 centroid = Vector3.zero;
+		}
+		else
+		{
+			//TODO do we want to give feedback on too low threshold?
+			//And begin fade of spell?
+		}
+	}
 
-        foreach (Vector3 point in pointCloudList)
-        {
-            float newDistance = Vector3.Distance(transform.position, point);
-            centroid += point;
-            
-            if (distance < newDistance)
-            {
-                distance = newDistance;
-            }
-        }
+	private float GetCloudSize()
+	{
+		if (pointCloudList.Count <= 2)
+		{
+			return triggerStartSize;
+		}
+		
+		float distance = 0;
+		Vector3 centroid = Vector3.zero;
 
-        centroid = centroid / pointCloudList.Count;
-        trigger.center = transform.InverseTransformPoint(centroid);
-        
-        return distance;
-    }
+		foreach (Vector3 point in pointCloudList)
+		{
+			float newDistance = Vector3.Distance(transform.position, point);
+			centroid += point;
+			
+			if (distance < newDistance)
+			{
+				distance = newDistance;
+			}
+		}
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("RuneHand"))
-        {
-            other.GetComponent<RuneHand>().SetInRuneCloud(this);
-        }
-    }
+		centroid = centroid / pointCloudList.Count;
+		trigger.center = transform.InverseTransformPoint(centroid);
+		
+		return distance;
+	}
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("RuneHand"))
-        {
-            other.GetComponent<RuneHand>().SetOutsideRuneCloud();
-        }
-    }
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.CompareTag("RuneHand"))
+		{
+			other.GetComponent<RuneHand>().SetInRuneCloud(this);
+		}
+	}
+
+	private void OnTriggerExit(Collider other)
+	{
+		if (other.CompareTag("RuneHand"))
+		{
+			other.GetComponent<RuneHand>().SetOutsideRuneCloud();
+		}
+	}
+
+	public void SendGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
+	{
+		GlobalMediator.Instance.ReceiveGlobal(eventState, globalSignalData);
+	}
 }
