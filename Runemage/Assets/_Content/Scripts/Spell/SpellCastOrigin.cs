@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpellCastOrigin : PC_Interactable
 {
     public GameObject fireBallPrefab;
-    public GameObject RockPrefab;
+    public GameObject icePrefab;
 
     public Spell currentSpell;
 
@@ -24,9 +24,9 @@ public class SpellCastOrigin : PC_Interactable
                 SetVisuals(Color.red);
                 tmp.text = "Fire";
                 break;
-            case Spell.CreateRock:
-                SetVisuals(Color.gray);
-                tmp.text = "Rock";
+            case Spell.Ice:
+                SetVisuals(Color.cyan);
+                tmp.text = "Ice";
                 break;
             default:
                 break;
@@ -48,8 +48,8 @@ public class SpellCastOrigin : PC_Interactable
             case Spell.Fireball:
                 Fireball(position);
                 break;
-            case Spell.CreateRock:
-                CreateRock(position);
+            case Spell.Ice:
+                createIceSpear(position);
                 break;
             default:
                 break;
@@ -65,14 +65,13 @@ public class SpellCastOrigin : PC_Interactable
     {
         GameObject obj = Instantiate(fireBallPrefab);
         obj.transform.position = transform.position;
-        obj.transform.LookAt(transform.position * 2 - position);
 
     }
 
-    private void CreateRock(Vector3 position)
+    private void createIceSpear(Vector3 position)
     {
-        GameObject obj = Instantiate(RockPrefab);
-        obj.transform.position = transform.position + transform.position - position + transform.up;
+        GameObject obj = Instantiate(icePrefab);
+        obj.transform.position = transform.position;
         
     }
 

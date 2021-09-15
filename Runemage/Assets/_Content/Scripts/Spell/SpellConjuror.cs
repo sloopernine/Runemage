@@ -54,7 +54,6 @@ public class SpellConjuror : MonoBehaviour
         {
             Debug.DrawLine(transform.position, transform.position + transform.forward * castRange, Color.blue, 1f);
 
-
             spellCastOrigin = hit.transform.GetComponent<SpellCastOrigin>();
 
         }

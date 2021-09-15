@@ -132,6 +132,9 @@ MonoBehaviour:
   initialLifeTime: 999
   initialVelocity: 0
   baseDamage: 100
+  damageRadius: 10
+  debugSpherePrefab: {fileID: 643709195315026628, guid: ba8d92a59cc3ed343b1d3145c958cf95, type: 3}
+  ExplosionParticlePrefab: {fileID: 3157122271921523132, guid: 08c4a8379597b5d4a85318c6a15bd154, type: 3}
 --- !u!114 &6162771881094250842
 MonoBehaviour:
   m_ObjectHideFlags: 0

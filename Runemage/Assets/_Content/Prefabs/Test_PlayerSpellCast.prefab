@@ -114,6 +114,7 @@ GameObject:
   - component: {fileID: 2905775703775072420}
   - component: {fileID: 6396003303968828179}
   - component: {fileID: 2887287181795608203}
+  - component: {fileID: 6073697348611942718}
   m_Layer: 0
   m_Name: Test_PlayerSpellCast
   m_TagString: MainCamera
@@ -249,6 +250,20 @@ MonoBehaviour:
   moveSpeed: 10
   rotateSpeed: 30
   burstSpeed: 10
+--- !u!114 &6073697348611942718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6281301762962851065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 867b443d1209caa4d8ee6adbcc23057d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pC_ThrowSpeed: 1000
+  grabRange: 5
 --- !u!1 &8047032235035166666
 GameObject:
   m_ObjectHideFlags: 0
