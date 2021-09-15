@@ -29,9 +29,6 @@ public class RuneMaker : MonoBehaviour, IReceiveGlobalSignal
 					switch(runeData.result.GestureClass)
 					{
 						case "Circle":
-							Debug.Log("RuneMaker is going to instantiate a spellCastOrigin with Fireball");
-							Debug.Log("RuneMaker is going to instantiate with spell-type CIRCLE");
-
 							Instantiate(spellCastOrigin);
 							spellCastOrigin.gameObject.transform.position = runeData.position;
 							spellCastOrigin.gameObject.transform.eulerAngles = runeData.angle;
@@ -39,9 +36,6 @@ public class RuneMaker : MonoBehaviour, IReceiveGlobalSignal
 							spellCastOrigin.currentSpell = Spell.Fireball;
 							break;
 						case "Fireball":
-							Debug.Log("RuneMaker is going to instantiate a spellCastOrigin with Fireball");
-							Debug.Log("RuneMaker is going to instantiate with spell-type FIREBALL");
-
 							Instantiate(spellCastOrigin);
 							spellCastOrigin.gameObject.transform.position = runeData.position;
 							spellCastOrigin.gameObject.transform.eulerAngles = runeData.angle;
@@ -49,9 +43,6 @@ public class RuneMaker : MonoBehaviour, IReceiveGlobalSignal
 							spellCastOrigin.currentSpell = Spell.Fireball;
 							break;
 						case "Ice":
-							Debug.Log("RuneMaker is going to instantiate a spellCastOrigin with Fireball.");
-							Debug.Log("RuneMaker is going to instantiate with spell-type ICE");
-
 							Instantiate(spellCastOrigin);
 							spellCastOrigin.gameObject.transform.position = runeData.position;
 							spellCastOrigin.gameObject.transform.eulerAngles = runeData.angle;
