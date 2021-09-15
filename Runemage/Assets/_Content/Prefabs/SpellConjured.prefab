@@ -282,6 +282,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireBallPrefab: {fileID: 6356653243117928251, guid: 155706fdc5de6f947a12a2964a33e0ed, type: 3}
-  RockPrefab: {fileID: 2650631540182164737, guid: 9a10b9e458aa0ef45834813c9440e3a1, type: 3}
+  icePrefab: {fileID: 7915618189126999260, guid: f5216aa23b3f7cf44a54312ea1a95a5f, type: 3}
   currentSpell: 0
   destroyOnCast: 1

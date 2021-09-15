@@ -10,7 +10,7 @@ public class RoundHandler : MonoBehaviour
     private Round currentRound;
     private int numberOfRounds;
     private int roundIndex;
-    private bool isRoundDead;
+    private bool isRoundDead = true;
     private float waveTimer;
     private int roundTotalEnemies;
     public int getRoundTotalEnemies { get { return roundTotalEnemies; } }
