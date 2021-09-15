@@ -23,7 +23,7 @@ public class RuneMaker : MonoBehaviour, IReceiveGlobalSignal
 	public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
 	{
 		switch (eventState) {
-			case GlobalEvent.CREATE_SPELL: 
+			case GlobalEvent.CREATE_SPELL_ORIGIN: 
 				if(globalSignalData is RuneData runeData)
 				{
 					switch(runeData.result.GestureClass)
@@ -31,13 +31,23 @@ public class RuneMaker : MonoBehaviour, IReceiveGlobalSignal
 						case "Circle":
 							Instantiate(spellCastOrigin);
 							spellCastOrigin.gameObject.transform.position = runeData.position;
-
+							spellCastOrigin.gameObject.transform.eulerAngles = runeData.angle;
+							spellCastOrigin.gameObject.transform.localScale = runeData.scale;
+							spellCastOrigin.currentSpell = Spell.Fireball;
 							break;
 						case "Fireball":
-
+							Instantiate(spellCastOrigin);
+							spellCastOrigin.gameObject.transform.position = runeData.position;
+							spellCastOrigin.gameObject.transform.eulerAngles = runeData.angle;
+							spellCastOrigin.gameObject.transform.localScale = runeData.scale;
+							spellCastOrigin.currentSpell = Spell.Fireball;
 							break;
 						case "Ice":
-
+							Instantiate(spellCastOrigin);
+							spellCastOrigin.gameObject.transform.position = runeData.position;
+							spellCastOrigin.gameObject.transform.eulerAngles = runeData.angle;
+							spellCastOrigin.gameObject.transform.localScale = runeData.scale;
+							spellCastOrigin.currentSpell = Spell.Fireball;
 							break;
 						default:
 							Debug.Log("The switch lacks a case that compares to the gestureclass!");

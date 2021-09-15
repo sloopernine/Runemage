@@ -52,6 +52,7 @@ public class RuneChecker : MonoBehaviour
 	
 	public void AddPointCloud(Point[] points)
 	{
+		Debug.Log("RuneChecker recieves pointCloud.");
 		Gesture newGesture = new Gesture(points);
 
 		newGesture.Name = newGestureName;
@@ -66,17 +67,10 @@ public class RuneChecker : MonoBehaviour
 		}
 		else 
 		{
+			Debug.Log("RuneChecker approves of rune.");
+
 			Result result = PointCloudRecognizer.Classify(newGesture, trainingSet.ToArray());
 			Debug.Log(result.GestureClass + " " + result.Score);
-
-			//RuneCloud, RuneChecker, RuneMaker, RuneHands, & SpellBall & Global Mediator.
-			//RuneCloud RuneChecker is this spell or no?
-			//if spell, then make this spell, (send spell type).
-			//if not spell, begin to fade
-
-			//RuneCloud, if get spelltype, then check how good, against own list,
-			//Then talk to Global Mediator spawn spell here
-			//Then kill itself.
 		}
 	}
 
