@@ -1,89 +1,81 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using PDollarGestureRecognizer;
-using System.IO;
 using Valve.VR;
 
-public class RuneHand : MonoBehaviour
-{
-	[SerializeField] RuneMaker runeMaker;
+public class RuneHand : MonoBehaviour {
+	
+	private RuneCloud runeCloud;
 
-	private LineRenderer lineRenderer;
-
-	public SteamVR_Input_Sources handInput;
+	public GameObject prefabRuneCloud;
+	
+	public SteamVR_Input_Sources inputSource;
+	public SteamVR_Action_Pose poseAction = SteamVR_Input.GetAction<SteamVR_Action_Pose>("Pose");
 
 	public SteamVR_Action_Boolean grabAction;
 
 	public SteamVR_Action_Vector3 handPosition;
-
-	private bool isMoving;
-
-	public float newPositionThresholdDistance;
-	public List<Vector3> pointCloudList = new List<Vector3>();
-
-	void Start()
-	{
-
-	lineRenderer = GetComponent<LineRenderer>();
 	
-	}
+	private bool isDrawing;
 
-	void Update() 
+	private bool inRuneCloud;
+
+	void Update()
 	{
-		bool isPressed = grabAction.GetState(handInput);
-
-		if (!isMoving && isPressed)
+		transform.position = poseAction[inputSource].localPosition;
+		
+		bool isPressed = grabAction.GetState(inputSource);
+		
+		if (!isDrawing && isPressed)
 		{
-			StartMovement(handPosition.GetAxis(handInput));
+			StartMovement(transform.position);
 		}
-		else if (isMoving && !isPressed)
+		else if (isDrawing && !isPressed)
 		{
-			EndMovement(handPosition.GetAxis(handInput));
+			EndMovement();
 		}
-		else if (isMoving && isPressed)
+		else if (isDrawing && isPressed)
 		{
-			UpdateMovement(handPosition.GetAxis(handInput));
+			UpdateMovement(transform.position);
 		}
 	}
 
 	private void StartMovement(Vector3 position)
 	{	
-		isMoving = true;
-		pointCloudList.Clear();
-		lineRenderer.positionCount = 1;
-		pointCloudList.Add(position);
-		lineRenderer.SetPosition(0, position);
+		isDrawing = true;
+		
+		if (runeCloud == null)
+		{
+			runeCloud = Instantiate(prefabRuneCloud, position, Quaternion.identity).GetComponent<RuneCloud>();
+			inRuneCloud = true;
+		}
 	}
 
-	private void EndMovement(Vector3 position)
+	private void EndMovement()
 	{
-		isMoving = false;
-		Point[] pointArray = new Point[pointCloudList.Count];
-
-		for (int i = 0; i < pointArray.Length; i++) {
-			Vector2 screenPoint = Camera.main.WorldToScreenPoint(pointCloudList[i]);
-			pointArray[i] = new Point(screenPoint.x, screenPoint.y, 0);
+		isDrawing = false;
+		
+		if (inRuneCloud)
+		{
+			runeCloud.EndDraw();
 		}
-
-		//Point cloud sends to RuneMaker without being made into a Gesture.
-		runeMaker.AddPointCloud(pointArray);
 	}
 
 	private void UpdateMovement(Vector3 position)
 	{
-		Vector3 lastPoint = pointCloudList[pointCloudList.Count - 1];
-
-		if (Vector3.Distance(position, lastPoint) > newPositionThresholdDistance)
+		if (inRuneCloud)
 		{
-			pointCloudList.Add(position);
-			lineRenderer.positionCount = pointCloudList.Count;
-			lineRenderer.SetPosition(pointCloudList.Count - 1, position);
-		} 
-		else
-		{
-			lineRenderer.positionCount = pointCloudList.Count;
-			lineRenderer.SetPosition(pointCloudList.Count - 1, position);
+			runeCloud.AddPoint(position);
 		}
+	}
+
+	public void SetInRuneCloud(RuneCloud runeCloud)
+	{
+		this.runeCloud = runeCloud;
+		inRuneCloud = true;
+	}
+
+	public void SetOutsideRuneCloud()
+	{
+		this.runeCloud = null;
+		inRuneCloud = false;
 	}
 }
