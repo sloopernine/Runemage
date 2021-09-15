@@ -14,6 +14,9 @@ namespace Data.Enums
         DEBUG_ON,
         DEBUG_OFF,
         SHOW_FPS,
-        HIDE_FPS
+        HIDE_FPS,
+
+		// RUNE MAKING
+		CREATE_SPELL
     }
 }
