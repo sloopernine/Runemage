@@ -10,11 +10,10 @@ public class RoundHandler : MonoBehaviour
     private Round currentRound;
     private int numberOfRounds;
     private int roundIndex;
-    public bool isRoundDead;
+    private bool isRoundDead;
     private float waveTimer;
-
-    [Header("Testing")]
-    public bool updateRound;
+    private int roundTotalEnemies;
+    public int getRoundTotalEnemies { get { return roundTotalEnemies; } }
 
     private void Start()
     {
@@ -38,15 +37,11 @@ public class RoundHandler : MonoBehaviour
         {
             Debug.Log("All enemies are not dead");
         }
-
-        if (updateRound)
-        {
-            UpdateCurrentRound();
-        }
     }
 
     private void StartRound(Round round)
     {
+        isRoundDead = false;
         EnemyWave[] enemyWaves = round.enemyWaves;
         waveTimer = round.setWaveTimer;
         StartCoroutine(SpawnWaves(enemyWaves));
@@ -54,10 +49,14 @@ public class RoundHandler : MonoBehaviour
 
     private IEnumerator SpawnWaves(EnemyWave[] nextWaves)
     {
-        foreach (EnemyWave waves in nextWaves)
+        foreach (EnemyWave wave in nextWaves)
         {
-            yield return StartCoroutine(StartWave(waves));
+            roundTotalEnemies += wave.numberOfEnemies * wave.numberOfSpawners;
         }
+        foreach (EnemyWave wave in nextWaves)
+        {
+            yield return StartCoroutine(StartWave(wave));
+        }       
     }
 
     private IEnumerator StartWave(EnemyWave nextWave)
@@ -69,7 +68,7 @@ public class RoundHandler : MonoBehaviour
 
         if (spawnerHandler == null)
         {
-            Debug.LogWarning("Round Handler is missing Enemy Spawner Handler. Canceld 'Start Round()'");
+            Debug.LogWarning("Round Handler is missing Enemy Spawner Handler. Canceled Start Round()");
             yield return null;
         }
 
@@ -79,19 +78,22 @@ public class RoundHandler : MonoBehaviour
     }
 
 
-    //I want to acivate this when we know that the current waves are cleared.
-    public void UpdateCurrentRound()
+    //Later implement a GlobalSignal that signals it is a new round.
+    public void UpdateRound()
     {
-        Debug.Log("Update Current Round");
+        Debug.Log("0.Update Current Round");
         roundIndex++;
+        isRoundDead = true;
+        roundTotalEnemies = 0;
         if (roundIndex <= numberOfRounds)
         {
+            Debug.Log("1.New Round");
+            roundInformationText.text = "Press N to start new Wave";
             currentRound = rounds[roundIndex];
         }
         else
         {
-            Debug.Log("No more rounds. GZ YOU WON THE GAME");
+            Debug.Log("2.No more rounds. GZ YOU WON THE GAME");
         }
-        updateRound = false;
     }
 }

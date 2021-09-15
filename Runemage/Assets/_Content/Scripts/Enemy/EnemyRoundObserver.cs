@@ -7,7 +7,8 @@ using Singletons;
 
 public class EnemyRoundObserver : MonoBehaviour, IReceiveGlobalSignal
 {
-    RoundHandler roundHandler;
+    private RoundHandler roundHandler;
+    private int deadEnemies;
 
     private void Start()
     {
@@ -25,21 +26,12 @@ public class EnemyRoundObserver : MonoBehaviour, IReceiveGlobalSignal
     private void Observe()
     {
         Debug.Log("Observer was observing");
-        List<Enemy> allEnemies = EnemyPool.Instance.pooledEnemies;
-        int deadEnemies = 0;
-
-        for (int i = 0; i < allEnemies.Count; i++)
+        deadEnemies++;
+        if (deadEnemies == roundHandler.getRoundTotalEnemies)
         {
-            if (allEnemies[i].gameObject.activeInHierarchy == false)
-            {
-                deadEnemies++;
-                Debug.Log(deadEnemies);
-                if (deadEnemies == allEnemies.Count)
-                {
-                    roundHandler.UpdateCurrentRound();
-                }
-            }
-        }       
+            roundHandler.UpdateRound();
+            deadEnemies = 0;
+        }
     }
 
     public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
