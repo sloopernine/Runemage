@@ -16,6 +16,6 @@ namespace Data.Enums
         HIDE_FPS,
 
 		// RUNE MAKING
-		CREATE_SPELL
+		CREATE_SPELL_ORIGIN
     }
 }

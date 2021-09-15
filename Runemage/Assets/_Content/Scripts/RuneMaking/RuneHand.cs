@@ -52,7 +52,9 @@ public class RuneHand : MonoBehaviour {
 	private void EndMovement()
 	{
 		isDrawing = false;
-		
+
+		Debug.Log("RuneHand enters EndMovement()");
+
 		if (inRuneCloud)
 		{
 			runeCloud.EndDraw();

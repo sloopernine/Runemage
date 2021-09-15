@@ -43,6 +43,7 @@ public class RuneChecker : MonoBehaviour
 	
 	public void AddPointCloud(Point[] points)
 	{
+		Debug.Log("RuneChecker recieves pointCloud.");
 		Gesture newGesture = new Gesture(points);
 
 		newGesture.Name = newGestureName;
@@ -57,6 +58,8 @@ public class RuneChecker : MonoBehaviour
 		}
 		else 
 		{
+			Debug.Log("RuneChecker approves of rune.");
+
 			Result result = PointCloudRecognizer.Classify(newGesture, trainingSet.ToArray());
 			Debug.Log(result.GestureClass + " " + result.Score);
 

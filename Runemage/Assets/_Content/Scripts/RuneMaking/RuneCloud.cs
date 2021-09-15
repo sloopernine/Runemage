@@ -20,7 +20,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	public float triggerStartSize;
 	public float triggerSizeModifier;
 	
-	public float spellThreshold;
+	public float spellThreshold = 0f;
 	public float fadeTime;
 	private float fadeCounter;
 
@@ -74,6 +74,8 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 
 	public void EndDraw()
 	{
+		Debug.Log("RuneCloud enters EndDraw()");
+
 		Point[] pointArray = new Point[pointCloudList.Count];
 		
 		for (int i = 0; i < pointArray.Length; i++) 
@@ -83,23 +85,34 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		}
 
 		result = RuneChecker.Instance.Classify(pointArray);
-		
+
+		Debug.Log("Result.gestureName is " + result.GestureClass);
+		Debug.Log("Result.Score is: " + result.Score);
+
 		ValidateSpell();
 	}
 
 	private void ValidateSpell()
 	{
-	//TODO: Turn into switch here if use indivudual spellThresholdvalue.
-		if (result.Score >= spellThreshold)
-		{
-			SendGlobal(GlobalEvent.CREATE_SPELL, new RuneData(result, transform.position, transform.eulerAngles, transform.localScale));
 
-		}
-		else
-		{
-			//TODO do we want to give feedback on too low threshold?
-			//And begin fade of spell?
-		}
+
+	//TODO: Turn into switch here if use indivudual spellThresholdvalue.
+		//if (result.Score >= spellThreshold)
+		//{
+			Debug.Log("RuneHand says spell is above spellThreshold.");
+
+			Debug.Log("RuneCloud sends CREATE_SPELL to Global Mediator.");
+			SendGlobal(GlobalEvent.CREATE_SPELL_ORIGIN, new RuneData(result, transform.position, transform.eulerAngles, transform.localScale));
+			Debug.Log("RuneCloud destroys itself.");
+			Destroy(this);
+
+		//}
+		//else
+		//{
+			
+		//	//TODO do we want to give feedback on too low threshold?
+		//	//And begin fade of spell?
+		//}
 	}
 
 	private float GetCloudSize()
