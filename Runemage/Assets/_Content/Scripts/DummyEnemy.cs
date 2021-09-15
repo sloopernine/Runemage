@@ -6,7 +6,7 @@ public class DummyEnemy : MonoBehaviour, ITakeDamage
 {
     public float health;
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, DamageType damageType)
     {
         health -= damage;
         if (health <= 0 )

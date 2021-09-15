@@ -13,7 +13,16 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
     [SerializeField] float maxHealth;
     [SerializeField] float currentHealth;
     [SerializeField] float speed;
+    private float currentSpeed;
+
+    [Header("Freez Settings")]
+    [Tooltip("Procent of the speed value")]
+    [Range(0,1)]
+    [SerializeField] float freezedSpeed;
     [SerializeField] float damage;
+    [SerializeField] float freezedTime;
+    public bool isFreezed;
+
     public bool isAttacking;
 
     [SerializeField] AudioClip spawnSound;
@@ -32,9 +41,11 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
 
         currentHealth = maxHealth;
 
+        currentSpeed = speed;
+
         if (!useMovement)
         {
-            rigidbody.AddForce(transform.forward * speed * addForcePower);
+            rigidbody.AddForce(transform.forward * currentSpeed * addForcePower);
         }
     }
 
@@ -44,11 +55,12 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
         if (currentHealth <=0 )
         {
             Die();
+            return;
         }
 
         if (damageType == DamageType.ice)
         {
-            speed = 0;
+            Freeze();
         }
     }
 
@@ -62,6 +74,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
 
     public void Die()
     {
+        StopAllCoroutines();
         audioSource.PlayOneShot(deathSound);
         BasicData data = new BasicData(gameObject.tag);
         SendGlobal(GlobalEvent.OBJECT_INACTIVE, data); //We need to might att what gameobject it is!
@@ -72,7 +85,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
     { 
         Vector3 direction = point - transform.position;
         direction = direction.normalized;
-        rigidbody.MovePosition(transform.position + direction * Time.deltaTime * speed);
+        rigidbody.MovePosition(transform.position + direction * Time.deltaTime * currentSpeed);
     }
 
     public float DistanceTowardsPoint(Vector3 point)
@@ -104,6 +117,33 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
         if (target != null && other.gameObject.name == "Shield")
         {
             DealDamage(target, damage, DamageType.enemy);
+        }
+    }
+
+    private void Freeze()
+    {
+        StartCoroutine(FreezTimer(freezedTime));
+    }
+
+    private IEnumerator FreezTimer(float freezedTime)
+    {
+        isFreezed = true;
+        currentSpeed = speed * freezedSpeed;
+        yield return new WaitForSeconds(freezedTime);
+        currentSpeed = speed;
+        isFreezed = false;
+    }
+
+    private void OnEnable()
+    {
+        Debug.Log("Me is enabled");
+        currentHealth = maxHealth;
+        currentSpeed = speed;
+        isFreezed = false;
+
+        if (!useMovement)
+        {
+            rigidbody.AddForce(transform.forward * currentSpeed * addForcePower);
         }
     }
 }

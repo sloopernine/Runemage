@@ -14,7 +14,8 @@ public class SpellObject : PC_Interactable , IDealDamage
     [SerializeField] GameObject debugSpherePrefab;
 
     [SerializeField] GameObject ExplosionParticlePrefab;
-
+    [SerializeField] DamageType damageType;
+    [SerializeField] LayerMask layerMask;
 
     void Start()
     {
@@ -41,7 +42,7 @@ public class SpellObject : PC_Interactable , IDealDamage
             return;
         }
 
-        DealDamage(target, baseDamage);
+        DealDamage(target, baseDamage, damageType);
 
         Vector3 impactPoint = collision.GetContact(0).point;
         AoeDamage(impactPoint, damageRadius, target);
@@ -61,7 +62,7 @@ public class SpellObject : PC_Interactable , IDealDamage
             explosion.transform.localScale *= damageRadius;
         }
 
-        Collider[] Aoe = Physics.OverlapSphere(impactPoint, damageRadius);
+        Collider[] Aoe = Physics.OverlapSphere(impactPoint, damageRadius, layerMask);
 
         foreach (Collider hit in Aoe)
         {
@@ -71,13 +72,13 @@ public class SpellObject : PC_Interactable , IDealDamage
                 continue;
             }
 
-            DealDamage(secondaryTarget, baseDamage / 2f);
+            DealDamage(secondaryTarget, baseDamage / 2f, damageType);
         }
     }
 
-    public void DealDamage(ITakeDamage target, float damage)
+    public void DealDamage(ITakeDamage target, float damage, DamageType damageType)
     {
-        target.TakeDamage(damage);
+        target.TakeDamage(damage, damageType);
         
         print($"{gameObject.name} Dealt {damage} to Target");
        

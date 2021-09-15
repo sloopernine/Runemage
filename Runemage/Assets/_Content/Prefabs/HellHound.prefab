@@ -49,9 +49,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a618ec4f22aa2b42a4ca30e0c11fccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 300
   currentHealth: 100
   speed: 5
+  freezedSpeed: 0.33
+  damage: 1
+  freezedTime: 5
+  isFreezed: 0
+  isAttacking: 0
   spawnSound: {fileID: 8300000, guid: 918ee1b51fd32d748a66d520586569ba, type: 3}
   deathSound: {fileID: 8300000, guid: 1dfef04d7ab9ced4093c828025f5bf06, type: 3}
   useMovement: 1

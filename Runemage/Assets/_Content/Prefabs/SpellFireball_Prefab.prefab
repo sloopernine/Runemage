@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6162771881094250842}
   - component: {fileID: 2641284103120501502}
   - component: {fileID: 1720245218376170096}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SpellFireball_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,6 +135,10 @@ MonoBehaviour:
   damageRadius: 10
   debugSpherePrefab: {fileID: 643709195315026628, guid: ba8d92a59cc3ed343b1d3145c958cf95, type: 3}
   ExplosionParticlePrefab: {fileID: 3157122271921523132, guid: 08c4a8379597b5d4a85318c6a15bd154, type: 3}
+  damageType: 2
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1527
 --- !u!114 &6162771881094250842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,7 +271,7 @@ GameObject:
   - component: {fileID: 8031393891659772064}
   - component: {fileID: 8031393891644587120}
   - component: {fileID: 8031393891644483300}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FireSmall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5012,7 +5016,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8031393891659756680}
   - component: {fileID: 8031393891664293514}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sound_TorchFire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5167,7 +5171,7 @@ GameObject:
   - component: {fileID: 8031393891659756816}
   - component: {fileID: 8031393891644525008}
   - component: {fileID: 8031393891643625606}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Flame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
