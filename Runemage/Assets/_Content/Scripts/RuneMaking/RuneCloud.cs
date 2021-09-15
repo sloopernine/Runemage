@@ -87,8 +87,8 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 			Vector2 screenPoint = Camera.main.WorldToScreenPoint(pointCloudList[i]);
 			pointArray[i] = new Point(screenPoint.x, screenPoint.y, 0);
 		}
-
-		if (!gameManager.gestureTrainingMode)
+		
+		if (!gameManager.gestureTrainingMode && pointCloudList.Count <= 2) // <- Prevent to few points to be classified, throws error if few
 		{
 			result = RuneChecker.Instance.Classify(pointArray);
 			ValidateSpell();
