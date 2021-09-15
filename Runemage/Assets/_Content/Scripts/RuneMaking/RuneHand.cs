@@ -8,6 +8,7 @@ public class RuneHand : MonoBehaviour {
 	public GameObject prefabRuneCloud;
 	
 	public SteamVR_Input_Sources inputSource;
+
 	public SteamVR_Action_Pose poseAction = SteamVR_Input.GetAction<SteamVR_Action_Pose>("Pose");
 
 	public SteamVR_Action_Boolean grabAction;
@@ -20,6 +21,12 @@ public class RuneHand : MonoBehaviour {
 
 	void Update()
 	{
+		//Add on the SpellCastOrigin, triggers, that checks if it is RuneHands that are entering into it.
+		//If they are, the SoellCastOrigin sets itself to something.
+		//That something is checked here in Update, and it it *isn't* null, then you can't paint, but can instead move and kick of the spell.
+
+		//(Later on I can add something about how, if your painting maybe move rune etc.)
+
 		transform.position = poseAction[inputSource].localPosition;
 		
 		bool isPressed = grabAction.GetState(inputSource);

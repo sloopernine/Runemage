@@ -26,23 +26,16 @@ public class RuneMaker : MonoBehaviour, IReceiveGlobalSignal
 			case GlobalEvent.CREATE_SPELL_ORIGIN: 
 				if(globalSignalData is RuneData runeData)
 				{
-					switch(runeData.result.GestureClass)
+					switch(runeData.result.spell)
 					{
-						case "Circle":
+						case Spell.Fireball:
 							Instantiate(spellCastOrigin);
 							spellCastOrigin.gameObject.transform.position = runeData.position;
 							spellCastOrigin.gameObject.transform.eulerAngles = runeData.angle;
 							spellCastOrigin.gameObject.transform.localScale = runeData.scale;
 							spellCastOrigin.currentSpell = Spell.Fireball;
 							break;
-						case "Fireball":
-							Instantiate(spellCastOrigin);
-							spellCastOrigin.gameObject.transform.position = runeData.position;
-							spellCastOrigin.gameObject.transform.eulerAngles = runeData.angle;
-							spellCastOrigin.gameObject.transform.localScale = runeData.scale;
-							spellCastOrigin.currentSpell = Spell.Fireball;
-							break;
-						case "Ice":
+						case Spell.CreateRock:
 							Instantiate(spellCastOrigin);
 							spellCastOrigin.gameObject.transform.position = runeData.position;
 							spellCastOrigin.gameObject.transform.eulerAngles = runeData.angle;
