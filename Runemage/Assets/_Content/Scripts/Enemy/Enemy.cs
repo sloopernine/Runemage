@@ -1,8 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Data.Interfaces;
+using Data.Enums;
+using _Content.Scripts.Data.Containers.GlobalSignal;
+using Singletons;
 
-public abstract class Enemy : MonoBehaviour, ITakeDamage
+public abstract class Enemy : MonoBehaviour, ITakeDamage, ISendGlobalSignal
 {
     private Rigidbody rigidbody;
 
@@ -45,7 +49,9 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage
     public void Die()
     {
         audioSource.PlayOneShot(deathSound);
-        Destroy(gameObject);
+        BasicData data = new BasicData(gameObject.tag);
+        SendGlobal(GlobalEvent.OBJECT_INACTIVE, data); //We need to might att what gameobject it is!
+        gameObject.SetActive(false);
     }
 
     public void MoveTowardsPoint(Vector3 point)
@@ -61,5 +67,20 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage
         float distance = direction.magnitude;
 
         return distance;
+    }
+
+    public void SendGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
+    {
+        GlobalMediator.INSTANCE.ReceiveGlobal(eventState, globalSignalData);
+    }
+
+    //This would be based on a tag in the future when I dare to change the tag settings in Unity.
+    public void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.name == "Death Zoone")
+        {
+            Debug.Log("Killed Enemy. It was out of the arena");
+            Die();
+        }
     }
 }
