@@ -6,13 +6,15 @@ using Data.Enums;
 using _Content.Scripts.Data.Containers.GlobalSignal;
 using Singletons;
 
-public abstract class Enemy : MonoBehaviour, ITakeDamage, ISendGlobalSignal
+public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlobalSignal
 {
     private Rigidbody rigidbody;
 
     [SerializeField] float maxHealth;
     [SerializeField] float currentHealth;
     [SerializeField] float speed;
+    [SerializeField] float damage;
+    public bool isAttacking;
 
     [SerializeField] AudioClip spawnSound;
     [SerializeField] AudioClip deathSound;
@@ -36,13 +38,25 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, ISendGlobalSignal
         }
     }
 
-
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, DamageType damageType)
     {
         currentHealth -= damage;
         if (currentHealth <=0 )
         {
             Die();
+        }
+
+        if (damageType == DamageType.ice)
+        {
+            speed = 0;
+        }
+    }
+
+    public void DealDamage(ITakeDamage target, float damage, DamageType damageType)
+    {
+        if (isAttacking)
+        {
+            target.TakeDamage(damage, DamageType.enemy);
         }
     }
 
@@ -81,6 +95,15 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, ISendGlobalSignal
         {
             Debug.Log("Killed Enemy. It was out of the arena");
             Die();
+        }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        ITakeDamage target = other.gameObject.GetComponent<ITakeDamage>();
+        if (target != null && other.gameObject.name == "Shield")
+        {
+            DealDamage(target, damage, DamageType.enemy);
         }
     }
 }
