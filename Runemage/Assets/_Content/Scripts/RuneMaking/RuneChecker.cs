@@ -34,6 +34,14 @@ public class RuneChecker : MonoBehaviour
 	
 	private void Start()
 	{
+		
+		TextAsset[] gesturesXml = Resources.LoadAll<TextAsset>("GestureSet/");
+
+		foreach (TextAsset gestureXml in gesturesXml)
+		{
+			trainingSet.Add(GestureIO.ReadGestureFromXML(gestureXml.text));
+		}
+		
 		string[] gestureFiles = Directory.GetFiles(Application.persistentDataPath, "*.xml");
 		
 		foreach (var item in gestureFiles)
