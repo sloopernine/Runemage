@@ -3,5 +3,5 @@
     Fireball,
     Teleport,
     CreateRock,
-
+    None
 }

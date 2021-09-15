@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using PDollarGestureRecognizer;
@@ -74,7 +75,28 @@ public class RuneChecker : MonoBehaviour
 	public Result Classify(Point[] points)
 	{
 		Gesture newGesture = new Gesture(points);
+
+		Result returnResult = PointCloudRecognizer.Classify(newGesture, trainingSet.ToArray());
+
+		returnResult.spell = GetSpellEnum(returnResult.GestureClass);
 		
 		return PointCloudRecognizer.Classify(newGesture, trainingSet.ToArray());
+	}
+
+	private Spell GetSpellEnum(string spellName)
+	{
+		string[] spellNames = Enum.GetNames(typeof(Spell));
+
+		Spell returnValue = Spell.None;
+		
+		for (int i = 0; i < spellNames.Length; i++)
+		{
+			if (spellNames[i] == spellName)
+			{
+				returnValue = (Spell) i;
+			}
+		}
+		
+		return returnValue;
 	}
 }

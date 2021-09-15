@@ -71,7 +71,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, ISendGlobalSignal
 
     public void SendGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
     {
-        GlobalMediator.INSTANCE.ReceiveGlobal(eventState, globalSignalData);
+        GlobalMediator.Instance.ReceiveGlobal(eventState, globalSignalData);
     }
 
     //This would be based on a tag in the future when I dare to change the tag settings in Unity.
