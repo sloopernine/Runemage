@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class SpellObject : PC_Interactable , IDealDamage
 {
-    public float initialLifeTime;
-    public float initialVelocity;
+    [SerializeField] float initialLifeTime;
+    [SerializeField] float initialVelocity;
     protected Rigidbody rb;
     protected float aliveTime;
-    public float baseDamage;
+    [SerializeField] float baseDamage;
     [SerializeField] protected float damageRadius;
 
-    public GameObject debugSpherePrefab;
+    [SerializeField] GameObject debugSpherePrefab;
+
+    [SerializeField] GameObject ExplosionParticlePrefab;
 
 
     void Start()
@@ -44,14 +46,20 @@ public class SpellObject : PC_Interactable , IDealDamage
         Vector3 impactPoint = collision.GetContact(0).point;
         AoeDamage(impactPoint, damageRadius, target);
 
+
+
         Destroy(gameObject);
 
     }
 
     private void AoeDamage(Vector3 impactPoint, float radius, ITakeDamage ignoreTarget = null)
     {
-        //GameObject DebugAoe = Instantiate(debugSpherePrefab, impactPoint, Quaternion.identity);
-        //DebugAoe.transform.localScale *= damageRadius;
+
+        if (ExplosionParticlePrefab != null)
+        {
+            GameObject explosion = Instantiate(ExplosionParticlePrefab, impactPoint, Quaternion.identity);
+            explosion.transform.localScale *= damageRadius;
+        }
 
         Collider[] Aoe = Physics.OverlapSphere(impactPoint, damageRadius);
 
@@ -69,14 +77,10 @@ public class SpellObject : PC_Interactable , IDealDamage
 
     public void DealDamage(ITakeDamage target, float damage)
     {
-        float velocity = rb.velocity.sqrMagnitude;
-        if (velocity > 10f)
-        {
-            target.TakeDamage(damage);
-            //print($"Dealt {damage} to Target with {velocity} velocity");
-
-        }
-
+        target.TakeDamage(damage);
+        
+        print($"{gameObject.name} Dealt {damage} to Target");
+       
     }
 
     public override void Release(Vector3 force)

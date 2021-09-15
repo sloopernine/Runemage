@@ -65,14 +65,13 @@ public class SpellCastOrigin : PC_Interactable
     {
         GameObject obj = Instantiate(fireBallPrefab);
         obj.transform.position = transform.position;
-        obj.transform.LookAt(transform.position * 2 - position);
 
     }
 
     private void createIceSpear(Vector3 position)
     {
         GameObject obj = Instantiate(icePrefab);
-        obj.transform.position = transform.position + transform.position - position + transform.up;
+        obj.transform.position = transform.position;
         
     }
 
