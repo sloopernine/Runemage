@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a618ec4f22aa2b42a4ca30e0c11fccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 300
+  maxHealth: 100
   currentHealth: 100
   speed: 5
   spawnSound: {fileID: 8300000, guid: 918ee1b51fd32d748a66d520586569ba, type: 3}

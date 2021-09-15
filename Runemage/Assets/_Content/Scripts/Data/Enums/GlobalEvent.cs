@@ -8,6 +8,7 @@ namespace Data.Enums
         UNPAUSE_GAME,
         
         PLAY_SOUND,
+        OBJECT_INACTIVE,
 
         // DEBUG
         DEBUG_ON,

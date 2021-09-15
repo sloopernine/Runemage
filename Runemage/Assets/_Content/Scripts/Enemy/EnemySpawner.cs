@@ -36,7 +36,14 @@ public class EnemySpawner : MonoBehaviour
         {
             Vector3 spawnPostion = RandomPositionOnLine();
             Quaternion spawnRotation = CalculateRotation();
-            Instantiate(enemyType.gameObject, spawnPostion, spawnRotation);
+
+            Enemy enemy = EnemyPool.Instance.GetPooledEnemy();
+            if (enemy != null)
+            {
+                enemy.transform.position = spawnPostion;
+                enemy.transform.rotation = spawnRotation;
+                enemy.gameObject.SetActive(true);
+            }
         }
 
         spawnEnemies = false;
