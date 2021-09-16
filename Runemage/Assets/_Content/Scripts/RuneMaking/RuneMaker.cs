@@ -32,14 +32,14 @@ public class RuneMaker : MonoBehaviour, IReceiveGlobalSignal
 							Instantiate(spellCastOrigin);
 							spellCastOrigin.gameObject.transform.position = runeData.position;
 							spellCastOrigin.gameObject.transform.eulerAngles = runeData.angle;
-							spellCastOrigin.gameObject.transform.localScale = runeData.scale;
+							spellCastOrigin.gameObject.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f); //runeData.scale;
 							spellCastOrigin.currentSpell = Spell.Fireball;
 							break;
 						case Spell.Ice:
 							Instantiate(spellCastOrigin);
 							spellCastOrigin.gameObject.transform.position = runeData.position;
 							spellCastOrigin.gameObject.transform.eulerAngles = runeData.angle;
-							spellCastOrigin.gameObject.transform.localScale = runeData.scale;
+							spellCastOrigin.gameObject.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f); //runeData.scale;
 							spellCastOrigin.currentSpell = Spell.Ice;
 							break;
 						default:
