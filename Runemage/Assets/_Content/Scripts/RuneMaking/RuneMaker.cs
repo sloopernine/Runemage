@@ -35,12 +35,12 @@ public class RuneMaker : MonoBehaviour, IReceiveGlobalSignal
 							spellCastOrigin.gameObject.transform.localScale = runeData.scale;
 							spellCastOrigin.currentSpell = Spell.Fireball;
 							break;
-						case Spell.CreateRock:
+						case Spell.Ice:
 							Instantiate(spellCastOrigin);
 							spellCastOrigin.gameObject.transform.position = runeData.position;
 							spellCastOrigin.gameObject.transform.eulerAngles = runeData.angle;
 							spellCastOrigin.gameObject.transform.localScale = runeData.scale;
-							spellCastOrigin.currentSpell = Spell.Fireball;
+							spellCastOrigin.currentSpell = Spell.Ice;
 							break;
 						default:
 							Debug.Log("The switch lacks a case that compares to the gestureclass!");
