@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Singletons;
 
 public class SpellObject : PC_Interactable , IDealDamage
 {
@@ -20,7 +21,16 @@ public class SpellObject : PC_Interactable , IDealDamage
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.AddForce(transform.up * initialVelocity);
+        if (GameManager.Instance.usePcInput)
+        {
+            rb.AddForce(transform.up);
+
+        }
+        else
+        {
+            rb.AddForce(transform.forward * initialVelocity);
+
+        }
         aliveTime = 0f;
 
     }
