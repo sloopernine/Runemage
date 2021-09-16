@@ -65,14 +65,14 @@ public class SpellCastOrigin : PC_Interactable
     {
         GameObject obj = Instantiate(fireBallPrefab);
         obj.transform.position = transform.position;
-
+        obj.transform.LookAt(transform.position * 2 - position);
     }
 
     private void createIceSpear(Vector3 position)
     {
         GameObject obj = Instantiate(icePrefab);
         obj.transform.position = transform.position;
-        
+        obj.transform.LookAt(transform.position * 2 - position);
     }
 
     public override void Release(Vector3 force)
@@ -83,5 +83,21 @@ public class SpellCastOrigin : PC_Interactable
     public override void Grab(Transform parent)
     {
         transform.SetParent(parent);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("RuneHand"))
+        {
+            other.GetComponent<RuneHand>().SetInSpellCastOrigin(this);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("RuneHand"))
+        {
+            other.GetComponent<RuneHand>().SetOutsideSpellCastOrigin();
+        }
     }
 }

@@ -12,7 +12,7 @@ public class EnemyRoundObserver : MonoBehaviour, IReceiveGlobalSignal
 
     private void Start()
     {
-        GlobalMediator.INSTANCE.Subscribe(this);
+        GlobalMediator.Instance.Subscribe(this);
 
         roundHandler = FindObjectOfType<RoundHandler>();
         if (roundHandler == null)

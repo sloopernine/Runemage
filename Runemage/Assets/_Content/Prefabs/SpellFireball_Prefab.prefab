@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialLifeTime: 999
-  initialVelocity: 0
+  initialVelocity: 1000
   baseDamage: 100
   damageRadius: 10
   debugSpherePrefab: {fileID: 643709195315026628, guid: ba8d92a59cc3ed343b1d3145c958cf95, type: 3}

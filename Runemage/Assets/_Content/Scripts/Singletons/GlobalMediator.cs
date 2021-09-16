@@ -9,7 +9,7 @@ namespace Singletons
     [DefaultExecutionOrder(-9)]
     public class GlobalMediator : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSignal
     {
-        public static GlobalMediator INSTANCE;
+        public static GlobalMediator Instance;
 
         private List<IReceiveGlobalSignal> subscribers = new List<IReceiveGlobalSignal>();
         
@@ -17,8 +17,8 @@ namespace Singletons
         
         private void Awake()
         {
-            if (INSTANCE == null)
-                INSTANCE = this;
+            if (Instance == null)
+                Instance = this;
             else
                 Destroy(gameObject);
         }

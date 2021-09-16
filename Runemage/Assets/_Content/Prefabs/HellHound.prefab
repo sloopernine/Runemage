@@ -56,7 +56,7 @@ MonoBehaviour:
   damage: 1
   freezedTime: 5
   isFreezed: 0
-  isAttacking: 0
+  isAttacking: 1
   spawnSound: {fileID: 8300000, guid: 918ee1b51fd32d748a66d520586569ba, type: 3}
   deathSound: {fileID: 8300000, guid: 1dfef04d7ab9ced4093c828025f5bf06, type: 3}
   useMovement: 1
@@ -198,8 +198,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: -1.77, y: 1.73, z: 2.61}
-  m_Center: {x: 0, y: 0.84, z: 0}
+  m_Size: {x: 1.8470781, y: 1.6048971, z: 2.61}
+  m_Center: {x: 0, y: 0.82156426, z: 0}
 --- !u!1 &2406872501415241164
 GameObject:
   m_ObjectHideFlags: 0

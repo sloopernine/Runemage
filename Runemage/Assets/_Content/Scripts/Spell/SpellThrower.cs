@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Singletons;
 
 public class SpellThrower : MonoBehaviour
 {
@@ -21,10 +22,15 @@ public class SpellThrower : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+
+        if (GameManager.Instance.usePcInput)
         {
-            ToggleGrabSpell();
-            //print(grabRange);
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                ToggleGrabSpell();
+                //print(grabRange);
+
+            }
 
         }
 
