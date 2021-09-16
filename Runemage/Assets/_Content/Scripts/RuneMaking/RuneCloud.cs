@@ -22,17 +22,11 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	public float triggerSizeModifier;
 	
 	public float spellThreshold = 0f;
-<<<<<<< Updated upstream
-	public float fadeTime;
-	private float fadeCounter;
 	
-=======
 	[SerializeField] float fadeTime;
 	private Vector3 centroidPosition;
 	private bool isFading;
 
-
->>>>>>> Stashed changes
 	private GameManager gameManager = GameManager.Instance;
 	[Header("Gesture Training")]
 	public string gestureName;
