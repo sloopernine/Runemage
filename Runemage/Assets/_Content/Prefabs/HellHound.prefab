@@ -56,7 +56,7 @@ MonoBehaviour:
   damage: 1
   freezedTime: 5
   isFreezed: 0
-  isAttacking: 0
+  isAttacking: 1
   spawnSound: {fileID: 8300000, guid: 918ee1b51fd32d748a66d520586569ba, type: 3}
   deathSound: {fileID: 8300000, guid: 1dfef04d7ab9ced4093c828025f5bf06, type: 3}
   useMovement: 1
