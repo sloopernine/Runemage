@@ -23,7 +23,11 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	public float spellThreshold = 0f;
 	public float fadeTime;
 	private float fadeCounter;
-
+	
+	private GameManager gameManager = GameManager.Instance;
+	[Header("Gesture Training")]
+	public string gestureName;
+	
 	private void Start()
 	{
 		lineRenderer = GetComponent<LineRenderer>();
@@ -83,19 +87,17 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 			Vector2 screenPoint = Camera.main.WorldToScreenPoint(pointCloudList[i]);
 			pointArray[i] = new Point(screenPoint.x, screenPoint.y, 0);
 		}
-
-		result = RuneChecker.Instance.Classify(pointArray);
-
-		Debug.Log("Result.gestureName is " + result.GestureClass);
-		Debug.Log("Result.Score is: " + result.Score);
-
-		ValidateSpell();
+		
+		if (!gameManager.gestureTrainingMode && pointCloudList.Count <= 2) // <- Prevent to few points to be classified, throws error if few
+		{
+			result = RuneChecker.Instance.Classify(pointArray);
+			ValidateSpell();
+		}
 	}
 
 	private void ValidateSpell()
 	{
-
-
+		
 	//TODO: Turn into switch here if use indivudual spellThresholdvalue.
 		//if (result.Score >= spellThreshold)
 		//{
@@ -142,6 +144,24 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		return distance;
 	}
 
+	public void SaveGestureToXML()
+	{
+		Point[] pointArray = new Point[pointCloudList.Count];
+		
+		for (int i = 0; i < pointArray.Length; i++) 
+		{
+			Vector2 screenPoint = Camera.main.WorldToScreenPoint(pointCloudList[i]);
+			pointArray[i] = new Point(screenPoint.x, screenPoint.y, 0);
+		}
+	
+		Gesture newGesture = new Gesture(pointArray);
+	
+		newGesture.Name = gestureName;
+		
+		string path = Application.dataPath + "/Resources/" + gestureName + ".xml";
+		GestureIO.WriteGesture(pointArray, gestureName, path);
+	}
+	
 	private void OnTriggerEnter(Collider other)
 	{
 		if (other.CompareTag("RuneHand"))
