@@ -8,6 +8,7 @@ namespace Singletons
         public static GameManager Instance;
 
         public bool gestureTrainingMode;
+        public bool usePcInput;
         
         private void Awake()
         {
