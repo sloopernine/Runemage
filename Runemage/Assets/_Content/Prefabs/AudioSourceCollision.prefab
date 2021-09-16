@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5856088974174590681}
   - component: {fileID: 5856088974174590680}
   m_Layer: 0
-  m_Name: CollisionAudioSource
+  m_Name: AudioSourceCollision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

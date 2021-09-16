@@ -21,6 +21,8 @@ public class SpellObject : PC_Interactable , IDealDamage
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        aliveTime = 0f;
+
         if (GameManager.Instance.usePcInput)
         {
             rb.AddForce(transform.up);
@@ -31,7 +33,6 @@ public class SpellObject : PC_Interactable , IDealDamage
             rb.AddForce(transform.forward * initialVelocity);
 
         }
-        aliveTime = 0f;
 
     }
 
