@@ -88,9 +88,11 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 			pointArray[i] = new Point(screenPoint.x, screenPoint.y, 0);
 		}
 		
-		if (!gameManager.gestureTrainingMode && pointCloudList.Count <= 2) // <- Prevent to few points to be classified, throws error if few
+		if (!gameManager.gestureTrainingMode && pointCloudList.Count > 2) // <- Prevent to few points to be classified, throws error if few
 		{
 			result = RuneChecker.Instance.Classify(pointArray);
+			Debug.Log("Result name: " + result.GestureClass);
+			Debug.Log("Result score: " + result.Score);
 			ValidateSpell();
 		}
 	}

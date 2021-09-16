@@ -142,11 +142,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newPositionThresholdDistance: 0.05
-  pointCloudList: []
-  triggerStartSize: 0
-  triggerSizeModifier: 0.8
-  spellThreshold: 0.9
+  triggerStartSize: 0.8
+  triggerSizeModifier: 0.7
+  spellThreshold: 0.2
   fadeTime: 10
+  gestureName: 
 --- !u!120 &8107353076575102391
 LineRenderer:
   m_ObjectHideFlags: 0
