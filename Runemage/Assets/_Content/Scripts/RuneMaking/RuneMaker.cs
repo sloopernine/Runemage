@@ -1,71 +1,55 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using PDollarGestureRecognizer;
-using System.IO;
-using Valve.VR;
+using Data.Interfaces;
+using Singletons;
+using Data.Enums;
+using _Content.Scripts.Data.Containers.GlobalSignal;
 
-public class RuneMaker : MonoBehaviour
+public class RuneMaker : MonoBehaviour, IReceiveGlobalSignal
 {
-	private static RuneMaker instance;
-	public static RuneMaker Instance
-	{
-		get => instance;
-	}
+	public SpellCastOrigin spellCastOrigin;
 
-	public bool trainingMode;
-
-	public string newGestureName;
-	private List<Gesture> trainingSet = new List<Gesture>();
-	
-	public List<Vector2> commonPointCloudList = new List<Vector2>();
-	
-	private void Awake()
+	void Start()
 	{
-		if (instance == null)
-		{
-			instance = this;
-		}
-		else
-		{
-			Destroy(gameObject);
-		}
+		GlobalMediator.Instance.Subscribe(this);
 	}
 	
-	private void Start()
+	private void OnDestroy()
 	{
-		string[] gestureFiles = Directory.GetFiles(Application.persistentDataPath, "*.xml");
-		
-		foreach (var item in gestureFiles)
-		{
-			trainingSet.Add(GestureIO.ReadGestureFromFile(item));
-		}
-	}
-	
-	public void AddPointCloud(Point[] points)
-	{
-		Gesture newGesture = new Gesture(points);
-
-		newGesture.Name = newGestureName;
-		
-		if (trainingMode)
-		{
-			newGesture.Name = newGestureName;
-			trainingSet.Add(newGesture);
-
-			string path = Application.persistentDataPath + "/" + newGestureName + ".xml";
-			GestureIO.WriteGesture(points, newGestureName, path);
-		}
-		else 
-		{
-			Result result = PointCloudRecognizer.Classify(newGesture, trainingSet.ToArray());
-			Debug.Log(result.GestureClass + " " + result.Score);
-		}
+		GlobalMediator.Instance.UnSubscribe(this);
 	}
 
-	public Result Classify(Point[] points)
+	public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
 	{
-		Gesture newGesture = new Gesture(points);
-		
-		return PointCloudRecognizer.Classify(newGesture, trainingSet.ToArray());
+		switch (eventState) {
+			case GlobalEvent.CREATE_SPELL_ORIGIN: 
+				if(globalSignalData is RuneData runeData)
+				{
+					switch(runeData.result.spell)
+					{
+						case Spell.Fireball:
+							Instantiate(spellCastOrigin);
+							spellCastOrigin.gameObject.transform.position = runeData.position;
+							spellCastOrigin.gameObject.transform.eulerAngles = runeData.angle;
+							spellCastOrigin.gameObject.transform.localScale = runeData.scale;
+							spellCastOrigin.currentSpell = Spell.Fireball;
+							break;
+						case Spell.CreateRock:
+							Instantiate(spellCastOrigin);
+							spellCastOrigin.gameObject.transform.position = runeData.position;
+							spellCastOrigin.gameObject.transform.eulerAngles = runeData.angle;
+							spellCastOrigin.gameObject.transform.localScale = runeData.scale;
+							spellCastOrigin.currentSpell = Spell.Fireball;
+							break;
+						default:
+							Debug.Log("The switch lacks a case that compares to the gestureclass!");
+							break;
+					}
+				}
+				break;
+
+		}
 	}
+
 }

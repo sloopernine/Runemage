@@ -6,8 +6,11 @@ public class RuneHand : MonoBehaviour {
 	private RuneCloud runeCloud;
 
 	public GameObject prefabRuneCloud;
+
+	private SpellCastOrigin spellCastOrigin;
 	
 	public SteamVR_Input_Sources inputSource;
+
 	public SteamVR_Action_Pose poseAction = SteamVR_Input.GetAction<SteamVR_Action_Pose>("Pose");
 
 	public SteamVR_Action_Boolean grabAction;
@@ -24,17 +27,30 @@ public class RuneHand : MonoBehaviour {
 		
 		bool isPressed = grabAction.GetState(inputSource);
 		
-		if (!isDrawing && isPressed)
+		//this checks if you are inside of the "spellCastOrigin" by checking if it is null.
+		//TODO: Check how this interacts with the fact that you may be drawing inside of a rune, that is expanding.
+		if(spellCastOrigin) 
 		{
-			StartMovement(transform.position);
+			if(isPressed)
+			{
+				//Sends the hands transform.position, might later on want to replace this with the players transform
+				spellCastOrigin.CastSpell(transform.position);
+			}
 		}
-		else if (isDrawing && !isPressed)
+		else
 		{
-			EndMovement();
-		}
-		else if (isDrawing && isPressed)
-		{
-			UpdateMovement(transform.position);
+			if (!isDrawing && isPressed)
+			{
+				StartMovement(transform.position);
+			}
+			else if (isDrawing && !isPressed)
+			{
+				EndMovement();
+			}
+			else if (isDrawing && isPressed)
+			{
+				UpdateMovement(transform.position);
+			}
 		}
 	}
 
@@ -52,7 +68,7 @@ public class RuneHand : MonoBehaviour {
 	private void EndMovement()
 	{
 		isDrawing = false;
-		
+
 		if (inRuneCloud)
 		{
 			runeCloud.EndDraw();
@@ -65,6 +81,16 @@ public class RuneHand : MonoBehaviour {
 		{
 			runeCloud.AddPoint(position);
 		}
+	}
+
+	public void SetInSpellCastOrigin(SpellCastOrigin spellCastOrigin)
+	{
+		this.spellCastOrigin = spellCastOrigin;
+	}
+
+	public void SetOutsideSpellCastOrigin()
+	{
+		this.spellCastOrigin = null;
 	}
 
 	public void SetInRuneCloud(RuneCloud runeCloud)
