@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using PDollarGestureRecognizer;
 using UnityEngine;
@@ -21,9 +22,17 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	public float triggerSizeModifier;
 	
 	public float spellThreshold = 0f;
+<<<<<<< Updated upstream
 	public float fadeTime;
 	private float fadeCounter;
 	
+=======
+	[SerializeField] float fadeTime;
+	private Vector3 centroidPosition;
+	private bool isFading;
+
+
+>>>>>>> Stashed changes
 	private GameManager gameManager = GameManager.Instance;
 	[Header("Gesture Training")]
 	public string gestureName;
@@ -37,24 +46,31 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		pointCloudList.Add(transform.position);
 		lineRenderer.SetPosition(0, transform.position);
 
-		fadeCounter = fadeTime;
 		triggerStartSize = trigger.radius / 2;
 	}
 
 	private void Update()
 	{
-		if (fadeCounter > 0)
+		if(isFading)
 		{
-			fadeCounter -= Time.deltaTime;
+			StartCoroutine(FadeCounter(fadeTime));
 		}
-		else
-		{
-			//TODO kill me
-		}
+		
 	}
+
+	private IEnumerator FadeCounter(float fadeTime)
+	{
+		isFading = false;
+
+		yield return new WaitForSeconds(fadeTime);
+
+		Destroy(this.gameObject);
+	} 
 
 	public void AddPoint(Vector3 point)
 	{
+		StopAllCoroutines();
+
 		Vector3 lastPoint = pointCloudList[pointCloudList.Count - 1];
 
 		float cloudSize = GetCloudSize();
@@ -73,11 +89,12 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 			lineRenderer.SetPosition(pointCloudList.Count - 1, point);
 		}
 
-		fadeCounter = fadeTime;
 	}
 
 	public void EndDraw()
 	{
+		isFading = true;
+
 		Debug.Log("RuneCloud enters EndDraw()");
 
 		Point[] pointArray = new Point[pointCloudList.Count];
