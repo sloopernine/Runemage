@@ -110,7 +110,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 			Debug.Log("RuneCloud sends CREATE_SPELL to Global Mediator.");
 			SendGlobal(GlobalEvent.CREATE_SPELL_ORIGIN, new RuneData(result, centroidPosition, transform.eulerAngles, new Vector3(spellballSize, spellballSize, spellballSize)));
 			Debug.Log("RuneCloud destroys itself.");
-			Destroy(gameObject);
+			DestroyRuneCloud();
 
 		//}
 		//else
@@ -149,6 +149,12 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		trigger.center = transform.InverseTransformPoint(centroid);
 		
 		return distance;
+	}
+
+	private void DestroyRuneCloud()
+	{
+		SendGlobal(GlobalEvent.RUNECLOUD_DESTROYED, new RuneCloudData(this));
+		Destroy(gameObject);
 	}
 
 	public void SaveGestureToXML()
