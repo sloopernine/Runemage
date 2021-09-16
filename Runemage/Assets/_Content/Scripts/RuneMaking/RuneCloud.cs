@@ -19,10 +19,12 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 
 	public float triggerStartSize;
 	public float triggerSizeModifier;
+	public float spellballSize;
 	
 	public float spellThreshold = 0f;
 	public float fadeTime;
 	private float fadeCounter;
+	private Vector3 centroidPosition;
 	
 	private GameManager gameManager = GameManager.Instance;
 	[Header("Gesture Training")]
@@ -106,9 +108,9 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 			Debug.Log("RuneHand says spell is above spellThreshold.");
 
 			Debug.Log("RuneCloud sends CREATE_SPELL to Global Mediator.");
-			SendGlobal(GlobalEvent.CREATE_SPELL_ORIGIN, new RuneData(result, transform.position, transform.eulerAngles, transform.localScale));
+			SendGlobal(GlobalEvent.CREATE_SPELL_ORIGIN, new RuneData(result, centroidPosition, transform.eulerAngles, new Vector3(spellballSize, spellballSize, spellballSize)));
 			Debug.Log("RuneCloud destroys itself.");
-			Destroy(this);
+			Destroy(gameObject);
 
 		//}
 		//else
@@ -141,6 +143,9 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		}
 
 		centroid = centroid / pointCloudList.Count;
+
+		centroidPosition = centroid;
+		
 		trigger.center = transform.InverseTransformPoint(centroid);
 		
 		return distance;
