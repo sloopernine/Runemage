@@ -158,7 +158,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	
 		newGesture.Name = gestureName;
 		
-		string path = Application.dataPath + "/Resources/" + gestureName + ".xml";
+		string path = Application.dataPath + "/_Content/Resources/GestureSet/" + gestureName + ".xml";
 		GestureIO.WriteGesture(pointArray, gestureName, path);
 	}
 	

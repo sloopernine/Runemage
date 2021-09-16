@@ -9,7 +9,7 @@ namespace Singletons
 
         public bool gestureTrainingMode;
         public bool usePcInput;
-        
+
         private void Awake()
         {
             if (Instance == null)
