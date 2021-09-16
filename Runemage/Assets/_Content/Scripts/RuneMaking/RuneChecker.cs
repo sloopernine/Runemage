@@ -93,6 +93,7 @@ public class RuneChecker : MonoBehaviour
 		
 		for (int i = 0; i < spellNames.Length; i++)
 		{
+			Debug.Log("Spellnames is: " + spellNames[i] + "and the current spell is: " + spellName);
 			if (spellNames[i] == spellName)
 			{
 				returnValue = (Spell) i;
