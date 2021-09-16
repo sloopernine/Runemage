@@ -33,7 +33,7 @@ public class RuneHand : MonoBehaviour {
 		{
 			if(isPressed)
 			{
-				//Sends the hands transform.position might later on want to replace this with the players transform
+				//Sends the hands transform.position, might later on want to replace this with the players transform
 				spellCastOrigin.CastSpell(transform.position);
 			}
 		}
