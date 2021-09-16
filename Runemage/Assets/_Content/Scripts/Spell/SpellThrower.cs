@@ -21,6 +21,11 @@ public class SpellThrower : MonoBehaviour
 
     void Update()
     {
+
+        if (Gamemanager)
+        {
+
+        }
         if (Input.GetKeyDown(KeyCode.R))
         {
             ToggleGrabSpell();
