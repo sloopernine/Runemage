@@ -58,8 +58,17 @@ public class SpellObject : PC_Interactable , IDealDamage
         Vector3 impactPoint = collision.GetContact(0).point;
         AoeDamage(impactPoint, damageRadius, target);
 
-
-
+        switch (damageType)
+        {
+            case DamageType.fire:
+                GenericSoundController.Instance.Play(WorldSounds.FireballExplode, impactPoint);
+                break;
+            case DamageType.ice:
+                GenericSoundController.Instance.Play(WorldSounds.IceSpearExplode, impactPoint);
+                break;
+            default:
+                break;
+        }
         Destroy(gameObject);
 
     }
