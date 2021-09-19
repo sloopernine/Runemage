@@ -34,6 +34,20 @@ public class SpellObject : PC_Interactable , IDealDamage
 
         }
 
+        switch (damageType)
+        {
+            case DamageType.fire:
+                GenericSoundController.Instance.Play(WorldSounds.FireballCreate, transform.position);
+                break;
+            case DamageType.ice:
+                GenericSoundController.Instance.Play(WorldSounds.IceSpearCreate, transform.position);
+                break;
+            default:
+                GenericSoundController.Instance.Play(WorldSounds.RuneDrawStart, transform.position, false);
+
+                break;
+        }
+
     }
 
     void Update()
@@ -67,6 +81,8 @@ public class SpellObject : PC_Interactable , IDealDamage
                 GenericSoundController.Instance.Play(WorldSounds.IceSpearExplode, impactPoint);
                 break;
             default:
+                GenericSoundController.Instance.Play(WorldSounds.RuneDrawSuccess, impactPoint, false);
+
                 break;
         }
         Destroy(gameObject);

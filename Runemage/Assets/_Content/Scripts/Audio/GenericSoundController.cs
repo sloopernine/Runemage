@@ -78,7 +78,7 @@ public class GenericSoundController : MonoBehaviour
     {
         if (!soundLibrary.ContainsKey(sound))
         {
-            Debug.LogError("[SoundSystem] CollisionSound: Trying to play sound for material without a clip. Need a clip at: " + soundsPath + "/" + sound.ToString());
+            Debug.LogError("[SoundSystem] WorldSound: Trying to play sound without a clip. Need a clip at: " + soundsPath + "/" + sound.ToString());
             sound = WorldSounds._default;
             return;
         }
@@ -87,7 +87,14 @@ public class GenericSoundController : MonoBehaviour
 
         source.clip = soundLibrary[sound][Random.Range(0, soundLibrary[sound].Count)];
         source.transform.position = position;
-        source.pitch = Random.Range(0.7f, 1.3f);
+        if (randomizePitch)
+        {
+            source.pitch = Random.Range(0.7f, 1.3f);
+        }
+        else
+        {
+            source.pitch = 1f;
+        }
         source.Play();
 
     }
@@ -99,7 +106,7 @@ public class GenericSoundController : MonoBehaviour
         }
         AudioSource s = Instantiate<GameObject>(audioSourcePrefab).GetComponent<AudioSource>();
         audioSources.Add(s);
-        Debug.LogWarning("[SoundSystem] CollisionSound: No idle audioSource found, adding new one. Consider increasing VoicePoolSize");
+        Debug.LogWarning("[SoundSystem] WorldSound: No idle audioSource found, adding new one. Consider increasing VoicePoolSize");
 
         return s;
 

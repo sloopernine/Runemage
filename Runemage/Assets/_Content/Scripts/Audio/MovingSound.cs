@@ -18,6 +18,8 @@ public class MovingSound : MonoBehaviour
         source = GetComponent<AudioSource>();
         lastPos = transform.position;
         source.volume = 0;
+        //source.pitch = Random.Range(0.95f, 1.05f); 
+
     }
 
     private void FixedUpdate()

@@ -4,6 +4,9 @@
     IceSpearCreate,
     IceSpearExplode,
     FireballCreate,
-    FireballExplode
+    FireballExplode,
+    RuneDrawStart,
+    RuneDrawSuccess,
+    RuneDrawFailure
 
 }
