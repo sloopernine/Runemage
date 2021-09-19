@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using _Content.Scripts.Data.Containers;
 using PDollarGestureRecognizer;
 using UnityEngine;
 using Data.Interfaces;
@@ -13,7 +14,10 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 
 	public float newPositionThresholdDistance;
 
-	private List<Vector3> pointCloudList = new List<Vector3>();
+	private List<Vector3> pointCloud = new List<Vector3>();
+
+	public GameObject subCloudPrefab;
+	private List<SubCloud> subClouds = new List<SubCloud>();
 
 	private Result result;
 
@@ -36,7 +40,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		trigger = GetComponent<SphereCollider>();
 
 		lineRenderer.positionCount = 1;
-		pointCloudList.Add(transform.position);
+		pointCloud.Add(transform.position);
 		lineRenderer.SetPosition(0, transform.position);
 
 		fadeCounter = fadeTime;
@@ -51,13 +55,13 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		}
 		else
 		{
-			//TODO kill me
+			DestroyRuneCloud();
 		}
 	}
 
 	public void AddPoint(Vector3 point)
 	{
-		Vector3 lastPoint = pointCloudList[pointCloudList.Count - 1];
+		Vector3 lastPoint = pointCloud[pointCloud.Count - 1];
 
 		float cloudSize = GetCloudSize();
 		
@@ -65,14 +69,14 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		
 		if (Vector3.Distance(point, lastPoint) > newPositionThresholdDistance)
 		{
-			pointCloudList.Add(point);
-			lineRenderer.positionCount = pointCloudList.Count;
-			lineRenderer.SetPosition(pointCloudList.Count - 1, point);
+			pointCloud.Add(point);
+			lineRenderer.positionCount = pointCloud.Count;
+			lineRenderer.SetPosition(pointCloud.Count - 1, point);
 		}
 		else
 		{
-			lineRenderer.positionCount = pointCloudList.Count;
-			lineRenderer.SetPosition(pointCloudList.Count - 1, point);
+			lineRenderer.positionCount = pointCloud.Count;
+			lineRenderer.SetPosition(pointCloud.Count - 1, point);
 		}
 
 		fadeCounter = fadeTime;
@@ -80,50 +84,65 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 
 	public void EndDraw()
 	{
-		Debug.Log("RuneCloud enters EndDraw()");
+		if (pointCloud.Count > 2)
+		{
+	
+			GameObject subCloudGameObject = Instantiate(subCloudPrefab, transform);
+			SubCloud subCloud = subCloudGameObject.GetComponent<SubCloud>();
+		
+			subClouds.Add(subCloud);
+			subCloud.AddPoints(pointCloud);
+			
+			List<Vector3> totalCloudPoints = new List<Vector3>();
+			
+			foreach (var cloud in subClouds)
+			{
+				foreach (var point in cloud.GetPointList())
+				{
+					totalCloudPoints.Add(point);
+				}
+			}
+			
+			Point[] pointArray = new Point[totalCloudPoints.Count];
+			
+			for (int i = 0; i < pointArray.Length; i++) 
+			{
+				Vector2 screenPoint = Camera.main.WorldToScreenPoint(totalCloudPoints[i]);
+				pointArray[i] = new Point(screenPoint.x, screenPoint.y, 0);
+			}
+			
+			if (!gameManager.gestureTrainingMode) 
+			{
+				result = RuneChecker.Instance.Classify(pointArray);
+				//Debug.Log("Result name: " + result.GestureClass);
+				//Debug.Log("Result score: " + result.Score);
+				ValidateSpell();
+			}
+		}
 
-		Point[] pointArray = new Point[pointCloudList.Count];
-		
-		for (int i = 0; i < pointArray.Length; i++) 
-		{
-			Vector2 screenPoint = Camera.main.WorldToScreenPoint(pointCloudList[i]);
-			pointArray[i] = new Point(screenPoint.x, screenPoint.y, 0);
-		}
-		
-		if (!gameManager.gestureTrainingMode && pointCloudList.Count > 2) // <- Prevent to few points to be classified, throws error if few
-		{
-			result = RuneChecker.Instance.Classify(pointArray);
-			Debug.Log("Result name: " + result.GestureClass);
-			Debug.Log("Result score: " + result.Score);
-			ValidateSpell();
-		}
+		lineRenderer.positionCount = 0;
+		pointCloud.Clear();
 	}
 
 	private void ValidateSpell()
 	{
-		
-	//TODO: Turn into switch here if use indivudual spellThresholdvalue.
-		//if (result.Score >= spellThreshold)
-		//{
-			Debug.Log("RuneHand says spell is above spellThreshold.");
-
-			Debug.Log("RuneCloud sends CREATE_SPELL to Global Mediator.");
+		//TODO: Turn into switch here if use indivudual spellThresholdvalue.
+		if (result.Score >= spellThreshold)
+		{
 			SendGlobal(GlobalEvent.CREATE_SPELL_ORIGIN, new RuneData(result, centroidPosition, transform.eulerAngles, new Vector3(spellballSize, spellballSize, spellballSize)));
-			Debug.Log("RuneCloud destroys itself.");
 			DestroyRuneCloud();
-
-		//}
-		//else
-		//{
+		}
+		else
+		{
 			
-		//	//TODO do we want to give feedback on too low threshold?
-		//	//And begin fade of spell?
-		//}
+			//TODO do we want to give feedback on too low threshold?
+			//And begin fade of spell?
+		}
 	}
 
 	private float GetCloudSize()
 	{
-		if (pointCloudList.Count <= 2)
+		if (pointCloud.Count <= 2)
 		{
 			return triggerStartSize;
 		}
@@ -131,7 +150,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		float distance = 0;
 		Vector3 centroid = Vector3.zero;
 
-		foreach (Vector3 point in pointCloudList)
+		foreach (Vector3 point in pointCloud)
 		{
 			float newDistance = Vector3.Distance(transform.position, point);
 			centroid += point;
@@ -142,7 +161,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 			}
 		}
 
-		centroid = centroid / pointCloudList.Count;
+		centroid = centroid / pointCloud.Count;
 
 		centroidPosition = centroid;
 		
@@ -159,11 +178,11 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 
 	public void SaveGestureToXML()
 	{
-		Point[] pointArray = new Point[pointCloudList.Count];
+		Point[] pointArray = new Point[pointCloud.Count];
 		
 		for (int i = 0; i < pointArray.Length; i++) 
 		{
-			Vector2 screenPoint = Camera.main.WorldToScreenPoint(pointCloudList[i]);
+			Vector2 screenPoint = Camera.main.WorldToScreenPoint(pointCloud[i]);
 			pointArray[i] = new Point(screenPoint.x, screenPoint.y, 0);
 		}
 	
