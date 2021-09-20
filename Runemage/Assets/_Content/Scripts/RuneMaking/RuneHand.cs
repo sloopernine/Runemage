@@ -1,7 +1,13 @@
+using System;
+using _Content.Scripts.Data.Containers.GlobalSignal;
+using Data.Enums;
+using Data.Interfaces;
+using Singletons;
 using UnityEngine;
 using Valve.VR;
 
-public class RuneHand : MonoBehaviour {
+public class RuneHand : MonoBehaviour, IReceiveGlobalSignal
+{
 	
 	private RuneCloud runeCloud;
 
@@ -20,6 +26,11 @@ public class RuneHand : MonoBehaviour {
 	private bool isDrawing;
 
 	private bool inRuneCloud;
+
+	private void Start()
+	{
+		GlobalMediator.Instance.Subscribe(this);
+	}
 
 	void Update()
 	{
@@ -103,5 +114,23 @@ public class RuneHand : MonoBehaviour {
 	{
 		this.runeCloud = null;
 		inRuneCloud = false;
+	}
+
+	public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
+	{
+		switch (eventState)
+		{
+			case GlobalEvent.RUNECLOUD_DESTROYED:
+
+				if (globalSignalData is RuneCloudData data)
+				{
+					if (runeCloud == data.runeCloud)
+					{
+						SetOutsideRuneCloud();
+					}
+				}
+				
+				break;
+		}
 	}
 }

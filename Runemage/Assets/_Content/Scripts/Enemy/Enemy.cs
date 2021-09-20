@@ -136,7 +136,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
 
     private void OnEnable()
     {
-        Debug.Log("Me is enabled");
+        //Debug.Log("Me is enabled");
         currentHealth = maxHealth;
         currentSpeed = speed;
         isFreezed = false;
