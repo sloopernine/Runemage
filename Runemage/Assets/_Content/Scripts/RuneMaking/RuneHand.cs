@@ -74,6 +74,10 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal
 			runeCloud = Instantiate(prefabRuneCloud, position, Quaternion.identity).GetComponent<RuneCloud>();
 			inRuneCloud = true;
 		}
+		else
+		{
+			runeCloud.InitDraw(false, transform.position);
+		}
 	}
 
 	private void EndMovement()
