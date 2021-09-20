@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using PDollarGestureRecognizer;
 using UnityEngine;
@@ -19,13 +20,13 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 
 	public float triggerStartSize;
 	public float triggerSizeModifier;
-	public float spellballSize;
 	
 	public float spellThreshold = 0f;
-	public float fadeTime;
-	private float fadeCounter;
-	private Vector3 centroidPosition;
 	
+	[SerializeField] float fadeTime;
+	private Vector3 centroidPosition;
+	private bool isFading;
+
 	private GameManager gameManager = GameManager.Instance;
 	[Header("Gesture Training")]
 	public string gestureName;
@@ -39,24 +40,31 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		pointCloudList.Add(transform.position);
 		lineRenderer.SetPosition(0, transform.position);
 
-		fadeCounter = fadeTime;
 		triggerStartSize = trigger.radius / 2;
 	}
 
 	private void Update()
 	{
-		if (fadeCounter > 0)
+		if(isFading)
 		{
-			fadeCounter -= Time.deltaTime;
+			StartCoroutine(FadeCounter(fadeTime));
 		}
-		else
-		{
-			//TODO kill me
-		}
+		
 	}
+
+	private IEnumerator FadeCounter(float fadeTime)
+	{
+		isFading = false;
+		Debug.Log("FadeCounter Started");
+		yield return new WaitForSeconds(fadeTime);
+		Debug.Log("Done waiting to Destroy");
+		Destroy(this.gameObject);
+	} 
 
 	public void AddPoint(Vector3 point)
 	{
+		StopAllCoroutines();
+
 		Vector3 lastPoint = pointCloudList[pointCloudList.Count - 1];
 
 		float cloudSize = GetCloudSize();
@@ -75,11 +83,12 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 			lineRenderer.SetPosition(pointCloudList.Count - 1, point);
 		}
 
-		fadeCounter = fadeTime;
 	}
 
 	public void EndDraw()
 	{
+		isFading = true;
+
 		Debug.Log("RuneCloud enters EndDraw()");
 
 		Point[] pointArray = new Point[pointCloudList.Count];
@@ -93,8 +102,6 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		if (!gameManager.gestureTrainingMode && pointCloudList.Count > 2) // <- Prevent to few points to be classified, throws error if few
 		{
 			result = RuneChecker.Instance.Classify(pointArray);
-			Debug.Log("Result name: " + result.GestureClass);
-			Debug.Log("Result score: " + result.Score);
 			ValidateSpell();
 		}
 	}
@@ -103,22 +110,20 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	{
 		
 	//TODO: Turn into switch here if use indivudual spellThresholdvalue.
-		//if (result.Score >= spellThreshold)
-		//{
+		if (result.Score >= spellThreshold)
+		{
 			Debug.Log("RuneHand says spell is above spellThreshold.");
 
 			Debug.Log("RuneCloud sends CREATE_SPELL to Global Mediator.");
-			SendGlobal(GlobalEvent.CREATE_SPELL_ORIGIN, new RuneData(result, centroidPosition, transform.eulerAngles, new Vector3(spellballSize, spellballSize, spellballSize)));
+			SendGlobal(GlobalEvent.CREATE_SPELL_ORIGIN, new RuneData(result, transform.position, transform.eulerAngles, transform.localScale));
 			Debug.Log("RuneCloud destroys itself.");
-			DestroyRuneCloud();
+			Destroy(this.gameObject);
 
-		//}
-		//else
-		//{
-			
-		//	//TODO do we want to give feedback on too low threshold?
-		//	//And begin fade of spell?
-		//}
+		}
+		else
+		{
+			isFading = true;
+		}
 	}
 
 	private float GetCloudSize()
@@ -143,18 +148,9 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		}
 
 		centroid = centroid / pointCloudList.Count;
-
-		centroidPosition = centroid;
-		
 		trigger.center = transform.InverseTransformPoint(centroid);
 		
 		return distance;
-	}
-
-	private void DestroyRuneCloud()
-	{
-		SendGlobal(GlobalEvent.RUNECLOUD_DESTROYED, new RuneCloudData(this));
-		Destroy(gameObject);
 	}
 
 	public void SaveGestureToXML()

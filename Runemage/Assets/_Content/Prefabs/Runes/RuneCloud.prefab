@@ -146,7 +146,7 @@ MonoBehaviour:
   triggerSizeModifier: 0.7
   spellballSize: 0.2
   spellThreshold: 0.2
-  fadeTime: 10
+  fadeTime: 5
   gestureName: 
 --- !u!120 &8107353076575102391
 LineRenderer:
