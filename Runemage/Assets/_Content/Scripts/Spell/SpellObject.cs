@@ -43,7 +43,6 @@ public class SpellObject : PC_Interactable , IDealDamage
                 GenericSoundController.Instance.Play(WorldSounds.IceSpearCreate, transform.position);
                 break;
             default:
-                GenericSoundController.Instance.Play(WorldSounds.RuneDrawStart, transform.position, false);
 
                 break;
         }
@@ -81,7 +80,6 @@ public class SpellObject : PC_Interactable , IDealDamage
                 GenericSoundController.Instance.Play(WorldSounds.IceSpearExplode, impactPoint);
                 break;
             default:
-                GenericSoundController.Instance.Play(WorldSounds.RuneDrawSuccess, impactPoint, false);
 
                 break;
         }
