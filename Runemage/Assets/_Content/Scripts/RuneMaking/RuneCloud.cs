@@ -110,8 +110,8 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	{
 		
 	//TODO: Turn into switch here if use indivudual spellThresholdvalue.
-		//if (result.Score >= spellThreshold)
-		//{
+		if (result.Score >= spellThreshold)
+		{
 			Debug.Log("RuneHand says spell is above spellThreshold.");
 
 			Debug.Log("RuneCloud sends CREATE_SPELL to Global Mediator.");
@@ -119,13 +119,11 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 			Debug.Log("RuneCloud destroys itself.");
 			Destroy(this.gameObject);
 
-		//}
-		//else
-		//{
-			
-		//	//TODO do we want to give feedback on too low threshold?
-		//	//And begin fade of spell?
-		//}
+		}
+		else
+		{
+			isFading = true;
+		}
 	}
 
 	private float GetCloudSize()
