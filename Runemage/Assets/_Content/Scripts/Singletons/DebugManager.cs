@@ -11,12 +11,22 @@ public class DebugManager : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSign
 {
 
     [SerializeField] bool isDebugMode;
+    public bool IsDebugMode { get => isDebugMode;}
     private Text debugUi;
     [SerializeField] float debugMessageTime = 5f;
+
 
     private void Start()
     {
         debugUi = GetComponentInChildren<Text>();
+        if (isDebugMode)
+        {
+            StartCoroutine(ShowDebugMessage("DebugMode_On", debugMessageTime));
+        }
+        else
+        {
+            StartCoroutine(ShowDebugMessage("DebugMode_Off", debugMessageTime));
+        }
     }
 
     private void OnEnable()
@@ -36,12 +46,8 @@ public class DebugManager : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSign
         {
             return;
         }
+        // Suggestion to add shield health indicator on debug hud
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            //SetDebugMode(!isDebugMode);
-            SendGlobal(GlobalEvent.ENEMY_DESTROY_ALL);
-        }
     }
 
     public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
@@ -61,21 +67,7 @@ public class DebugManager : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSign
         {
             return;
         }
-        switch (eventState)
-        {
-            case GlobalEvent.WIN_GAME:
-                break;
-            case GlobalEvent.PAUSE_GAME:
-                break;
-            case GlobalEvent.UNPAUSE_GAME:
-                break;
 
-            case GlobalEvent.SHOW_FPS:
-                break;
-            case GlobalEvent.HIDE_FPS:
-                break;
-
-        }
     }
 
     private void SetDebugMode(bool isOn)
@@ -103,5 +95,30 @@ public class DebugManager : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSign
     public void SendGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
     {
         GlobalMediator.Instance.ReceiveGlobal(eventState, globalSignalData);
+        StartCoroutine(ShowDebugMessage(eventState.ToString(), debugMessageTime));
+    }
+
+    public void KillAllEnemies()
+    {
+        SendGlobal(GlobalEvent.ENEMY_DESTROY_ALL);
+
+    }
+
+    public void Invulnerability()
+    {
+        SendGlobal(GlobalEvent.SHIELD_INVULNERABLE_ON); //Has no effect yet
+    }
+
+    public void ForceNextRound()
+    {
+        SendGlobal(GlobalEvent.ENEMY_DESTROY_ALL);
+        SendGlobal(GlobalEvent.SET_NEXT_ROUND);
+    }
+
+    public void ForceFirstRound()
+    {
+        SendGlobal(GlobalEvent.ENEMY_DESTROY_ALL);
+        BasicData roundNumber = new BasicData(0);
+        SendGlobal(GlobalEvent.SET_ROUND, roundNumber);
     }
 }
