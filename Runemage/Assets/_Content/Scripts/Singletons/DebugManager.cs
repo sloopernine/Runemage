@@ -121,4 +121,10 @@ public class DebugManager : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSign
         BasicData roundNumber = new BasicData(0);
         SendGlobal(GlobalEvent.SET_ROUND, roundNumber);
     }
+
+    public void DestroyAllSpells()
+    {
+        SendGlobal(GlobalEvent.SPELLS_DESTROY_ALL);
+    }
+
 }

@@ -19,6 +19,7 @@ namespace Data.Enums
         SHIELD_INVULNERABLE_OFF,
         SET_NEXT_ROUND,
         SET_ROUND,
+        SPELLS_DESTROY_ALL,
 
         // RUNE CLOUD
         RUNECLOUD_DESTROYED,
@@ -28,8 +29,6 @@ namespace Data.Enums
 
         // Enemies
         ENEMY_DESTROY_ALL,
-
-
 
     }
 }
