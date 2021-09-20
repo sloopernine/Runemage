@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using _Content.Scripts.Data.Containers;
 using PDollarGestureRecognizer;
 using UnityEngine;
 using Data.Interfaces;
@@ -26,6 +25,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	public float triggerSizeModifier;
 	
 	public float spellThreshold = 0f;
+	public float spellballSize;
 	
 	[SerializeField] float fadeTime;
 	private Vector3 centroidPosition;
@@ -47,17 +47,14 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 
 	private void Update()
 	{
-	  if(isFading)
+		if(isFading)
 		{
 			StartCoroutine(FadeCounter(fadeTime));
-
 		}
 	}
 
 	public void InitStartMovement(bool firstInit, Vector3 point)
 	{
-		fadeCounter = fadeTime;
-
 		if (firstInit)
 		{
 			newLinePointCloudData.Add(transform.position);
@@ -68,7 +65,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		{
 			newLinePointCloudData.Add(point);
 			totalCloudPoints.Add(point);
-    }
+		}
 	}
 
 	private IEnumerator FadeCounter(float fadeTime)
@@ -77,7 +74,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		Debug.Log("FadeCounter Started");
 		yield return new WaitForSeconds(fadeTime);
 		Debug.Log("Done waiting to Destroy");
-		Destroy(this.gameObject);
+		DestroyRuneCloud();
 	} 
 
 	public void AddPoint(Vector3 point)
@@ -108,7 +105,6 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		{
 			trigger.radius = 0.2f;
 		}
-
 	}
 
 	public void EndDraw()
@@ -165,6 +161,12 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		{
 			isFading = true;
 		}
+	}
+
+	private void DestroyRuneCloud()
+	{
+		SendGlobal(GlobalEvent.RUNECLOUD_DESTROYED, new RuneCloudData(this));
+		Destroy(gameObject);
 	}
 
 	private float GetCloudSize()
