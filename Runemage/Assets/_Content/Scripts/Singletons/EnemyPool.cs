@@ -1,8 +1,12 @@
+using _Content.Scripts.Data.Containers.GlobalSignal;
+using Data.Enums;
+using Data.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Singletons;
 
-public class EnemyPool : MonoBehaviour
+public class EnemyPool : MonoBehaviour , IReceiveGlobalSignal
 {
     private static EnemyPool instance;
     public static EnemyPool Instance { get { return instance; } }
@@ -14,6 +18,18 @@ public class EnemyPool : MonoBehaviour
 	{
         instance = this;
 	}
+
+    private void OnEnable()
+    {
+        GlobalMediator.Instance.Subscribe(this);
+    }
+
+    private void OnDisable()
+    {
+        GlobalMediator.Instance.UnSubscribe(this);
+
+    }
+
 
     private void Start()
     {
@@ -37,6 +53,29 @@ public class EnemyPool : MonoBehaviour
             }
         }       
         return null;
+    }
+
+    public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
+    {
+        switch (eventState)
+        {
+            case GlobalEvent.ENEMY_DESTROY_ALL:
+                KillAllEnemies();
+                break;
+
+        }
+    }
+
+    private void KillAllEnemies()
+    {
+        foreach (Enemy enemy in pooledEnemies)
+        {
+            
+            if (enemy.gameObject.activeInHierarchy)
+            {
+                enemy.Die();
+            }
+        }
     }
 
 }

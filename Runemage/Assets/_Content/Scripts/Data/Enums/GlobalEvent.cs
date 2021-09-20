@@ -20,6 +20,10 @@ namespace Data.Enums
         RUNECLOUD_DESTROYED,
         
 		// RUNE MAKING
-		CREATE_SPELL_ORIGIN
+		CREATE_SPELL_ORIGIN,
+
+        // Enemies
+        ENEMY_DESTROY_ALL
+
     }
 }
