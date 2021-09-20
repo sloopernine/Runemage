@@ -93,6 +93,7 @@ public class CollisionSoundController : MonoBehaviour
 
         AudioSource source = GetIdleAudioSource();
         source.clip = soundLibrary[mat][Random.Range(0, soundLibrary[mat].Count)];
+        source.volume = impactVolume;
         source.transform.position = position;
         source.pitch = Random.Range(0.7f, 1.3f);
         source.Play();

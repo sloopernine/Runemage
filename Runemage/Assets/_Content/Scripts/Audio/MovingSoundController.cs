@@ -88,7 +88,7 @@ public class MovingSoundController : MonoBehaviour
         AudioSource source = GetIdleAudioSource();
         source.clip = soundLibrary[mat][Random.Range(0, soundLibrary[mat].Count)];
         source.transform.parent = newParent;
-        source.pitch = Random.Range(0.7f, 1.3f);
+        source.pitch = Random.Range(0.95f, 1.05f);
         source.Play();
 
     }

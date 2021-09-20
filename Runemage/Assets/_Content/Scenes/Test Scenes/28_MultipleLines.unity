@@ -409,10 +409,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 484522791140054251, guid: 50e8e4daa9b724741ac0f154dd01e6a5, type: 3}
-      propertyPath: prefabRuneCloud
-      value: 
-      objectReference: {fileID: 7165554949352084570, guid: fefcb462d299c9442bbd32f648cda148, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50e8e4daa9b724741ac0f154dd01e6a5, type: 3}
 --- !u!1 &424923194
@@ -1496,10 +1492,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4343211114678539196, guid: e4ba35e187bee184fa0d322c0eb20d97, type: 3}
-      propertyPath: prefabRuneCloud
-      value: 
-      objectReference: {fileID: 7165554949352084570, guid: fefcb462d299c9442bbd32f648cda148, type: 3}
     - target: {fileID: 4343211114678539199, guid: e4ba35e187bee184fa0d322c0eb20d97, type: 3}
       propertyPath: m_Name
       value: RuneHand_Right
