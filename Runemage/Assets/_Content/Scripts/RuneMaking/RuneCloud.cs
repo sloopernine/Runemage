@@ -14,10 +14,11 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 
 	public float newPositionThresholdDistance;
 
-	private List<Vector3> pointCloud = new List<Vector3>();
-
-	public GameObject subCloudPrefab;
-	private List<SubCloud> subClouds = new List<SubCloud>();
+	private List<Vector3> newPointCloudData = new List<Vector3>();
+	private List<Vector3> totalCloudPoints = new List<Vector3>();
+	
+	public GameObject subLineRendererPrefab;
+	private List<LineRenderer> subLineRenderers = new List<LineRenderer>();
 
 	private Result result;
 
@@ -40,7 +41,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		trigger = GetComponent<SphereCollider>();
 
 		lineRenderer.positionCount = 1;
-		pointCloud.Add(transform.position);
+		newPointCloudData.Add(transform.position);
 		lineRenderer.SetPosition(0, transform.position);
 
 		fadeCounter = fadeTime;
@@ -61,7 +62,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 
 	public void AddPoint(Vector3 point)
 	{
-		Vector3 lastPoint = pointCloud[pointCloud.Count - 1];
+		Vector3 lastPoint = newPointCloudData[newPointCloudData.Count - 1];
 
 		float cloudSize = GetCloudSize();
 		
@@ -69,14 +70,14 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		
 		if (Vector3.Distance(point, lastPoint) > newPositionThresholdDistance)
 		{
-			pointCloud.Add(point);
-			lineRenderer.positionCount = pointCloud.Count;
-			lineRenderer.SetPosition(pointCloud.Count - 1, point);
+			newPointCloudData.Add(point);
+			lineRenderer.positionCount = newPointCloudData.Count;
+			lineRenderer.SetPosition(newPointCloudData.Count - 1, point);
 		}
 		else
 		{
-			lineRenderer.positionCount = pointCloud.Count;
-			lineRenderer.SetPosition(pointCloud.Count - 1, point);
+			lineRenderer.positionCount = newPointCloudData.Count;
+			lineRenderer.SetPosition(newPointCloudData.Count - 1, point);
 		}
 
 		fadeCounter = fadeTime;
@@ -84,23 +85,20 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 
 	public void EndDraw()
 	{
-		if (pointCloud.Count > 2)
+		if (newPointCloudData.Count > 2)
 		{
 	
-			GameObject subCloudGameObject = Instantiate(subCloudPrefab, transform);
-			SubCloud subCloud = subCloudGameObject.GetComponent<SubCloud>();
-		
-			subClouds.Add(subCloud);
-			subCloud.AddPoints(pointCloud);
+			GameObject subLineRendrerGameObject = Instantiate(subLineRendererPrefab, transform);
+			LineRenderer subLineRenderer = subLineRendrerGameObject.GetComponent<LineRenderer>();
+
+			subLineRenderer.positionCount = newPointCloudData.Count;
+
+			int index = 0;
 			
-			List<Vector3> totalCloudPoints = new List<Vector3>();
-			
-			foreach (var cloud in subClouds)
+			foreach (Vector3 point in newPointCloudData)
 			{
-				foreach (var point in cloud.GetPointList())
-				{
-					totalCloudPoints.Add(point);
-				}
+				totalCloudPoints.Add(point);
+				subLineRenderer.SetPosition(index, point);
 			}
 			
 			Point[] pointArray = new Point[totalCloudPoints.Count];
@@ -121,7 +119,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		}
 
 		lineRenderer.positionCount = 0;
-		pointCloud.Clear();
+		newPointCloudData.Clear();
 	}
 
 	private void ValidateSpell()
@@ -142,7 +140,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 
 	private float GetCloudSize()
 	{
-		if (pointCloud.Count <= 2)
+		if (newPointCloudData.Count <= 2)
 		{
 			return triggerStartSize;
 		}
@@ -150,7 +148,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		float distance = 0;
 		Vector3 centroid = Vector3.zero;
 
-		foreach (Vector3 point in pointCloud)
+		foreach (Vector3 point in newPointCloudData)
 		{
 			float newDistance = Vector3.Distance(transform.position, point);
 			centroid += point;
@@ -161,7 +159,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 			}
 		}
 
-		centroid = centroid / pointCloud.Count;
+		centroid = centroid / newPointCloudData.Count;
 
 		centroidPosition = centroid;
 		
@@ -178,11 +176,11 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 
 	public void SaveGestureToXML()
 	{
-		Point[] pointArray = new Point[pointCloud.Count];
+		Point[] pointArray = new Point[newPointCloudData.Count];
 		
 		for (int i = 0; i < pointArray.Length; i++) 
 		{
-			Vector2 screenPoint = Camera.main.WorldToScreenPoint(pointCloud[i]);
+			Vector2 screenPoint = Camera.main.WorldToScreenPoint(newPointCloudData[i]);
 			pointArray[i] = new Point(screenPoint.x, screenPoint.y, 0);
 		}
 	
