@@ -22,6 +22,10 @@ public class SpellThrower : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance == null)
+        {
+            return;
+        }
 
         if (GameManager.Instance.usePcInput)
         {

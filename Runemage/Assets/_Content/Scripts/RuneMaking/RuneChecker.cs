@@ -79,6 +79,7 @@ public class RuneChecker : MonoBehaviour
 		Gesture newGesture = new Gesture(points);
 
 		Result returnResult = PointCloudRecognizer.Classify(newGesture, trainingSet.ToArray());
+		Debug.Log("returnResult is: " + returnResult.GestureClass);
 
 		returnResult.spell = GetSpellEnum(returnResult.GestureClass);
 		
@@ -95,7 +96,8 @@ public class RuneChecker : MonoBehaviour
 		{
 			if (spellNames[i] == spellName)
 			{
-				Debug.Log("Spellnames is: " + spellNames[i] + "and the current spell is: " + spellName);
+				Debug.Log("Spellnames is: " + spellNames[i] + " and the current spell is: " + spellName);
+
 				returnValue = (Spell) i;
 			}
 		}

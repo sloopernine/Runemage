@@ -21,6 +21,8 @@ public class SpellObject : PC_Interactable , IDealDamage
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        aliveTime = 0f;
+
         if (GameManager.Instance.usePcInput)
         {
             rb.AddForce(transform.up);
@@ -31,7 +33,19 @@ public class SpellObject : PC_Interactable , IDealDamage
             rb.AddForce(transform.forward * initialVelocity);
 
         }
-        aliveTime = 0f;
+
+        switch (damageType)
+        {
+            case DamageType.fire:
+                GenericSoundController.Instance.Play(WorldSounds.FireballCreate, transform.position);
+                break;
+            case DamageType.ice:
+                GenericSoundController.Instance.Play(WorldSounds.IceSpearCreate, transform.position);
+                break;
+            default:
+
+                break;
+        }
 
     }
 
@@ -57,8 +71,18 @@ public class SpellObject : PC_Interactable , IDealDamage
         Vector3 impactPoint = collision.GetContact(0).point;
         AoeDamage(impactPoint, damageRadius, target);
 
+        switch (damageType)
+        {
+            case DamageType.fire:
+                GenericSoundController.Instance.Play(WorldSounds.FireballExplode, impactPoint);
+                break;
+            case DamageType.ice:
+                GenericSoundController.Instance.Play(WorldSounds.IceSpearExplode, impactPoint);
+                break;
+            default:
 
-
+                break;
+        }
         Destroy(gameObject);
 
     }

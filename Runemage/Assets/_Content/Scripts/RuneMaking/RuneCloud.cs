@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using _Content.Scripts.Data.Containers;
 using PDollarGestureRecognizer;
@@ -23,13 +24,13 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 
 	public float triggerStartSize;
 	public float triggerSizeModifier;
-	public float spellballSize;
 	
 	public float spellThreshold = 0f;
-	public float fadeTime;
-	private float fadeCounter;
-	private Vector3 centroidPosition;
 	
+	[SerializeField] float fadeTime;
+	private Vector3 centroidPosition;
+	private bool isFading;
+
 	private GameManager gameManager = GameManager.Instance;
 	[Header("Gesture Training")]
 	public string gestureName;
@@ -46,13 +47,10 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 
 	private void Update()
 	{
-		if (fadeCounter > 0 && !gameManager.gestureTrainingMode)
+	  if(isFading)
 		{
-			fadeCounter -= Time.deltaTime;
-		}
-		else
-		{
-			DestroyRuneCloud();
+			StartCoroutine(FadeCounter(fadeTime));
+
 		}
 	}
 
@@ -70,12 +68,22 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		{
 			newLinePointCloudData.Add(point);
 			totalCloudPoints.Add(point);
-		}
+    }
 	}
+
+	private IEnumerator FadeCounter(float fadeTime)
+	{
+		isFading = false;
+		Debug.Log("FadeCounter Started");
+		yield return new WaitForSeconds(fadeTime);
+		Debug.Log("Done waiting to Destroy");
+		Destroy(this.gameObject);
+	} 
 
 	public void AddPoint(Vector3 point)
 	{
 		Vector3 lastPoint = newLinePointCloudData[newLinePointCloudData.Count - 1];
+		StopAllCoroutines();
 
 		if (Vector3.Distance(point, lastPoint) > newPositionThresholdDistance)
 		{
@@ -101,11 +109,14 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 			trigger.radius = 0.2f;
 		}
 
-		fadeCounter = fadeTime;
 	}
 
 	public void EndDraw()
 	{
+    isFading = true;
+
+		Debug.Log("RuneCloud enters EndDraw()");
+
 		if (newLinePointCloudData.Count > 2)
 		{
 			GameObject subLineRendererGameObject = Instantiate(subLineRendererPrefab, transform);
@@ -152,8 +163,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		}
 		else
 		{
-			//TODO do we want to give feedback on too low threshold?
-			//And begin fade of spell?
+			isFading = true;
 		}
 	}
 
@@ -185,12 +195,6 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		trigger.center = transform.InverseTransformPoint(centroid);
 		
 		return distance;
-	}
-
-	private void DestroyRuneCloud()
-	{
-		SendGlobal(GlobalEvent.RUNECLOUD_DESTROYED, new RuneCloudData(this));
-		Destroy(gameObject);
 	}
 
 	public void SaveGestureToXML()
