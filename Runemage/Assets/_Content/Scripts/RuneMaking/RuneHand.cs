@@ -76,7 +76,7 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal
 		}
 		else
 		{
-			runeCloud.InitDraw(false, transform.position);
+			runeCloud.InitStartMovement(false, transform.position);
 		}
 	}
 
