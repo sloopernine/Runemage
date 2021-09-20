@@ -22,6 +22,12 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal
 	public SteamVR_Action_Boolean grabAction;
 
 	public SteamVR_Action_Vector3 handPosition;
+
+	public Transform PCHandPosition;
+
+	[SerializeField] bool usePCDraw;
+
+	private bool isPressed;
 	
 	private bool isDrawing;
 
@@ -30,13 +36,24 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal
 	private void Start()
 	{
 		GlobalMediator.Instance.Subscribe(this);
+		if (usePCDraw && handPosition == null)
+        {
+			Debug.LogError("Can't use PCDraw witout a pc hand transfrom to the hand.");
+        }
 	}
 
 	void Update()
 	{
-		transform.position = poseAction[inputSource].localPosition;
-		
-		bool isPressed = grabAction.GetState(inputSource);
+		if (!usePCDraw)
+        {
+			transform.position = poseAction[inputSource].localPosition;
+			isPressed = grabAction.GetState(inputSource);
+		}
+		else
+        {
+			transform.position = PCHandPosition.position;
+			isPressed = Input.GetMouseButton(0);
+        }
 		
 		//this checks if you are inside of the "spellCastOrigin" by checking if it is null.
 		//TODO: Check how this interacts with the fact that you may be drawing inside of a rune, that is expanding.
