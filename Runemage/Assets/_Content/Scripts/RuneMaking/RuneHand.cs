@@ -110,8 +110,16 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal
 
 	public void SetInRuneCloud(RuneCloud runeCloud)
 	{
-		this.runeCloud = runeCloud;
-		inRuneCloud = true;
+		if (this.runeCloud != runeCloud)
+		{
+			EndMovement();
+			SetOutsideRuneCloud();
+		}
+		else
+		{
+			this.runeCloud = runeCloud;
+			inRuneCloud = true;
+		}
 	}
 
 	public void SetOutsideRuneCloud()
