@@ -8,10 +8,10 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Shield Shader
-  m_Shader: {fileID: -6465566751694194690, guid: be32c9336baea014e87df095f78d2551, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: f79219583281acf46b8254548396bf51, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -31,6 +31,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Floats: []
-    m_Colors: []
+    m_Floats:
+    - Vector1_8390d69330ed4713a2b16693a1ab631f: 0.41
+    - Vector1_f102a45d6c3a435c8efd4d9f75e8edbd: 4
+    - Vector1_f65c0a7aae824c1397656fe7efaafd17: 0.1
+    m_Colors:
+    - Color_758030dc8d47424a8fb398028c560d22: {r: 16, g: 11.420067, b: 0, a: 0}
   m_BuildTextureStacks: []
