@@ -55,9 +55,9 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	private IEnumerator FadeCounter(float fadeTime)
 	{
 		isFading = false;
-
+		Debug.Log("FadeCounter Started");
 		yield return new WaitForSeconds(fadeTime);
-
+		Debug.Log("Done waiting to Destroy");
 		Destroy(this.gameObject);
 	} 
 
@@ -99,7 +99,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 			pointArray[i] = new Point(screenPoint.x, screenPoint.y, 0);
 		}
 		
-		if (!gameManager.gestureTrainingMode && pointCloudList.Count <= 2) // <- Prevent to few points to be classified, throws error if few
+		if (!gameManager.gestureTrainingMode && pointCloudList.Count > 2) // <- Prevent to few points to be classified, throws error if few
 		{
 			result = RuneChecker.Instance.Classify(pointArray);
 			ValidateSpell();
@@ -117,7 +117,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 			Debug.Log("RuneCloud sends CREATE_SPELL to Global Mediator.");
 			SendGlobal(GlobalEvent.CREATE_SPELL_ORIGIN, new RuneData(result, transform.position, transform.eulerAngles, transform.localScale));
 			Debug.Log("RuneCloud destroys itself.");
-			Destroy(this);
+			Destroy(this.gameObject);
 
 		//}
 		//else
