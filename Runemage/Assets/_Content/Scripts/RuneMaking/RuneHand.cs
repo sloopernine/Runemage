@@ -91,6 +91,10 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal
 			runeCloud = Instantiate(prefabRuneCloud, position, Quaternion.identity).GetComponent<RuneCloud>();
 			inRuneCloud = true;
 		}
+		else
+		{
+			runeCloud.InitStartMovement(false, transform.position);
+		}
 	}
 
 	private void EndMovement()
@@ -123,8 +127,16 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal
 
 	public void SetInRuneCloud(RuneCloud runeCloud)
 	{
-		this.runeCloud = runeCloud;
-		inRuneCloud = true;
+		if (this.runeCloud != runeCloud)
+		{
+			EndMovement();
+			SetOutsideRuneCloud();
+		}
+		else
+		{
+			this.runeCloud = runeCloud;
+			inRuneCloud = true;
+		}
 	}
 
 	public void SetOutsideRuneCloud()
