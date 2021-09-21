@@ -29,14 +29,8 @@ public class SpellObject : PC_Interactable , IDealDamage, IReceiveGlobalSignal
         if (GameManager.Instance.usePcInput)
         {
             rb.AddForce(transform.up);
-
         }
-        else
-        {
-            rb.AddForce(transform.forward * initialVelocity);
-
-        }
-
+        
         switch (damageType)
         {
             case DamageType.fire:
@@ -60,7 +54,6 @@ public class SpellObject : PC_Interactable , IDealDamage, IReceiveGlobalSignal
     private void OnDisable()
     {
         GlobalMediator.Instance.UnSubscribe(this);
-
     }
 
     void Update()
@@ -136,7 +129,7 @@ public class SpellObject : PC_Interactable , IDealDamage, IReceiveGlobalSignal
     {
         transform.parent = null;
         rb.isKinematic = false;
-        rb.AddForce(force);
+        //NO! rb.AddForce(force);
 
     }
 

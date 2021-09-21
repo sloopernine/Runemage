@@ -43,4 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b81e8737b728d4485878a81115c4ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spellCastOrigin: {fileID: 0}
+  iceSpellPrefab: {fileID: 7915618189126999260, guid: f5216aa23b3f7cf44a54312ea1a95a5f, type: 3}
+  fireSpellPrefab: {fileID: 6356653243117928251, guid: 155706fdc5de6f947a12a2964a33e0ed, type: 3}

@@ -149,7 +149,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	{
 		if (result.spell != Spell.None)
 		{
-			SendGlobal(GlobalEvent.CREATE_SPELL_ORIGIN, new RuneData(result, centroidPosition, transform.eulerAngles, new Vector3(spellballSize, spellballSize, spellballSize)));
+			SendGlobal(GlobalEvent.CREATE_SPELL_ORIGIN, new RuneData(result, centroidPosition));
 			DestroyRuneCloud();
 		}
 		else

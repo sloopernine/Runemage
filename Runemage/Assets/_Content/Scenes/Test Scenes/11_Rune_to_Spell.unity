@@ -123,6 +123,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &96170729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 96170731}
+  - component: {fileID: 96170730}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &96170730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96170729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 599cfe3e7149e29468d5b5964c288185, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voicePoolSize: 24
+  audioSourcePrefab: {fileID: 6327118475761378715, guid: 83e7f17f57074044a9ff7446cee2e6f5, type: 3}
+--- !u!4 &96170731
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96170729}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.16203646, y: 0.30696392, z: -1.7390144}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &198110542
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -136,15 +181,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8519080691925560964, guid: 5bb24331f247ec349ba49fad67a525d2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.624266
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8519080691925560964, guid: 5bb24331f247ec349ba49fad67a525d2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.89449626
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8519080691925560964, guid: 5bb24331f247ec349ba49fad67a525d2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.36085698
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8519080691925560964, guid: 5bb24331f247ec349ba49fad67a525d2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -174,6 +219,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8519080691925560965, guid: 5bb24331f247ec349ba49fad67a525d2, type: 3}
+      propertyPath: fireSpellPrefab
+      value: 
+      objectReference: {fileID: 6356653243117928251, guid: 155706fdc5de6f947a12a2964a33e0ed, type: 3}
     - target: {fileID: 8519080691925560965, guid: 5bb24331f247ec349ba49fad67a525d2, type: 3}
       propertyPath: spellCastOrigin
       value: 
@@ -237,7 +286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5301233974158738310, guid: f45187e0748dfb349bd4e67b205b750f, type: 3}
       propertyPath: usePcInput
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5301233974158738310, guid: f45187e0748dfb349bd4e67b205b750f, type: 3}
       propertyPath: gestureTrainingMode
@@ -412,7 +461,7 @@ PrefabInstance:
     - target: {fileID: 484522791140054251, guid: 50e8e4daa9b724741ac0f154dd01e6a5, type: 3}
       propertyPath: prefabRuneCloud
       value: 
-      objectReference: {fileID: 7165554949352084570, guid: fefcb462d299c9442bbd32f648cda148, type: 3}
+      objectReference: {fileID: 7165554949352084570, guid: 510b0858c09880e4ea7f84a0eab04b22, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50e8e4daa9b724741ac0f154dd01e6a5, type: 3}
 --- !u!1 &424923194
@@ -1001,6 +1050,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 393946180691590616, guid: 729a3ca452cbfac47b594fd5f9b9dd4f, type: 3}
+      propertyPath: spellTreshold
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 393946180691590617, guid: 729a3ca452cbfac47b594fd5f9b9dd4f, type: 3}
       propertyPath: m_Name
       value: RuneChecker
@@ -1011,15 +1064,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 393946180691590623, guid: 729a3ca452cbfac47b594fd5f9b9dd4f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.56613785
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 393946180691590623, guid: 729a3ca452cbfac47b594fd5f9b9dd4f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.41118205
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 393946180691590623, guid: 729a3ca452cbfac47b594fd5f9b9dd4f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.21871297
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 393946180691590623, guid: 729a3ca452cbfac47b594fd5f9b9dd4f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1499,7 +1552,7 @@ PrefabInstance:
     - target: {fileID: 4343211114678539196, guid: e4ba35e187bee184fa0d322c0eb20d97, type: 3}
       propertyPath: prefabRuneCloud
       value: 
-      objectReference: {fileID: 7165554949352084570, guid: fefcb462d299c9442bbd32f648cda148, type: 3}
+      objectReference: {fileID: 7165554949352084570, guid: 510b0858c09880e4ea7f84a0eab04b22, type: 3}
     - target: {fileID: 4343211114678539199, guid: e4ba35e187bee184fa0d322c0eb20d97, type: 3}
       propertyPath: m_Name
       value: RuneHand_Right
