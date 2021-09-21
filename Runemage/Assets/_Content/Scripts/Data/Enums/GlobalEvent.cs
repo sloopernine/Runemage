@@ -15,11 +15,20 @@ namespace Data.Enums
         DEBUG_OFF,
         SHOW_FPS,
         HIDE_FPS,
+        SHIELD_INVULNERABLE_ON,
+        SHIELD_INVULNERABLE_OFF,
+        SET_NEXT_ROUND,
+        SET_ROUND,
+        SPELLS_DESTROY_ALL,
 
         // RUNE CLOUD
         RUNECLOUD_DESTROYED,
         
 		// RUNE MAKING
-		CREATE_SPELL_ORIGIN
+		CREATE_SPELL_ORIGIN,
+
+        // Enemies
+        ENEMY_DESTROY_ALL,
+
     }
 }

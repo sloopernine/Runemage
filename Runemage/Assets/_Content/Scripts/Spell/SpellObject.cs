@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Singletons;
+using Data.Interfaces;
+using Data.Enums;
+using _Content.Scripts.Data.Containers.GlobalSignal;
 
-public class SpellObject : PC_Interactable , IDealDamage
+public class SpellObject : PC_Interactable , IDealDamage, IReceiveGlobalSignal
 {
     [SerializeField] float initialLifeTime;
     [SerializeField] float initialVelocity;
@@ -49,6 +52,17 @@ public class SpellObject : PC_Interactable , IDealDamage
 
     }
 
+    private void OnEnable()
+    {
+        GlobalMediator.Instance.Subscribe(this);
+    }
+
+    private void OnDisable()
+    {
+        GlobalMediator.Instance.UnSubscribe(this);
+
+    }
+
     void Update()
     {
         aliveTime += Time.deltaTime;
@@ -83,6 +97,7 @@ public class SpellObject : PC_Interactable , IDealDamage
 
                 break;
         }
+
         Destroy(gameObject);
 
     }
@@ -112,8 +127,7 @@ public class SpellObject : PC_Interactable , IDealDamage
 
     public void DealDamage(ITakeDamage target, float damage, DamageType damageType)
     {
-        target.TakeDamage(damage, damageType);
-        
+        target.TakeDamage(damage, damageType);        
         print($"{gameObject.name} Dealt {damage} to Target");
        
     }
@@ -134,5 +148,16 @@ public class SpellObject : PC_Interactable , IDealDamage
         transform.position = parent.transform.position;
         transform.forward = parent.forward;
 
+    }
+
+    public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
+    {
+        switch (eventState)
+        {
+            case GlobalEvent.SPELLS_DESTROY_ALL:
+                Destroy(gameObject);
+                break;
+
+        }
     }
 }
