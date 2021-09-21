@@ -42,7 +42,7 @@ public class RuneChecker : MonoBehaviour
 		Gesture newGesture = new Gesture(points);
 
 		Result returnResult = PointCloudRecognizer.Classify(newGesture, trainingSet.ToArray());
-		//Debug.Log("Return result is: " + returnResult.GestureClass + " " + returnResult.Score + "%");
+		Debug.Log("Return result is: " + returnResult.GestureClass + " " + returnResult.Score + "%");
 
 		returnResult.spell = GetSpellEnum(returnResult.GestureClass, returnResult.Score);
 		

@@ -237,7 +237,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5301233974158738310, guid: f45187e0748dfb349bd4e67b205b750f, type: 3}
       propertyPath: usePcInput
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5301233974158738310, guid: f45187e0748dfb349bd4e67b205b750f, type: 3}
       propertyPath: gestureTrainingMode

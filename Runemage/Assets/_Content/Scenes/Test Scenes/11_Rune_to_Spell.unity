@@ -123,6 +123,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &96170729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 96170731}
+  - component: {fileID: 96170730}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &96170730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96170729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 599cfe3e7149e29468d5b5964c288185, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voicePoolSize: 24
+  audioSourcePrefab: {fileID: 6327118475761378715, guid: 83e7f17f57074044a9ff7446cee2e6f5, type: 3}
+--- !u!4 &96170731
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96170729}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.16203646, y: 0.30696392, z: -1.7390144}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &198110542
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -174,6 +219,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8519080691925560965, guid: 5bb24331f247ec349ba49fad67a525d2, type: 3}
+      propertyPath: fireSpellPrefab
+      value: 
+      objectReference: {fileID: 6356653243117928251, guid: 62d6093a1dca54a4eaa3e704bb7ddd19, type: 3}
     - target: {fileID: 8519080691925560965, guid: 5bb24331f247ec349ba49fad67a525d2, type: 3}
       propertyPath: spellCastOrigin
       value: 
@@ -237,7 +286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5301233974158738310, guid: f45187e0748dfb349bd4e67b205b750f, type: 3}
       propertyPath: usePcInput
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5301233974158738310, guid: f45187e0748dfb349bd4e67b205b750f, type: 3}
       propertyPath: gestureTrainingMode
