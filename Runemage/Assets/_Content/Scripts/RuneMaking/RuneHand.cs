@@ -56,7 +56,6 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal
         }
 		
 		//this checks if you are inside of the "spellCastOrigin" by checking if it is null.
-		//TODO: Check how this interacts with the fact that you may be drawing inside of a rune, that is expanding.
 		if(spellCastOrigin) 
 		{
 			if(isPressed)

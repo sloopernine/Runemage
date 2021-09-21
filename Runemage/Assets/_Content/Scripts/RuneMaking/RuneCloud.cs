@@ -24,7 +24,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	public float triggerStartSize;
 	public float triggerSizeModifier;
 	
-	public float spellThreshold = 0f;
+	public float spellThreshold;
 	public float spellballSize;
 	
 	[SerializeField] float fadeTime;
@@ -139,8 +139,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 			if (!gameManager.gestureTrainingMode) 
 			{
 				result = RuneChecker.Instance.Classify(pointArray);
-				//Debug.Log("Result name: " + result.GestureClass);
-				//Debug.Log("Result score: " + result.Score);
+
 				ValidateSpell();
 			}
 		}
@@ -151,7 +150,6 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 
 	private void ValidateSpell()
 	{
-		//TODO: Turn into switch here if use indivudual spellThresholdvalue.
 		if (result.Score >= spellThreshold)
 		{
 			SendGlobal(GlobalEvent.CREATE_SPELL_ORIGIN, new RuneData(result, centroidPosition, transform.eulerAngles, new Vector3(spellballSize, spellballSize, spellballSize)));
