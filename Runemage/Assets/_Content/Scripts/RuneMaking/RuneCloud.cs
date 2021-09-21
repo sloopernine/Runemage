@@ -19,7 +19,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	
 	public GameObject subLineRendererPrefab;
 
-	private Result result;
+	//private Result result;
 
 	public float triggerStartSize;
 	public float triggerSizeModifier;
@@ -48,7 +48,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	{
 		if(isFading)
 		{
-			StartCoroutine(FadeCounter(fadeTime));
+			//StartCoroutine(FadeCounter(fadeTime));
 		}
 	}
 
@@ -79,7 +79,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	public void AddPoint(Vector3 point)
 	{
 		Vector3 lastPoint = newLinePointCloudData[newLinePointCloudData.Count - 1];
-		StopAllCoroutines();
+		//StopAllCoroutines();
 
 		if (Vector3.Distance(point, lastPoint) > newPositionThresholdDistance)
 		{
@@ -135,9 +135,9 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 			
 			if (!gameManager.gestureTrainingMode) 
 			{
-				result = RuneChecker.Instance.Classify(pointArray);
+				Result result = RuneChecker.Instance.Classify(pointArray);
 
-				ValidateSpell();
+				ValidateSpell(result);
 			}
 		}
 		
@@ -145,7 +145,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		newLinePointCloudData.Clear();
 	}
 
-	private void ValidateSpell()
+	private void ValidateSpell(Result result)
 	{
 		if (result.spell != Spell.None)
 		{
