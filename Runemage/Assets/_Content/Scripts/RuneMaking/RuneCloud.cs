@@ -48,7 +48,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	{
 		if(isFading)
 		{
-			//StartCoroutine(FadeCounter(fadeTime));
+			StartCoroutine(FadeCounter(fadeTime));
 		}
 	}
 
@@ -79,7 +79,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	public void AddPoint(Vector3 point)
 	{
 		Vector3 lastPoint = newLinePointCloudData[newLinePointCloudData.Count - 1];
-		//StopAllCoroutines();
+		StopAllCoroutines();
 
 		if (Vector3.Distance(point, lastPoint) > newPositionThresholdDistance)
 		{
@@ -150,6 +150,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		if (result.spell != Spell.None)
 		{
 			SendGlobal(GlobalEvent.CREATE_SPELL_ORIGIN, new RuneData(result, centroidPosition));
+			StopAllCoroutines();
 			DestroyRuneCloud();
 		}
 		else
