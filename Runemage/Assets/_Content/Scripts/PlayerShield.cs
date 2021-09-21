@@ -30,6 +30,16 @@ public class PlayerShield : MonoBehaviour, ITakeDamage, IReceiveGlobalSignal
 
     [SerializeField] bool isInvulnerable;
 
+    private void OnEnable()
+    {
+        GlobalMediator.Instance.Subscribe(this);
+    }
+
+    private void OnDisable()
+    {
+        GlobalMediator.Instance.UnSubscribe(this);
+
+    }
     private void Start()
     {
         if (maxHealth == 0)
@@ -80,16 +90,6 @@ public class PlayerShield : MonoBehaviour, ITakeDamage, IReceiveGlobalSignal
         isBroken = false;
     }
 
-    private void OnEnable()
-    {
-        GlobalMediator.Instance.Subscribe(this);
-    }
-
-    private void OnDisable()
-    {
-        GlobalMediator.Instance.UnSubscribe(this);
-
-    }
 
     public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
     {
