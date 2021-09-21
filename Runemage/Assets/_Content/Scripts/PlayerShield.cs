@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Singletons;
+using Data.Interfaces;
+using Data.Enums;
+using _Content.Scripts.Data.Containers.GlobalSignal;
 
-public class PlayerShield : MonoBehaviour, ITakeDamage
+public class PlayerShield : MonoBehaviour, ITakeDamage, IReceiveGlobalSignal
 {
     [SerializeField] float maxHealth = 200;
     [SerializeField] float currentHealth;
@@ -13,6 +17,8 @@ public class PlayerShield : MonoBehaviour, ITakeDamage
     private MeshRenderer meshRenderer;
     private bool isBroken;
     public bool getIsBroken { get { return isBroken; } }
+
+    [SerializeField] bool isInvulnerable;
 
     private void Start()
     {
@@ -32,6 +38,11 @@ public class PlayerShield : MonoBehaviour, ITakeDamage
 
     public void TakeDamage(float damage, DamageType damageType)
     {
+        if (isInvulnerable)
+        {
+            return;
+        }
+
         currentHealth -= damage * reducedDamage;
         if (currentHealth <= 0)
         {
@@ -52,5 +63,35 @@ public class PlayerShield : MonoBehaviour, ITakeDamage
         meshRenderer.enabled = true;
         currentHealth = maxHealth;
         isBroken = false;
+    }
+
+    private void OnEnable()
+    {
+        GlobalMediator.Instance.Subscribe(this);
+    }
+
+    private void OnDisable()
+    {
+        GlobalMediator.Instance.UnSubscribe(this);
+
+    }
+
+    public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
+    {
+        switch (eventState)
+        {
+            case GlobalEvent.SHIELD_INVULNERABLE_ON:
+                SetIsInvulnerable(true);
+                break;
+            case GlobalEvent.SHIELD_INVULNERABLE_OFF:
+                SetIsInvulnerable(false);
+                break;
+
+        }
+    }
+
+    private void SetIsInvulnerable(bool value)
+    {
+        isInvulnerable = value;
     }
 }

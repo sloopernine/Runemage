@@ -6,6 +6,8 @@ using Data.Enums;
 using _Content.Scripts.Data.Containers.GlobalSignal;
 using Singletons;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class DebugManager : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 {
@@ -125,6 +127,17 @@ public class DebugManager : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSign
     public void DestroyAllSpells()
     {
         SendGlobal(GlobalEvent.SPELLS_DESTROY_ALL);
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ResetShield()
+    {
+        SendGlobal(GlobalEvent.SHIELD_RESET);
+
     }
 
 }
