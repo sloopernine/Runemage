@@ -1,4 +1,3 @@
-using System;
 using _Content.Scripts.Data.Containers.GlobalSignal;
 using Data.Enums;
 using Data.Interfaces;
@@ -56,7 +55,6 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal
         }
 		
 		//this checks if you are inside of the "spellCastOrigin" by checking if it is null.
-		//TODO: Check how this interacts with the fact that you may be drawing inside of a rune, that is expanding.
 		if(spellCastOrigin) 
 		{
 			if(isPressed)
@@ -91,6 +89,10 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal
 			runeCloud = Instantiate(prefabRuneCloud, position, Quaternion.identity).GetComponent<RuneCloud>();
 			inRuneCloud = true;
 		}
+		else
+		{
+			runeCloud.InitStartMovement(false, transform.position);
+		}
 	}
 
 	private void EndMovement()
@@ -123,8 +125,16 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal
 
 	public void SetInRuneCloud(RuneCloud runeCloud)
 	{
-		this.runeCloud = runeCloud;
-		inRuneCloud = true;
+		if (this.runeCloud != runeCloud)
+		{
+			EndMovement();
+			SetOutsideRuneCloud();
+		}
+		else
+		{
+			this.runeCloud = runeCloud;
+			inRuneCloud = true;
+		}
 	}
 
 	public void SetOutsideRuneCloud()

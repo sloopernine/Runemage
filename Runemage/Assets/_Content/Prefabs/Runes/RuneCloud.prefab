@@ -142,10 +142,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newPositionThresholdDistance: 0.05
-  triggerStartSize: 0.8
+  subLineRendererPrefab: {fileID: 1520846384813478036, guid: a04a1d057517b1b458dda7d85041a50f, type: 3}
+  triggerStartSize: 1
   triggerSizeModifier: 0.7
   spellballSize: 0.2
-  spellThreshold: 0.2
+  spellThreshold: 0.9
   fadeTime: 5
   gestureName: 
 --- !u!120 &8107353076575102391

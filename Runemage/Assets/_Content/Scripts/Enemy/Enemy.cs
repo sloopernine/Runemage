@@ -75,7 +75,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
     public void Die()
     {
         StopAllCoroutines();
-        audioSource.PlayOneShot(deathSound);
+        //audioSource.PlayOneShot(deathSound);
         BasicData data = new BasicData(gameObject.tag);
         SendGlobal(GlobalEvent.OBJECT_INACTIVE, data); //We need to might att what gameobject it is!
         gameObject.SetActive(false);
