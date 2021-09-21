@@ -17,6 +17,13 @@ public class DebugManagerEditor : Editor
             return;
         }
 
+        if (GUILayout.Button("Rebuild Shield"))
+        {
+            dm.ResetShield();
+        }
+        EditorGUILayout.HelpBox("Calls RebuildShield() to restore shield to full health", MessageType.Info);
+        EditorGUILayout.Space();
+
         if (GUILayout.Button("Force next round"))
         {
             dm.ForceNextRound();
@@ -44,6 +51,7 @@ public class DebugManagerEditor : Editor
         }
         EditorGUILayout.HelpBox("Calls Destroy(gameObject) on all SpellObjects", MessageType.Info);
         EditorGUILayout.Space();
+
 
     }
 
