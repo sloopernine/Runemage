@@ -143,6 +143,11 @@ public class SpellObject : PC_Interactable , IDealDamage, IReceiveGlobalSignal
 
     }
 
+    public void TurnOnGravity()
+    {
+        rb.useGravity = true;
+    }
+
     public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
     {
         switch (eventState)
@@ -150,7 +155,6 @@ public class SpellObject : PC_Interactable , IDealDamage, IReceiveGlobalSignal
             case GlobalEvent.SPELLS_DESTROY_ALL:
                 Destroy(gameObject);
                 break;
-
         }
     }
 }
