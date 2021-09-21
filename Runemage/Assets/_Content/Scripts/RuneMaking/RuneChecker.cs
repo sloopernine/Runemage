@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using PDollarGestureRecognizer;
-using System.IO;
-using Valve.VR;
 
 public class RuneChecker : MonoBehaviour
 {
@@ -14,7 +12,9 @@ public class RuneChecker : MonoBehaviour
 	}
 
 	private List<Gesture> trainingSet = new List<Gesture>();
-		
+
+	public float spellTreshold;
+	
 	private void Awake()
 	{
 		if (instance == null)
@@ -36,22 +36,26 @@ public class RuneChecker : MonoBehaviour
 			trainingSet.Add(GestureIO.ReadGestureFromXML(gestureXml.text));
 		}
 	}
-
-	//TODO: What does this do when it doesn't recognize?
+	
 	public Result Classify(Point[] points)
 	{
 		Gesture newGesture = new Gesture(points);
 
 		Result returnResult = PointCloudRecognizer.Classify(newGesture, trainingSet.ToArray());
-		Debug.Log("returnResult is: " + returnResult.GestureClass);
+		//Debug.Log("Return result is: " + returnResult.GestureClass + " " + returnResult.Score + "%");
 
-		returnResult.spell = GetSpellEnum(returnResult.GestureClass);
+		returnResult.spell = GetSpellEnum(returnResult.GestureClass, returnResult.Score);
 		
-		return PointCloudRecognizer.Classify(newGesture, trainingSet.ToArray());
+		return returnResult;
 	}
 
-	private Spell GetSpellEnum(string spellName)
+	private Spell GetSpellEnum(string spellName, float score)
 	{
+		if (score <= spellTreshold)
+		{
+			return Spell.None;
+		}
+		
 		string[] spellNames = Enum.GetNames(typeof(Spell));
 
 		Spell returnValue = Spell.None;
@@ -60,8 +64,6 @@ public class RuneChecker : MonoBehaviour
 		{
 			if (spellNames[i] == spellName)
 			{
-				Debug.Log("Spellnames is: " + spellNames[i] + " and the current spell is: " + spellName);
-
 				returnValue = (Spell) i;
 			}
 		}

@@ -1,4 +1,3 @@
-using System;
 using _Content.Scripts.Data.Containers.GlobalSignal;
 using Data.Enums;
 using Data.Interfaces;
