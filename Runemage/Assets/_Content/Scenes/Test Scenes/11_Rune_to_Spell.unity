@@ -222,7 +222,7 @@ PrefabInstance:
     - target: {fileID: 8519080691925560965, guid: 5bb24331f247ec349ba49fad67a525d2, type: 3}
       propertyPath: fireSpellPrefab
       value: 
-      objectReference: {fileID: 6356653243117928251, guid: 62d6093a1dca54a4eaa3e704bb7ddd19, type: 3}
+      objectReference: {fileID: 6356653243117928251, guid: 155706fdc5de6f947a12a2964a33e0ed, type: 3}
     - target: {fileID: 8519080691925560965, guid: 5bb24331f247ec349ba49fad67a525d2, type: 3}
       propertyPath: spellCastOrigin
       value: 
