@@ -84,10 +84,12 @@ public class PlayerShield : MonoBehaviour, ITakeDamage, IReceiveGlobalSignal
 
     private void RebuildShield()
     {
+        
         sheildInfoText.enabled = false;
         meshRenderer.enabled = true;
         currentHealth = maxHealth;
         isBroken = false;
+        HitEffect();
     }
 
 
@@ -101,6 +103,9 @@ public class PlayerShield : MonoBehaviour, ITakeDamage, IReceiveGlobalSignal
             case GlobalEvent.SHIELD_INVULNERABLE_OFF:
                 SetIsInvulnerable(false);
                 break;
+            case GlobalEvent.SHIELD_RESET:
+                RebuildShield();
+                break;
 
         }
     }
@@ -108,6 +113,8 @@ public class PlayerShield : MonoBehaviour, ITakeDamage, IReceiveGlobalSignal
     private void SetIsInvulnerable(bool value)
     {
         isInvulnerable = value;
+    }
+
     private void HitEffect()
     {
         StopAllCoroutines();
