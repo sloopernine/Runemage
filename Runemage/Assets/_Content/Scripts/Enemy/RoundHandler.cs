@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Data.Interfaces;
+using Data.Enums;
+using _Content.Scripts.Data.Containers.GlobalSignal;
+using Singletons;
 
-public class RoundHandler : MonoBehaviour
+public class RoundHandler : MonoBehaviour, IReceiveGlobalSignal
 {
     [SerializeField] TextMeshProUGUI roundInformationText;
     [SerializeField] Round[] rounds;
@@ -24,6 +28,18 @@ public class RoundHandler : MonoBehaviour
             currentRound = rounds[roundIndex];
         }
     }
+
+    private void OnEnable()
+    {
+        GlobalMediator.Instance.Subscribe(this);
+    }
+
+    private void OnDisable()
+    {
+        GlobalMediator.Instance.UnSubscribe(this);
+
+    }
+
 
     //Later StartRound will be called somewhere in the Scenes environment?
     private void Update()
@@ -81,6 +97,7 @@ public class RoundHandler : MonoBehaviour
     //Later implement a GlobalSignal that signals it is a new round.
     public void UpdateRound()
     {
+
         Debug.Log("0.Update Current Round");
         roundIndex++;
         isRoundDead = true;
@@ -94,6 +111,42 @@ public class RoundHandler : MonoBehaviour
         else
         {
             Debug.Log("2.No more rounds. GZ YOU WON THE GAME");
+        }
+    }
+
+    //Used by debugger to restart the rounds
+    public void SetRound(int newRoundNumber)
+    {
+
+        Debug.Log($"Update Current Round to {newRoundNumber}");
+        roundIndex = newRoundNumber;
+        isRoundDead = true;
+        roundTotalEnemies = 0;
+       
+        roundInformationText.text = "Press N to start new Wave";
+        currentRound = rounds[roundIndex];
+
+
+    }
+
+    public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
+    {
+        switch (eventState)
+        {
+            case GlobalEvent.SET_NEXT_ROUND:
+                StopAllCoroutines();
+                UpdateRound();
+                break;
+            case GlobalEvent.SET_ROUND:
+                StopAllCoroutines();
+                if (globalSignalData is BasicData)
+                {
+                    BasicData data = (BasicData)globalSignalData;                    
+                    SetRound(data.intValue);
+
+                }
+                break;
+
         }
     }
 }

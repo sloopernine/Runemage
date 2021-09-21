@@ -75,7 +75,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
     public void Die()
     {
         StopAllCoroutines();
-        audioSource.PlayOneShot(deathSound);
+        //audioSource.PlayOneShot(deathSound);
         BasicData data = new BasicData(gameObject.tag);
         SendGlobal(GlobalEvent.OBJECT_INACTIVE, data); //We need to might att what gameobject it is!
         gameObject.SetActive(false);
@@ -114,7 +114,8 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
     public void OnTriggerEnter(Collider other)
     {
         ITakeDamage target = other.gameObject.GetComponent<ITakeDamage>();
-        if (target != null && other.gameObject.name == "Shield")
+        LayerMask mask = other.gameObject.layer;
+        if (target != null && mask == 9)
         {
             DealDamage(target, damage, DamageType.enemy);
         }

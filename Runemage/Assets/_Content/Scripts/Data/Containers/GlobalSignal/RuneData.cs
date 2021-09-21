@@ -16,12 +16,10 @@ namespace _Content.Scripts.Data.Containers.GlobalSignal
 			
 		}
 
-		public RuneData(Result newResult, Vector3 newPosition, Vector3 newAngle, Vector3 newScale)
+		public RuneData(Result newResult, Vector3 newPosition)
 		{
 			result = newResult;
 			position = newPosition;
-			angle = newAngle;
-			scale = newScale;
 		}
 	}
 }
