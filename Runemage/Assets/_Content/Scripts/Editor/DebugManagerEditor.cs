@@ -52,12 +52,6 @@ public class DebugManagerEditor : Editor
         EditorGUILayout.HelpBox("Calls Destroy(gameObject) on all SpellObjects", MessageType.Info);
         EditorGUILayout.Space();
 
-        if (GUILayout.Button("Reload scene"))
-        {
-            dm.ReloadScene();
-        }
-        EditorGUILayout.HelpBox("Calls LoadScene with current scene name", MessageType.Info);
-        EditorGUILayout.Space();
 
     }
 

@@ -129,11 +129,6 @@ public class DebugManager : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSign
         SendGlobal(GlobalEvent.SPELLS_DESTROY_ALL);
     }
 
-    public void ReloadScene()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
     public void ResetShield()
     {
         SendGlobal(GlobalEvent.SHIELD_RESET);
