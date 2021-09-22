@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 300
   currentHealth: 100
-  speed: 5
+  speed: 1
   freezedSpeed: 0.33
   damage: 1
   freezedTime: 5
