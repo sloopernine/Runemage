@@ -34,6 +34,14 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	[Header("Gesture Training")]
 	public string gestureName;
 	
+	/// <summary>
+	/// So, we will want another rune, so therefore, it needs to be a RUNE and follow rune logic.
+	/// we want it to be another type of message to global mediator
+	/// That global mediator sends on to UI instead of Runemaker.
+	/// However, if we had it create a new container, then we could have that container be something that only the "UI-script" can take in, right?
+	///	So, AFTER runeChecker has checked it, we do something in the first step of validate spell?
+	/// </summary>
+
 	private void Start()
 	{
 		lineRenderer = GetComponent<LineRenderer>();
@@ -149,7 +157,24 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	{
 		if (result.spell != Spell.None)
 		{
-			SendGlobal(GlobalEvent.CREATE_SPELL_ORIGIN, new RuneData(result, centroidPosition));
+			if (result.spell == Spell.UI)
+			{
+				//Continue here later, will need to send more complex UI messages right?
+				SendGlobal(GlobalEvent.PAUSE_GAME);
+				///
+				/// So, we will need to include stuff in this message then, so that we can have it interact in a reasonable way with the UI,
+				///Some things will be set in the menu already,
+				///would it be possible to have a rune for each of the choices you could make in the UI?
+				///So, if you are in a certain "state" in the game it will ignore those messages, otherwise it will execute them.
+				///However, would you have different runes for each button? Or would you like to go through an array in some way? As in, switching between buttons...
+				///Could you do a rune that pauses, and then a rune that choses the action of the runestone that it collides with?
+				///
+			}
+			else
+			{
+				SendGlobal(GlobalEvent.CREATE_SPELL_ORIGIN, new RuneData(result, centroidPosition));
+			}
+
 			StopAllCoroutines();
 			DestroyRuneCloud();
 		}

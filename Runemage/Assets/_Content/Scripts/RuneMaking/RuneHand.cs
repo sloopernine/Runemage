@@ -54,6 +54,8 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal
 			isPressed = Input.GetMouseButton(0);
         }
 		
+		//is this really needed right now? I mean, we don't have these spellCastOrigins any more right?
+		//How can this **not** have been removed by now?
 		//this checks if you are inside of the "spellCastOrigin" by checking if it is null.
 		if(spellCastOrigin) 
 		{

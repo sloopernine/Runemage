@@ -2,6 +2,6 @@
 {
     Fireball,
     Ice,
-	None,
-    
+	UI,
+	None,    
 }
