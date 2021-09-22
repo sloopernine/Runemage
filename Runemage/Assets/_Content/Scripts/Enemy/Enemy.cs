@@ -88,6 +88,13 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
         rigidbody.MovePosition(transform.position + direction * Time.deltaTime * currentSpeed);
     }
 
+    protected void RotateAndMoveForward(Quaternion rot)
+    {
+        
+        rigidbody.MoveRotation(transform.rotation * rot);
+        rigidbody.MovePosition(transform.position + transform.forward * Time.deltaTime * currentSpeed);
+    }
+
     public float DistanceTowardsPoint(Vector3 point)
     {
         Vector3 direction = point - transform.position;
@@ -134,6 +141,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
         currentSpeed = speed;
         isFreezed = false;
     }
+
 
     private void OnEnable()
     {

@@ -9,7 +9,7 @@ public class MovementPatternEnemy : Enemy
     [SerializeField] float distanceToAttack = 6f;
 
     [SerializeField] float rotationSpeed = 5f;
-
+    [SerializeField] Vector3 eulerAngleVelocity;
 
     private void FixedUpdate()
     {
@@ -24,15 +24,15 @@ public class MovementPatternEnemy : Enemy
             return;
         }
 
-        if (DistanceTowardsPoint(playerPosition) < distanceToAttack)
-        {
-            MoveTowardsPoint(playerPosition);
-            return;
-        }
+        //if (DistanceTowardsPoint(playerPosition) < distanceToAttack)
+        //{
+        //    MoveTowardsPoint(playerPosition);
+        //    return;
+        //}
 
-
-
-
+        Quaternion deltaRotation = Quaternion.Euler(eulerAngleVelocity * Time.fixedDeltaTime * rotationSpeed);
+        RotateAndMoveForward(deltaRotation);
+        
     }
 
 
