@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pooledEnemies: []
-  enemyToPool: {fileID: 1781821687837907841, guid: 3f217201735825a4abe57617d043ee88, type: 3}
+  enemyToPool: {fileID: 3174619125681143704, guid: 33d5b489d883f2840941e13c26348df5, type: 3}
   amoutToPool: 100
 --- !u!1 &8244276540208430942
 GameObject:
