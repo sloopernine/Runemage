@@ -6,6 +6,7 @@ namespace Data.Enums
         WIN_GAME,
         PAUSE_GAME,
         UNPAUSE_GAME,
+        LOST_GAME,
         
         PLAY_SOUND,
         OBJECT_INACTIVE,
@@ -29,7 +30,6 @@ namespace Data.Enums
 		CREATE_SPELL_ORIGIN,
 
         // Enemies
-        ENEMY_DESTROY_ALL,
-
+        ENEMY_DESTROY_ALL
     }
 }
