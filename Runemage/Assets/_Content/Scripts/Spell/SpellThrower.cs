@@ -32,7 +32,7 @@ public class SpellThrower : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.R))
             {
                 ToggleGrabSpell();
-                //print(grabRange);
+                
 
             }
 
@@ -51,6 +51,7 @@ public class SpellThrower : MonoBehaviour
         if (interactable.transform.IsChildOf(pc_Hand.transform))
         {
             interactable.Release(transform.forward * pC_ThrowSpeed);
+            interactable.GetComponent<Rigidbody>().AddForce(transform.forward * pC_ThrowSpeed);
             return;
         }
 

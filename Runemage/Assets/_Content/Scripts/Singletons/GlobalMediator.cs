@@ -30,10 +30,15 @@ namespace Singletons
 
         public void SendGlobal(GlobalEvent eventState, GlobalSignalBaseData signalData)
         {
-            foreach (var subscriber in subscribers)
+            for (int i = subscribers.Count -1; i >= 0; i--)
             {
-                subscriber.ReceiveGlobal(eventState, signalData);
+                subscribers[i].ReceiveGlobal(eventState, signalData);
             }
+            // Save this until we know for sure that for loop works better in all cases
+            // foreach (var subscriber in subscribers)
+            // {
+            //     subscriber.ReceiveGlobal(eventState, signalData);
+            // }
         }
 
         public void Subscribe(IReceiveGlobalSignal subscriber)
