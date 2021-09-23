@@ -51,22 +51,27 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
     public void TakeDamage(float damage, DamageType damageType)
     {
         currentHealth -= damage;
+
         if (currentHealth <=0 )
         {
             Die();
             return;
         }
+        animator.SetTrigger("Damage");
 
         if (damageType == DamageType.ice)
         {
             Freeze();
         }
+
     }
 
     public void DealDamage(ITakeDamage target, float damage, DamageType damageType)
     {
         if (isAttacking)
         {
+            animator.SetTrigger("Attack");
+
             target.TakeDamage(damage, DamageType.enemy);
         }
     }

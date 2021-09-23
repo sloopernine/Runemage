@@ -529,6 +529,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7305354335321435274, guid: 08dae1e37a2f01f4f985c534d1c9d097, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7305354336626221264, guid: 08dae1e37a2f01f4f985c534d1c9d097, type: 3}
       propertyPath: m_Name
       value: DebugManager
@@ -724,63 +728,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!1001 &760578070
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2519104055739638627, guid: 33d5b489d883f2840941e13c26348df5, type: 3}
-      propertyPath: m_RootOrder
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 2519104055739638627, guid: 33d5b489d883f2840941e13c26348df5, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2519104055739638627, guid: 33d5b489d883f2840941e13c26348df5, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2519104055739638627, guid: 33d5b489d883f2840941e13c26348df5, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2519104055739638627, guid: 33d5b489d883f2840941e13c26348df5, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2519104055739638627, guid: 33d5b489d883f2840941e13c26348df5, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2519104055739638627, guid: 33d5b489d883f2840941e13c26348df5, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2519104055739638627, guid: 33d5b489d883f2840941e13c26348df5, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2519104055739638627, guid: 33d5b489d883f2840941e13c26348df5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2519104055739638627, guid: 33d5b489d883f2840941e13c26348df5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2519104055739638627, guid: 33d5b489d883f2840941e13c26348df5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2519104055739638629, guid: 33d5b489d883f2840941e13c26348df5, type: 3}
-      propertyPath: m_Name
-      value: Enemy_DreamHunter
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 33d5b489d883f2840941e13c26348df5, type: 3}
 --- !u!1 &1055172118
 GameObject:
   m_ObjectHideFlags: 0
@@ -1300,7 +1247,7 @@ PrefabInstance:
     - target: {fileID: 3602261956243231062, guid: 7244c583899efb845a1981f6741d363b, type: 3}
       propertyPath: enemyToPool
       value: 
-      objectReference: {fileID: 6947832020118455076, guid: 2a4ea2b83cdeacd4a9146a8e17c2962d, type: 3}
+      objectReference: {fileID: 3174619125681143704, guid: 33d5b489d883f2840941e13c26348df5, type: 3}
     - target: {fileID: 4810715536097657435, guid: 7244c583899efb845a1981f6741d363b, type: 3}
       propertyPath: m_RootOrder
       value: 3
