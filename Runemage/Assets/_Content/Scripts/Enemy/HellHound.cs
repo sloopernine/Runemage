@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class HellHound : Enemy
 {
-    [SerializeField] float minDistanceToPlayer = 4f;
 
     private void FixedUpdate()
     {

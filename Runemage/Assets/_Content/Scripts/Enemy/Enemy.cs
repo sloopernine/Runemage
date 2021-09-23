@@ -29,6 +29,8 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
 
     private EnemyMovement enemyMovement;
 
+    [SerializeField] Animator animator;
+
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -38,6 +40,11 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
         enemyMovement = GetComponent<EnemyMovement>();
         
         currentHealth = maxHealth;
+
+        if (animator == null)
+        {
+            print($"No animator Set for {transform.name}");
+        }
 
     }
 
