@@ -5018,6 +5018,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   currentSpeed: 0
+  turnPower: 0.025
   minDistanceToPlayer: 4
   closeEnoughToTarget: 0.5
   useMovement: 1

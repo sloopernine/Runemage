@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 public class EnemyMovement : MonoBehaviour
 {
 
     [SerializeField] float speed;
     public float Speed { get => speed;}
     public float currentSpeed;
+    [SerializeField] float turnPower = 0.05f;
 
     private Rigidbody rigidbody;
     
@@ -23,7 +22,6 @@ public class EnemyMovement : MonoBehaviour
     private Vector3 finalTarget;
     public Vector3 targetMovePosition;
     [SerializeField] int currentMoveCommand;
-
 
     private void Awake()
     {
@@ -152,7 +150,7 @@ public class EnemyMovement : MonoBehaviour
         }
 
         Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-        Quaternion deltaRotation = Quaternion.Slerp(transform.rotation, targetRotation, 0.2f);
+        Quaternion deltaRotation = Quaternion.Slerp(transform.rotation, targetRotation, turnPower);
         rigidbody.MoveRotation(deltaRotation);
     }
 
