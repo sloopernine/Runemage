@@ -13,6 +13,8 @@ public class RunestoneMovement : MonoBehaviour, IReceiveGlobalSignal
     [SerializeField] float speed = 1;
     [SerializeField] List<ParticleSystem> particels;
     private Rigidbody rigidbody;
+
+    //Test bools
     public bool setPosition;
     public bool isMoving;
 
