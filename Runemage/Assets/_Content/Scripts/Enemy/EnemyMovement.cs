@@ -5,9 +5,12 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
 
-    [SerializeField] float speed;
-    public float Speed { get => speed;}
-    public float currentSpeed;
+    [SerializeField] float initialSpeed;
+    public float InitialSpeed { get => initialSpeed; }
+    private float currentSpeed;
+    public float CurrentSpeed { get => currentSpeed;}
+
+
     [SerializeField] float turnPower = 0.05f;
 
     private Rigidbody rigidbody;
@@ -20,7 +23,7 @@ public class EnemyMovement : MonoBehaviour
     public bool useMovement;
 
     private Vector3 finalTarget;
-    public Vector3 targetMovePosition;
+    private Vector3 targetMovePosition;
     [SerializeField] int currentMoveCommand;
 
     private void Awake()
@@ -32,13 +35,19 @@ public class EnemyMovement : MonoBehaviour
     private void OnEnable()
     {
         //vector.zero acts as our final target for now
+
         finalTarget = Vector3.zero;
-        currentSpeed = speed;
+        currentSpeed = initialSpeed;
         currentMoveCommand = 0;
+        useMovement = true;
         ChooseMoveCommand();
 
     }
 
+    public void SetCurrentSpeed(float amount)
+    {
+        currentSpeed = amount;
+    }
 
     private void ChooseMoveCommand()
     {
@@ -138,7 +147,7 @@ public class EnemyMovement : MonoBehaviour
         direction = direction.normalized;
 
         RotateTowardsDirection(direction);
-        rigidbody.MovePosition(transform.position + direction * Time.deltaTime * currentSpeed);
+        rigidbody.MovePosition(transform.position + direction * Time.deltaTime * CurrentSpeed);
     
     }
 
