@@ -7,6 +7,8 @@
     FireballExplode,
     RuneDrawStart,
     RuneDrawSuccess,
-    RuneDrawFailure
+    RuneDrawFailure,
+    EnemySpawn,
+    EnemyDeath
 
 }

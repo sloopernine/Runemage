@@ -5,6 +5,7 @@ using Data.Interfaces;
 using Data.Enums;
 using _Content.Scripts.Data.Containers.GlobalSignal;
 using Singletons;
+using System;
 
 public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlobalSignal
 {
@@ -34,13 +35,8 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
-        audioSource = GetComponent<AudioSource>();
-
-        audioSource.PlayOneShot(spawnSound);
         enemyMovement = GetComponent<EnemyMovement>();
-        
-        currentHealth = maxHealth;
-
+       
         if (animator == null)
         {
             print($"No animator Set for {transform.name}");
@@ -66,6 +62,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
 
     }
 
+
     public void DealDamage(ITakeDamage target, float damage, DamageType damageType)
     {
         if (isAttacking)
@@ -79,7 +76,11 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
     public void Die()
     {
         StopAllCoroutines();
-        //audioSource.PlayOneShot(deathSound);
+        if (GenericSoundController.Instance != null)
+        {
+            GenericSoundController.Instance.Play(WorldSounds.EnemyDeath, transform.position);
+        }
+
         BasicData data = new BasicData(gameObject.tag);
         SendGlobal(GlobalEvent.OBJECT_INACTIVE, data); //We need to might att what gameobject it is!
         gameObject.SetActive(false);
@@ -126,18 +127,24 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
     private IEnumerator FreezTimer(float freezedTime)
     {
         isFreezed = true;
-        enemyMovement.currentSpeed *= freezedSpeed;
+        enemyMovement.SetCurrentSpeed(enemyMovement.CurrentSpeed * freezedSpeed);
+
         yield return new WaitForSeconds(freezedTime);
-        enemyMovement.currentSpeed = enemyMovement.Speed;
+        enemyMovement.SetCurrentSpeed(enemyMovement.InitialSpeed);
+
         isFreezed = false;
     }
 
-
-    private void OnEnable()
+    public void OnSpawn()
     {
         //Debug.Log("Me is enabled");
+        StopAllCoroutines();       
         currentHealth = maxHealth;
         isFreezed = false;
 
+        if (GenericSoundController.Instance != null)
+        {
+            GenericSoundController.Instance.Play(WorldSounds.EnemySpawn, transform.position);
+        }
     }
 }
