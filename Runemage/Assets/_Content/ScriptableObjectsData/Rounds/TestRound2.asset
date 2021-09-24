@@ -15,4 +15,4 @@ MonoBehaviour:
   enemyWaves:
   - {fileID: 11400000, guid: 4cf1a850cfe64484e971686cd74cfcc9, type: 2}
   - {fileID: 11400000, guid: 4a35f7ef63986184d9f00a298cc07b18, type: 2}
-  setWaveTimer: 10
+  setWaveTimer: 30

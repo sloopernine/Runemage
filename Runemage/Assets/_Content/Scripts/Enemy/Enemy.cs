@@ -5,6 +5,7 @@ using Data.Interfaces;
 using Data.Enums;
 using _Content.Scripts.Data.Containers.GlobalSignal;
 using Singletons;
+using System;
 
 public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlobalSignal
 {
@@ -12,8 +13,6 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
 
     [SerializeField] float maxHealth;
     [SerializeField] float currentHealth;
-    [SerializeField] float speed;
-    private float currentSpeed;
 
     [Header("Freez Settings")]
     [Tooltip("Procent of the speed value")]
@@ -28,46 +27,48 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
     [SerializeField] AudioClip spawnSound;
     [SerializeField] AudioClip deathSound;
     private AudioSource audioSource;
-    private float addForcePower = 140;
 
-    public bool useMovement;
+    private EnemyMovement enemyMovement;
+
+    [SerializeField] Animator animator;
 
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
-        audioSource = GetComponent<AudioSource>();
-
-        audioSource.PlayOneShot(spawnSound);
-
-        currentHealth = maxHealth;
-
-        currentSpeed = speed;
-
-        if (!useMovement)
+        enemyMovement = GetComponent<EnemyMovement>();
+       
+        if (animator == null)
         {
-            rigidbody.AddForce(transform.forward * currentSpeed * addForcePower);
+            print($"No animator Set for {transform.name}");
         }
+
     }
 
     public void TakeDamage(float damage, DamageType damageType)
     {
         currentHealth -= damage;
+
         if (currentHealth <=0 )
         {
             Die();
             return;
         }
+        animator.SetTrigger("Damage");
 
         if (damageType == DamageType.ice)
         {
             Freeze();
         }
+
     }
+
 
     public void DealDamage(ITakeDamage target, float damage, DamageType damageType)
     {
         if (isAttacking)
         {
+            animator.SetTrigger("Attack");
+
             target.TakeDamage(damage, DamageType.enemy);
         }
     }
@@ -75,17 +76,14 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
     public void Die()
     {
         StopAllCoroutines();
-        //audioSource.PlayOneShot(deathSound);
+        if (GenericSoundController.Instance != null)
+        {
+            GenericSoundController.Instance.Play(WorldSounds.EnemyDeath, transform.position);
+        }
+
         BasicData data = new BasicData(gameObject.tag);
         SendGlobal(GlobalEvent.OBJECT_INACTIVE, data); //We need to might att what gameobject it is!
         gameObject.SetActive(false);
-    }
-
-    public void MoveTowardsPoint(Vector3 point)
-    { 
-        Vector3 direction = point - transform.position;
-        direction = direction.normalized;
-        rigidbody.MovePosition(transform.position + direction * Time.deltaTime * currentSpeed);
     }
 
     public float DistanceTowardsPoint(Vector3 point)
@@ -129,22 +127,24 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
     private IEnumerator FreezTimer(float freezedTime)
     {
         isFreezed = true;
-        currentSpeed = speed * freezedSpeed;
+        enemyMovement.SetCurrentSpeed(enemyMovement.CurrentSpeed * freezedSpeed);
+
         yield return new WaitForSeconds(freezedTime);
-        currentSpeed = speed;
+        enemyMovement.SetCurrentSpeed(enemyMovement.InitialSpeed);
+
         isFreezed = false;
     }
 
-    private void OnEnable()
+    public void OnSpawn()
     {
         //Debug.Log("Me is enabled");
+        StopAllCoroutines();       
         currentHealth = maxHealth;
-        currentSpeed = speed;
         isFreezed = false;
 
-        if (!useMovement)
+        if (GenericSoundController.Instance != null)
         {
-            rigidbody.AddForce(transform.forward * currentSpeed * addForcePower);
+            GenericSoundController.Instance.Play(WorldSounds.EnemySpawn, transform.position);
         }
     }
 }
