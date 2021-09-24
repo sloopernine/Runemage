@@ -6,8 +6,7 @@ using UnityEngine;
 
 namespace Singletons
 {
-    public class GameManager : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSignal
-
+    public class GameManager : MonoBehaviour, IReceiveGlobalSignal
     {
         private static GameManager instance;
 
@@ -15,13 +14,16 @@ namespace Singletons
         {
             get { return instance; }
         }
+        
+        private GlobalEvent currentGameState;
+        public GlobalEvent CurrentGameState
+        {
+            get { return currentGameState; }
+        }
 
-        public bool gamePaused;
         public bool gestureTrainingMode;
         public bool usePcInput;
-
-        public GlobalEvent currentGameState;
-
+        
         private void Awake()
         {
             if (instance == null)
@@ -38,61 +40,31 @@ namespace Singletons
         {
             GlobalMediator.Instance.Subscribe(this);
         }
-
-        public void ChangeGameState(GlobalEvent newGameState)
-        {
-            if (currentGameState == newGameState)
-            {
-                return;
-            }
-
-            switch (newGameState)
-            {
-                case GlobalEvent.WIN_GAME:
-                    
-                    break;
-                
-                case GlobalEvent.LOST_GAME:
-
-                    break;
-                
-                case GlobalEvent.PAUSE_GAME:
-
-                    break;
-                
-                case GlobalEvent.UNPAUSE_GAME:
-
-                    break;
-            }
-        }
         
         public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
         {
             switch (eventState)
             {
-                case GlobalEvent.WIN_GAME:
+                case GlobalEvent.WIN_GAMESTATE:
 
+                    currentGameState = GlobalEvent.WIN_GAMESTATE;
                     break;
 
-                case GlobalEvent.LOST_GAME:
+                case GlobalEvent.LOST_GAMESTATE:
 
-                    break;
-                
-                case GlobalEvent.PAUSE_GAME:
-
-                    gamePaused = true;
+                    currentGameState = GlobalEvent.LOST_GAMESTATE;
                     break;
                 
-                case GlobalEvent.UNPAUSE_GAME:
+                case GlobalEvent.PAUSED_GAMESTATE:
 
-                    gamePaused = false;
+                    currentGameState = GlobalEvent.PAUSED_GAMESTATE;
+                    break;
+                
+                case GlobalEvent.PLAY_GAMESTATE:
+
+                    currentGameState = GlobalEvent.PLAY_GAMESTATE;
                     break;
             }
-        }
-
-        public void SendGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
-        {
-            GlobalMediator.Instance.ReceiveGlobal(eventState, globalSignalData);
         }
     }
 }

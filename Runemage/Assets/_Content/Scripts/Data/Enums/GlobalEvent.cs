@@ -3,10 +3,10 @@ namespace Data.Enums
     public enum GlobalEvent
     {
         // GAME STATE EVENT
-        WIN_GAME,
-        PAUSE_GAME,
-        UNPAUSE_GAME,
-        LOST_GAME,
+        WIN_GAMESTATE,
+        LOST_GAMESTATE,
+        PAUSED_GAMESTATE,
+        PLAY_GAMESTATE,
         
         PLAY_SOUND,
         OBJECT_INACTIVE,
