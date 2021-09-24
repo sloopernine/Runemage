@@ -14,7 +14,7 @@ public class RunestoneMovement : MonoBehaviour, IReceiveGlobalSignal
     [SerializeField] List<ParticleSystem> particels;
     [Tooltip ("If false runestone moves under ground during play")]
     [SerializeField] bool alwaysShow; 
-    private Rigidbody rigidbody;
+    private Rigidbody rigidBody;
 
     //Test bools
     public bool setPosition;
@@ -25,7 +25,7 @@ public class RunestoneMovement : MonoBehaviour, IReceiveGlobalSignal
     private void Start()
     {
         startPosition = transform.position;
-        rigidbody = GetComponent<Rigidbody>();
+        rigidBody = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
@@ -61,7 +61,7 @@ public class RunestoneMovement : MonoBehaviour, IReceiveGlobalSignal
         if (distance > 0.01f)
         {
             isMoving = true;
-            rigidbody.MovePosition(transform.position + direction * Time.deltaTime * speed);
+            rigidBody.MovePosition(transform.position + direction * Time.deltaTime * speed);
         }
         else
         {

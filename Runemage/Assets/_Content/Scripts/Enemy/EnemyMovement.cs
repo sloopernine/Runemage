@@ -13,7 +13,7 @@ public class EnemyMovement : MonoBehaviour
 
     [SerializeField] float turnPower = 0.05f;
 
-    private Rigidbody rigidbody;
+    private Rigidbody rigidBody;
     
     [SerializeField] float minDistanceToPlayer = 4f;
 
@@ -28,7 +28,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Awake()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rigidBody = GetComponent<Rigidbody>();
         
     }
 
@@ -147,7 +147,7 @@ public class EnemyMovement : MonoBehaviour
         direction = direction.normalized;
 
         RotateTowardsDirection(direction);
-        rigidbody.MovePosition(transform.position + direction * Time.deltaTime * CurrentSpeed);
+        rigidBody.MovePosition(transform.position + direction * Time.deltaTime * CurrentSpeed);
     
     }
 
@@ -160,7 +160,7 @@ public class EnemyMovement : MonoBehaviour
 
         Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
         Quaternion deltaRotation = Quaternion.Slerp(transform.rotation, targetRotation, turnPower);
-        rigidbody.MoveRotation(deltaRotation);
+        rigidBody.MoveRotation(deltaRotation);
     }
 
     public float DistanceTowardsPoint(Vector3 point)
