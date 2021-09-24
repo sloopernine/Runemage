@@ -3,9 +3,10 @@ namespace Data.Enums
     public enum GlobalEvent
     {
         // GAME STATE EVENT
-        WIN_GAME,
-        PAUSE_GAME,
-        UNPAUSE_GAME,
+        WIN_GAMESTATE,
+        LOST_GAMESTATE,
+        PAUSED_GAMESTATE,
+        PLAY_GAMESTATE,
         
         PLAY_SOUND,
         OBJECT_INACTIVE,
@@ -29,7 +30,6 @@ namespace Data.Enums
 		CREATE_SPELL_ORIGIN,
 
         // Enemies
-        ENEMY_DESTROY_ALL,
-
+        ENEMY_DESTROY_ALL
     }
 }
