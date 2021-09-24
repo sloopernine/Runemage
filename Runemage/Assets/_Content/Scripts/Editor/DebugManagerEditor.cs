@@ -24,6 +24,20 @@ public class DebugManagerEditor : Editor
         EditorGUILayout.HelpBox("Calls RebuildShield() to restore shield to full health", MessageType.Info);
         EditorGUILayout.Space();
 
+        if (GUILayout.Button("Invulnerable Shield"))
+        {
+            dm.Invulnerability();
+        }
+        EditorGUILayout.HelpBox("Sets the shield to invulnerable state", MessageType.Info);
+        EditorGUILayout.Space();
+
+        if (GUILayout.Button("Invulnerable Shield Off"))
+        {
+            dm.Invulnerability_Off();
+        }
+        EditorGUILayout.HelpBox("Turns invulnerable state off", MessageType.Info);
+        EditorGUILayout.Space();
+
         if (GUILayout.Button("Force next round"))
         {
             dm.ForceNextRound();
