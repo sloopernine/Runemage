@@ -33,7 +33,7 @@ public class RuneDestroyer : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSig
 	private float timeSinceCheck;
 
 	[Header("Criteria for judging runeclouds")]
-	[SerializeField] [Min(0)] int pointMinimum;
+	[SerializeField] [Min(0)] int minimumPoints;
 	[SerializeField] private float minRuneCloudAge;
 
 	private List<RuneCloud> runeClouds;
@@ -55,7 +55,14 @@ public class RuneDestroyer : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSig
 			
 			foreach(RuneCloud runeCloud in runeClouds)
 			{
-				if(runeCloud.lifeTime >= )
+				if(runeCloud.lifeTime >= minRuneCloudAge && runeCloud.totalCloudPoints.Count <= minimumPoints)
+				{
+					//Create event
+					//send reference in event to runeCloud
+					//send to global mediator
+					//Have it send to everyone:
+					//"if this is you, remove yourself from runedestroyers list and then die!"
+				}
 			}
 		//find all runeclouds in scene with fewer than pointMinimum amount of points.
 

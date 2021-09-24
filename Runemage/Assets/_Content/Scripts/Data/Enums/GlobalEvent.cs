@@ -25,6 +25,7 @@ namespace Data.Enums
 
         // RUNE CLOUD
         RUNECLOUD_DESTROYED,
+		RUNECLOUD_SELFDESTRUCT,
 		RUNECLOUD_SPAWNED,
         
 		// RUNE MAKING
