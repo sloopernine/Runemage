@@ -57,17 +57,9 @@ public class RuneDestroyer : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSig
 			{
 				if(runeCloud.lifeTime >= minRuneCloudAge && runeCloud.totalCloudPoints.Count <= minimumPoints)
 				{
-					//Create event
-					//send reference in event to runeCloud
-					//send to global mediator
-					//Have it send to everyone:
-					//"if this is you, remove yourself from runedestroyers list and then die!"
+					SendGlobal(GlobalEvent.RUNECLOUD_SELFDESTRUCT, new RuneCloudData(runeCloud));
 				}
 			}
-		//find all runeclouds in scene with fewer than pointMinimum amount of points.
-
-
-
 		}
 	}
 
@@ -98,6 +90,19 @@ public class RuneDestroyer : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSig
 				}
 				break;
 			}
+			case GlobalEvent.RUNECLOUD_DESTROYALL:
+			{
+				if(globalSignalData is RuneCloudData data)
+				{
+					foreach (RuneCloud runeCloud in runeClouds)
+					{
+						SendGlobal(GlobalEvent.RUNECLOUD_SELFDESTRUCT, new RuneCloudData(runeCloud));
+						runeClouds.Remove(runeCloud);
+					}
+				}
+					break;
+			}
+			
 		}
 	}
 

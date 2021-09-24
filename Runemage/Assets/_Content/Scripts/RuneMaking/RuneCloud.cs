@@ -7,7 +7,8 @@ using Singletons;
 using Data.Enums;
 using _Content.Scripts.Data.Containers.GlobalSignal;
 
-public class RuneCloud : MonoBehaviour, ISendGlobalSignal {
+public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
+{
 	private LineRenderer lineRenderer;
 	private SphereCollider trigger;
 
@@ -47,6 +48,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal {
 		triggerStartSize = trigger.radius / 2;
 
 		SendGlobal(GlobalEvent.RUNECLOUD_SPAWNED, new RuneCloudData(this));
+
 	}
 
 	private void Update()
@@ -247,5 +249,23 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal {
 	public void SendGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
 	{
 		GlobalMediator.Instance.ReceiveGlobal(eventState, globalSignalData);
+	}
+
+	public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
+	{
+		switch (eventState)
+		{
+			case GlobalEvent.RUNECLOUD_SELFDESTRUCT:
+			{
+					if (globalSignalData is RuneCloudData data)
+					{
+						if (this == data.runeCloud)
+						{
+							this.DestroyRuneCloud();
+						}
+					}
+				break;
+			}
+		}
 	}
 }
