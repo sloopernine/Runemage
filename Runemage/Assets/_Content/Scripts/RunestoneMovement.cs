@@ -12,11 +12,15 @@ public class RunestoneMovement : MonoBehaviour, IReceiveGlobalSignal
     [SerializeField] Vector3 movePosition;
     [SerializeField] float speed = 1;
     [SerializeField] List<ParticleSystem> particels;
+    [Tooltip ("If false runestone moves under ground during play")]
+    [SerializeField] bool alwaysShow; 
     private Rigidbody rigidbody;
 
     //Test bools
     public bool setPosition;
     public bool isMoving;
+    private bool IsMoving { get { return isMoving; } set { if (value == isMoving) return; isMoving = value; } }
+
 
     private void Start()
     {
@@ -63,23 +67,18 @@ public class RunestoneMovement : MonoBehaviour, IReceiveGlobalSignal
         {
             isMoving = false;
         }
+        ParticelEffect();
     }
 
-    private void ParticelEffect(bool value)
+    private void ParticelEffect()
     {
+        bool value = IsMoving;
         Debug.Log("Trying to activate ParticelEffect. Value: " + value);
         if (value)
         {
             foreach (ParticleSystem particle in particels)
             {
-                    particle.Play();         
-            }
-        }
-        else
-        {
-            foreach (ParticleSystem particle in particels)
-            {
-                    particle.Stop();
+                particle.Play();
             }
         }
     }
@@ -89,15 +88,24 @@ public class RunestoneMovement : MonoBehaviour, IReceiveGlobalSignal
         switch (eventState)
         {
             case GlobalEvent.PAUSE_GAME:
-                MoveTowardsPoint(movePosition);
+                if (!alwaysShow)
+                {
+                    MoveTowardsPoint(movePosition);
+                }
                 break;
 
             case GlobalEvent.UNPAUSE_GAME:
-                MoveTowardsPoint(startPosition);
+                if (!alwaysShow)
+                {
+                    MoveTowardsPoint(startPosition);
+                }
                 break;
 
             case GlobalEvent.WIN_GAME:
-                MoveTowardsPoint(movePosition);
+                if (!alwaysShow)
+                {
+                    MoveTowardsPoint(movePosition);
+                }
                 break;
         }
     }
