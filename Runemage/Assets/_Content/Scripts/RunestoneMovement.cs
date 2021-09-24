@@ -72,9 +72,7 @@ public class RunestoneMovement : MonoBehaviour, IReceiveGlobalSignal
 
     private void ParticelEffect()
     {
-        bool value = IsMoving;
-        Debug.Log("Trying to activate ParticelEffect. Value: " + value);
-        if (value)
+        if (IsMoving)
         {
             foreach (ParticleSystem particle in particels)
             {
