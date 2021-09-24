@@ -7,8 +7,7 @@ using Singletons;
 using Data.Enums;
 using _Content.Scripts.Data.Containers.GlobalSignal;
 
-public class RuneCloud : MonoBehaviour, ISendGlobalSignal
-{
+public class RuneCloud : MonoBehaviour, ISendGlobalSignal {
 	private LineRenderer lineRenderer;
 	private SphereCollider trigger;
 
@@ -16,16 +15,20 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 
 	public List<Vector3> newLinePointCloudData = new List<Vector3>();
 	public List<Vector3> totalCloudPoints = new List<Vector3>();
-	
+
 	public GameObject subLineRendererPrefab;
 
 	//private Result result;
 
 	public float triggerStartSize;
 	public float triggerSizeModifier;
-	
+
 	public float spellballSize;
-	
+
+	[Header("LifeSpan")]
+	[Min(0f)] public float lifeTime;
+	[Min(0.1f)] private float maxLife;
+
 	[SerializeField] float fadeTime;
 	private Vector3 centroidPosition;
 	private bool isFading;
@@ -42,14 +45,25 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		InitStartMovement(true, Vector3.zero);
 		
 		triggerStartSize = trigger.radius / 2;
+
+		SendGlobal(GlobalEvent.RUNECLOUD_SPAWNED, new RuneCloudData(this));
 	}
 
 	private void Update()
 	{
-		if(isFading)
+		if(maxLife >= lifeTime)
 		{
-			StartCoroutine(FadeCounter(fadeTime));
+			maxLife += Time.deltaTime;
 		}
+		else if(isFading)
+		{
+			StartCoroutine(FadeRune());
+		}
+
+		//if(isFading)
+		//{
+		//	StartCoroutine(FadeCounter(fadeTime));
+		//}
 	}
 
 	public void InitStartMovement(bool firstInit, Vector3 point)
@@ -67,7 +81,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		}
 	}
 
-	private IEnumerator FadeCounter(float fadeTime)
+	private IEnumerator FadeRune()
 	{
 		isFading = false;
 		Debug.Log("FadeCounter Started");

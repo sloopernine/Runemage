@@ -25,6 +25,7 @@ namespace Data.Enums
 
         // RUNE CLOUD
         RUNECLOUD_DESTROYED,
+		RUNECLOUD_SPAWNED,
         
 		// RUNE MAKING
 		CREATE_SPELL_ORIGIN,

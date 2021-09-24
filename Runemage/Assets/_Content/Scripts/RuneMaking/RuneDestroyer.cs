@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Data.Interfaces;
+using Data.Enums;
+using _Content.Scripts.Data.Containers.GlobalSignal;
+using Singletons;
 
 /// <summary>
 /// The purpose of this script is to periodically look through a scene,
@@ -22,12 +26,15 @@ using UnityEngine;
 /// 
 /// Also, it needs to tell the RuneClouds to destroy themselves using a message sent to the global mediator.
 /// </summary>
-public class RuneDestroyer : MonoBehaviour 
+public class RuneDestroyer : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSignal
 {
-
+	[Header("Update time")]
 	[SerializeField] [Min(0.1f)] float checkIntervall;
 	private float timeSinceCheck;
+
+	[Header("Criteria for judging runeclouds")]
 	[SerializeField] [Min(0)] int pointMinimum;
+	[SerializeField] private float minRuneCloudAge;
 
 	private List<RuneCloud> runeClouds;
 
@@ -44,7 +51,51 @@ public class RuneDestroyer : MonoBehaviour
 		}
 		else
 		{
+			timeSinceCheck = 0f;
 			
+			foreach(RuneCloud runeCloud in runeClouds)
+			{
+				if(runeCloud.lifeTime >= )
+			}
+		//find all runeclouds in scene with fewer than pointMinimum amount of points.
+
+
+
 		}
+	}
+
+
+	public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null) 
+	{
+		switch(eventState)
+		{
+			case GlobalEvent.RUNECLOUD_SPAWNED:
+			{ 
+				if (globalSignalData is RuneCloudData data)
+				{
+					runeClouds.Add(data.runeCloud);
+				}
+				break;
+			}
+			case GlobalEvent.RUNECLOUD_DESTROYED:
+			{
+				if (globalSignalData is RuneCloudData data)
+				{
+					foreach (RuneCloud runeCloud in runeClouds)
+					{
+						if (runeCloud == data.runeCloud)
+						{
+							runeClouds.Remove(runeCloud);
+						}
+					}
+				}
+				break;
+			}
+		}
+	}
+
+	public void SendGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
+	{
+		GlobalMediator.Instance.ReceiveGlobal(eventState, globalSignalData);
 	}
 }
