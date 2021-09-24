@@ -28,7 +28,8 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 
 	[Header("LifeSpan")]
 	[Min(0f)] public float lifeTime;
-	[Min(0.1f)] private float maxLife;
+	[Min(0.1f)] private float lifetimeLeft;
+	public float lifeSpan;
 
 	[SerializeField] float fadeTime;
 	private Vector3 centroidPosition;
@@ -47,25 +48,21 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 		
 		triggerStartSize = trigger.radius / 2;
 
+		lifetimeLeft = lifeSpan;
+		
 		SendGlobal(GlobalEvent.RUNECLOUD_SPAWNED, new RuneCloudData(this));
-
+		GlobalMediator.Instance.Subscribe(this);
 	}
 
 	private void Update()
 	{
-		if(maxLife >= lifeTime)
+		lifeTime += Time.deltaTime;
+		
+		if(lifeTime >= lifetimeLeft)
 		{
-			maxLife += Time.deltaTime;
-		}
-		else if(isFading)
-		{
+			isFading = true;
 			StartCoroutine(FadeRune());
 		}
-
-		//if(isFading)
-		//{
-		//	StartCoroutine(FadeCounter(fadeTime));
-		//}
 	}
 
 	public void InitStartMovement(bool firstInit, Vector3 point)
@@ -85,7 +82,6 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 
 	private IEnumerator FadeRune()
 	{
-		isFading = false;
 		Debug.Log("FadeCounter Started");
 		yield return new WaitForSeconds(fadeTime);
 		Debug.Log("Done waiting to Destroy");
@@ -94,9 +90,13 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 
 	public void AddPoint(Vector3 point)
 	{
+		if (isFading)
+		{
+			return;
+		}
+		
 		Vector3 lastPoint = newLinePointCloudData[newLinePointCloudData.Count - 1];
-		StopAllCoroutines();
-
+		
 		if (Vector3.Distance(point, lastPoint) > newPositionThresholdDistance)
 		{
 			newLinePointCloudData.Add(point);
@@ -124,7 +124,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 
 	public void EndDraw()
 	{
-		isFading = true;
+		lifetimeLeft = lifeSpan + lifeTime;
 		
 		if (newLinePointCloudData.Count > 2)
 		{
@@ -232,6 +232,11 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 	
 	private void OnTriggerEnter(Collider other)
 	{
+		if (isFading)
+		{
+			return;
+		}
+		
 		if (other.CompareTag("RuneHand"))
 		{
 			other.GetComponent<RuneHand>().SetInRuneCloud(this);
@@ -257,13 +262,13 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 		{
 			case GlobalEvent.RUNECLOUD_SELFDESTRUCT:
 			{
-					if (globalSignalData is RuneCloudData data)
+				if (globalSignalData is RuneCloudData data)
+				{
+					if (this == data.runeCloud)
 					{
-						if (this == data.runeCloud)
-						{
-							this.DestroyRuneCloud();
-						}
+						this.DestroyRuneCloud();
 					}
+				}
 				break;
 			}
 		}
