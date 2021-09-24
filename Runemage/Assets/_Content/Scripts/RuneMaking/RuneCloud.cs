@@ -96,8 +96,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 		}
 		
 		Vector3 lastPoint = newLinePointCloudData[newLinePointCloudData.Count - 1];
-		StopAllCoroutines();
-
+		
 		if (Vector3.Distance(point, lastPoint) > newPositionThresholdDistance)
 		{
 			newLinePointCloudData.Add(point);
