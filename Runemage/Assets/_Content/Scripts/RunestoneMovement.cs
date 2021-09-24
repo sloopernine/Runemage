@@ -85,21 +85,21 @@ public class RunestoneMovement : MonoBehaviour, IReceiveGlobalSignal
     {
         switch (eventState)
         {
-            case GlobalEvent.PAUSE_GAME:
+            case GlobalEvent.PAUSED_GAMESTATE:
                 if (!alwaysShow)
                 {
                     MoveTowardsPoint(movePosition);
                 }
                 break;
 
-            case GlobalEvent.UNPAUSE_GAME:
+            case GlobalEvent.PLAY_GAMESTATE:
                 if (!alwaysShow)
                 {
                     MoveTowardsPoint(startPosition);
                 }
                 break;
 
-            case GlobalEvent.WIN_GAME:
+            case GlobalEvent.WIN_GAMESTATE:
                 if (!alwaysShow)
                 {
                     MoveTowardsPoint(movePosition);
