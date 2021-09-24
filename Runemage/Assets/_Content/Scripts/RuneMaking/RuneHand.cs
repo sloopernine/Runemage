@@ -54,6 +54,8 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal
 			isPressed = Input.GetMouseButton(0);
         }
 		
+		//TODO: remove this check, or change it, considering "spellCastOrigin" is no longer a thing.
+
 		//this checks if you are inside of the "spellCastOrigin" by checking if it is null.
 		if(spellCastOrigin) 
 		{
