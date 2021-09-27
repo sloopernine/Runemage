@@ -6,13 +6,14 @@ using UnityEngine;
 public class MovingSound : MonoBehaviour
 {
 
-    AudioSource source;
+    private AudioSource source;
 
-    Vector3 lastPos;
-    float lastVelocity;
-    float velocity;
+    private Vector3 lastPos;
+    private float lastVelocity;
+    private float velocity;
     public float Velocity { get => velocity; }
 
+    public bool isPlaying;
     void Start()
     {
         source = GetComponent<AudioSource>();
@@ -24,8 +25,16 @@ public class MovingSound : MonoBehaviour
 
     private void FixedUpdate()
     {
-        velocity = CalculateVelocity();
-        source.volume = velocity * 0.1f;
+        if (isPlaying)
+        {
+            velocity = CalculateVelocity();
+            source.volume = velocity * 0.1f;
+
+        }
+        else
+        {
+            source.volume = 0f;
+        }
 
     }
 
