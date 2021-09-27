@@ -4815,7 +4815,7 @@ GameObject:
   - component: {fileID: 7915618189126999254}
   - component: {fileID: 7915618189126999255}
   - component: {fileID: 7915618189126999256}
-  - component: {fileID: 7915618189126999257}
+  - component: {fileID: 3442055054073375974}
   - component: {fileID: 7915618189126999258}
   - component: {fileID: 7915618189126999259}
   - component: {fileID: -4607588622297363988}
@@ -4824,6 +4824,7 @@ GameObject:
   - component: {fileID: 143518626579418768}
   - component: {fileID: 3567490981993886982}
   - component: {fileID: -7260894410557062870}
+  - component: {fileID: 4160196524432555685}
   m_Layer: 10
   m_Name: Spell_IceSpear_Prefab
   m_TagString: Untagged
@@ -4897,8 +4898,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7915618189126999257
-BoxCollider:
+--- !u!136 &3442055054073375974
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4907,9 +4908,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.70112705, y: 2.0949886, z: 0.51888835}
-  m_Center: {x: 0.00000033527613, y: -0.21228147, z: 0.015019998}
+  m_Radius: 0.1
+  m_Height: 3
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: -0.39}
 --- !u!114 &7915618189126999258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4940,9 +4942,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7915618189126999260}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.8
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.01
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -5032,7 +5034,7 @@ MonoBehaviour:
   catchingSpeedThreshold: -1
   releaseVelocityStyle: 3
   releaseVelocityTimeOffset: -0.011
-  scaleReleaseVelocity: 1.1
+  scaleReleaseVelocity: 4.5
   scaleReleaseVelocityThreshold: -1
   scaleReleaseVelocityCurve:
     serializedVersion: 2
@@ -5042,6 +5044,15 @@ MonoBehaviour:
       value: 0.1
       inSlope: 0
       outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.28462535
+      value: 0.645773
+      inSlope: 1.3371887
+      outSlope: 1.3371887
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
@@ -5064,7 +5075,19 @@ MonoBehaviour:
       m_Calls: []
   onDetachFromHand:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7915618189126999258}
+        m_TargetAssemblyTypeName: SpellObject, Assembly-CSharp
+        m_MethodName: TurnOnGravity
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onHeldUpdate:
     m_PersistentCalls:
       m_Calls: []
@@ -5148,10 +5171,10 @@ MonoBehaviour:
   poseEditorExpanded: 1
   blendEditorExpanded: 0
   poseNames:
-  - sphereSmallPose (MAIN)
+  - Spear (MAIN)
   overridePreviewLeftHandPrefab: {fileID: 1000013348574242, guid: 638779290bce1af49b356f33dcc6fccf, type: 3}
   overridePreviewRightHandPrefab: {fileID: 1000010304998954, guid: 6def53d002137b747aec0b29551e0e25, type: 3}
-  skeletonMainPose: {fileID: 11400000, guid: ccd16738d1f943640aa2aed1071a3897, type: 2}
+  skeletonMainPose: {fileID: 11400000, guid: c7ff8a47028d4ad45be6fc4b2ca4fd1b, type: 2}
   skeletonAdditionalPoses: []
   showLeftPreview: 0
   showRightPreview: 0
@@ -5160,6 +5183,21 @@ MonoBehaviour:
   previewPoseSelection: 0
   blendingBehaviours: []
   scale: 1
+--- !u!114 &4160196524432555685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7915618189126999260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c06524ea27814a14680378d6b05a7a05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerOfMassOffset: {x: 0, y: 0, z: 0.15}
+  isAwake: 0
+  rb: {fileID: 7915618189126999259}
 --- !u!1001 &2512745303647677157
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5173,15 +5211,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bbedf078f049280448a83a350bdb26d6, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.5
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bbedf078f049280448a83a350bdb26d6, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.5
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bbedf078f049280448a83a350bdb26d6, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.5
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bbedf078f049280448a83a350bdb26d6, type: 3}
       propertyPath: m_LocalPosition.x
