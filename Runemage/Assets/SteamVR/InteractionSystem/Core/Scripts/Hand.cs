@@ -216,10 +216,7 @@ namespace Valve.VR.InteractionSystem
                 return null;
             }
         }
-		//Vad betyder det här??
-		//frågetecknet
-		//yes det var så jag också förstod det
-
+		
         public AttachedObject? currentAttachedObjectInfo
         {
             get
@@ -230,7 +227,7 @@ namespace Valve.VR.InteractionSystem
                 {
                     return attachedObjects[attachedObjects.Count - 1];
                 }
-				//Okej, så hur kallar jag på det här i ett annat skript då?
+
                 return null;
             }
         }
