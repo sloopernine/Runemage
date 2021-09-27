@@ -43,6 +43,7 @@ public class EnemySpawner : MonoBehaviour
                 enemy.transform.position = spawnPostion;
                 enemy.transform.rotation = spawnRotation;
                 enemy.gameObject.SetActive(true);
+                enemy.OnSpawn();
             }
         }
 
