@@ -216,7 +216,7 @@ namespace Valve.VR.InteractionSystem
                 return null;
             }
         }
-
+		
         public AttachedObject? currentAttachedObjectInfo
         {
             get
