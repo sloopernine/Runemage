@@ -40,7 +40,7 @@ public class RuneDestroyer : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSig
 
 	void Start()
 	{
-
+		runeClouds = new List<RuneCloud>();
 	}
 
 	void Update()
