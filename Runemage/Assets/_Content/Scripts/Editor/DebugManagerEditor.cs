@@ -66,6 +66,20 @@ public class DebugManagerEditor : Editor
         EditorGUILayout.HelpBox("Calls Destroy(gameObject) on all SpellObjects", MessageType.Info);
         EditorGUILayout.Space();
 
+        if (GUILayout.Button("Set Paused"))
+        {
+            dm.SetGameStatePaused();
+        }
+        EditorGUILayout.HelpBox("Sets GameManager.CurrentGameState to paused", MessageType.Info);
+        EditorGUILayout.Space();
+
+        if (GUILayout.Button("Set Play"))
+        {
+            dm.SetGameStatePlay();
+        }
+        EditorGUILayout.HelpBox("Sets GameManager.CurrentGameState to Play", MessageType.Info);
+        EditorGUILayout.Space();
+
 
     }
 
