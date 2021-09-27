@@ -84,20 +84,4 @@ public class SpellCastOrigin : PC_Interactable
     {
         transform.SetParent(parent);
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("RuneHand"))
-        {
-            other.GetComponent<RuneHand>().SetInSpellCastOrigin(this);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("RuneHand"))
-        {
-            other.GetComponent<RuneHand>().SetOutsideSpellCastOrigin();
-        }
-    }
 }

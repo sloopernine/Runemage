@@ -1,0 +1,12 @@
+﻿
+Notes for new changes to our RuneCloud system.
+
+We might need to simplify it quite drastically.
+
+Should we make it so that you can only create a single rune at a time? So that when you add to that, then everything becomes a part of that?
+That becomes problematic when/if you draw something wrongly and don't know how to erase it...
+
+You could have something going through the scene and finding all runes, and if they have fewer than a certain number of points then they are destroyed?
+- This seems very simple, and it might not hurt...
+
+Another later alternative, is to change the runecloud system. So... have everything become one rune? Hm... no... because what then with left-over lines?

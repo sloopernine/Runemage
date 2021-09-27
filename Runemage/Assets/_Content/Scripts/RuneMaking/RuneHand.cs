@@ -4,16 +4,17 @@ using Data.Interfaces;
 using Singletons;
 using UnityEngine;
 using Valve.VR;
+using Valve.VR.InteractionSystem;
 
-public class RuneHand : MonoBehaviour, IReceiveGlobalSignal
-{
-	
+public class RuneHand : MonoBehaviour, IReceiveGlobalSignal {
+
+	[Tooltip("The VR-hand reference, check so that left is connected to left & right to right")]
+	[SerializeField] Hand handVR;
+
 	private RuneCloud runeCloud;
 
 	public GameObject prefabRuneCloud;
 
-	private SpellCastOrigin spellCastOrigin;
-	
 	public SteamVR_Input_Sources inputSource;
 
 	public SteamVR_Action_Pose poseAction = SteamVR_Input.GetAction<SteamVR_Action_Pose>("Pose");
@@ -26,8 +27,10 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal
 
 	[SerializeField] bool usePCDraw;
 
+	[Tooltip("if the grab-action is true")]
 	private bool isPressed;
-	
+
+	[Tooltip("if the hand is already drawing a rune, or if it should spawn a new runecloud")]
 	private bool isDrawing;
 
 	private bool inRuneCloud;
@@ -47,6 +50,10 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal
         {
 			transform.position = poseAction[inputSource].localPosition;
 			isPressed = grabAction.GetState(inputSource);
+			//Okay, so first
+			//Then decide what button holds something,
+			//If you are holding, then you can't draw
+			//Then change so another button is making the drawing so that it is "point with index to draw" basically.
 		}
 		else
         {
@@ -54,29 +61,23 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal
 			isPressed = Input.GetMouseButton(0);
         }
 		
-		//this checks if you are inside of the "spellCastOrigin" by checking if it is null.
-		if(spellCastOrigin) 
+		//if player is holding something, you cannot draw a new rune and falls out of update.
+		if(handVR.currentAttachedObject != null)
 		{
-			if(isPressed)
-			{
-				//Sends the hands transform.position, might later on want to replace this with the players transform
-				spellCastOrigin.CastSpell(transform.position);
-			}
+			return;
 		}
-		else
+
+		if (!isDrawing && isPressed)
 		{
-			if (!isDrawing && isPressed)
-			{
-				StartMovement(transform.position);
-			}
-			else if (isDrawing && !isPressed)
-			{
-				EndMovement();
-			}
-			else if (isDrawing && isPressed)
-			{
-				UpdateMovement(transform.position);
-			}
+			StartMovement(transform.position);
+		}
+		else if (isDrawing && !isPressed)
+		{
+			EndMovement();
+		}
+		else if (isDrawing && isPressed)
+		{
+			UpdateMovement(transform.position);
 		}
 	}
 
@@ -111,16 +112,6 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal
 		{
 			runeCloud.AddPoint(position);
 		}
-	}
-
-	public void SetInSpellCastOrigin(SpellCastOrigin spellCastOrigin)
-	{
-		this.spellCastOrigin = spellCastOrigin;
-	}
-
-	public void SetOutsideSpellCastOrigin()
-	{
-		this.spellCastOrigin = null;
 	}
 
 	public void SetInRuneCloud(RuneCloud runeCloud)
