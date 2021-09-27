@@ -11,6 +11,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 {
 	private LineRenderer lineRenderer;
 	private SphereCollider trigger;
+	private Camera camera;
 
 	public float newPositionThresholdDistance;
 	public int minimumPoints = 2;
@@ -19,8 +20,6 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 	public List<Vector3> totalCloudPoints = new List<Vector3>();
 
 	public GameObject subLineRendererPrefab;
-
-	//private Result result;
 
 	public float triggerStartSize;
 	public float triggerSizeModifier;
@@ -44,6 +43,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 	{
 		lineRenderer = GetComponent<LineRenderer>();
 		trigger = GetComponent<SphereCollider>();
+		camera = Camera.main;
 
 		InitStartMovement(true, Vector3.zero);
 		
@@ -150,7 +150,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 			
 			for (int i = 0; i < pointArray.Length; i++) 
 			{
-				Vector2 screenPoint = Camera.main.WorldToScreenPoint(totalCloudPoints[i]);
+				Vector2 screenPoint = camera.WorldToScreenPoint(totalCloudPoints[i]);
 				pointArray[i] = new Point(screenPoint.x, screenPoint.y, 0);
 			}
 			
