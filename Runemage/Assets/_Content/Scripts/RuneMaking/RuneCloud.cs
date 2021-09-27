@@ -63,7 +63,8 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 		if(lifeTime >= lifetimeLeft)
 		{
 			isFading = true;
-			StartCoroutine(FadeRune());
+			//StartCoroutine(FadeRune()); Coroutine seems to not work properly, destroys at once for now instead
+			DestroyRuneCloud();
 		}
 	}
 
@@ -112,6 +113,8 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 			return;
 		}
 		
+		lifetimeLeft = lifeSpan + lifeTime;
+		
 		Vector3 lastPoint = newLinePointCloudData[newLinePointCloudData.Count - 1];
 		
 		if (Vector3.Distance(point, lastPoint) > newPositionThresholdDistance)
@@ -141,8 +144,6 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 
 	public void EndDraw()
 	{
-		lifetimeLeft = lifeSpan + lifeTime;
-		
 		if (newLinePointCloudData.Count < minimumPoints)
 		{
 			DestroyRuneCloud();
