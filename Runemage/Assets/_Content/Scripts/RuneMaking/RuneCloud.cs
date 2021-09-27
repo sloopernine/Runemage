@@ -144,7 +144,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 
 	public void EndDraw()
 	{
-		if (newLinePointCloudData.Count < minimumPoints)
+		if (newLinePointCloudData.Count <= minimumPoints)
 		{
 			DestroyRuneCloud();
 		}
