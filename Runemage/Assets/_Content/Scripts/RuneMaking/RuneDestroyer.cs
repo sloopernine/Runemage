@@ -63,7 +63,6 @@ public class RuneDestroyer : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSig
 		}
 	}
 
-
 	public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null) 
 	{
 		switch(eventState)
