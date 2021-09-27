@@ -13,6 +13,8 @@ public class MovingSound : MonoBehaviour
     private float velocity;
     public float Velocity { get => velocity; }
 
+    public float speedScaling = 0.1f;
+
     public bool isPlaying;
     void Start()
     {
@@ -28,7 +30,7 @@ public class MovingSound : MonoBehaviour
         if (isPlaying)
         {
             velocity = CalculateVelocity();
-            source.volume = velocity * 0.1f;
+            source.volume = velocity * speedScaling;
 
         }
         else

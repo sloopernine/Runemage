@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 599cfe3e7149e29468d5b5964c288185, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 245b555d26f215c4e8893638f4587911, type: 2}
   voicePoolSize: 24
   audioSourcePrefab: {fileID: 6327118475761378715, guid: 83e7f17f57074044a9ff7446cee2e6f5, type: 3}
 --- !u!114 &4676915173361116849

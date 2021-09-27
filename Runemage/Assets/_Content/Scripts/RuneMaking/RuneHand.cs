@@ -46,6 +46,7 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal {
         }
 
 		drawSound = GetComponentInChildren<MovingSound>();
+		drawSound.isPlaying = false;
 	}
 
 	void Update()
@@ -111,7 +112,7 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal {
 		{
 			runeCloud.EndDraw();
 		}
-		drawSound.isPlaying = true;
+		drawSound.isPlaying = false;
 
 	}
 

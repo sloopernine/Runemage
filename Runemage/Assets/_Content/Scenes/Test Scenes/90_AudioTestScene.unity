@@ -588,6 +588,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4987758815526084610, guid: 1c4a5d877c667664c9e1769d5709875c, type: 3}
+      propertyPath: speedScaling
+      value: 0.33
+      objectReference: {fileID: 0}
     - target: {fileID: 9094532889443554104, guid: 1c4a5d877c667664c9e1769d5709875c, type: 3}
       propertyPath: handVR
       value: 
