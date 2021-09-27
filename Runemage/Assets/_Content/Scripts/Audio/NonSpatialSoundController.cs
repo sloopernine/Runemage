@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class 2DSoundController : MonoBehaviour
+public class NonSpatialSoundController : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
