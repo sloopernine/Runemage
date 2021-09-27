@@ -21,7 +21,8 @@ public class RuneMaker : MonoBehaviour, IReceiveGlobalSignal
 
 	public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
 	{
-		switch (eventState) {
+		switch (eventState)
+		{
 			case GlobalEvent.CREATE_SPELL: 
 				if(globalSignalData is RuneData runeData)
 				{
@@ -43,5 +44,4 @@ public class RuneMaker : MonoBehaviour, IReceiveGlobalSignal
 				break;
 		}
 	}
-
 }
