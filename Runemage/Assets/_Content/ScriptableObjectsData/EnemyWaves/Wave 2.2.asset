@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfSpawners: 1
   numberOfEnemies: 4
-  enemy: {fileID: 1781821687837907841, guid: 3f217201735825a4abe57617d043ee88, type: 3}
+  enemy: {fileID: 3174619125681143704, guid: 33d5b489d883f2840941e13c26348df5, type: 3}

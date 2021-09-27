@@ -22,7 +22,7 @@ public class RuneMaker : MonoBehaviour, IReceiveGlobalSignal
 	public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
 	{
 		switch (eventState) {
-			case GlobalEvent.CREATE_SPELL_ORIGIN: 
+			case GlobalEvent.CREATE_SPELL: 
 				if(globalSignalData is RuneData runeData)
 				{
 				GameObject tempSpell;

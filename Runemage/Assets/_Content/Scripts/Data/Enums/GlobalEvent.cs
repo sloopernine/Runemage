@@ -30,7 +30,7 @@ namespace Data.Enums
 		RUNECLOUD_DESTROYALL,
         
 		// RUNE MAKING
-		CREATE_SPELL_ORIGIN,
+		CREATE_SPELL,
 
         // Enemies
         ENEMY_DESTROY_ALL
