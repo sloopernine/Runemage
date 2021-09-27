@@ -280,10 +280,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8519080691925560965, guid: 5bb24331f247ec349ba49fad67a525d2, type: 3}
-      propertyPath: fireSpellPrefab
-      value: 
-      objectReference: {fileID: 6356653243117928251, guid: 155706fdc5de6f947a12a2964a33e0ed, type: 3}
-    - target: {fileID: 8519080691925560965, guid: 5bb24331f247ec349ba49fad67a525d2, type: 3}
       propertyPath: spellCastOrigin
       value: 
       objectReference: {fileID: 3663080564244332393, guid: 9f6fcdf7dc75d854e9cf25824550344f, type: 3}

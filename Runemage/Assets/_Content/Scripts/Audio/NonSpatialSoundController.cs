@@ -5,18 +5,20 @@ using Singletons;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
+
 
 
 public class NonSpatialSoundController : MonoBehaviour, IReceiveGlobalSignal
 {
+    [SerializeField] AudioMixer audioMixer;
     [SerializeField] AudioClip pausedMusicClip;
     [SerializeField] AudioClip ambienceClip;
     //[SerializeField] AudioClip PlayMusic;
     [SerializeField] GameObject audioSourcePrefab;
-
-
+    
     private AudioSource pauseMusic;
-    private AudioSource battleMusic;
+    private AudioSource PlayMusic;
     private AudioSource ambience;
 
     //used for division so needs to be non-zero
@@ -25,10 +27,10 @@ public class NonSpatialSoundController : MonoBehaviour, IReceiveGlobalSignal
 
     private void Start()
     {
-        pauseMusic = InitializeAudioSource(pausedMusicClip);
-        ambience = InitializeAudioSource(ambienceClip);
-
         
+        pauseMusic = InitializeAudioSource(pausedMusicClip, "Music");
+        ambience = InitializeAudioSource(ambienceClip, "Ambience");
+        OnGameStatePaused();
 
     }
 
@@ -42,10 +44,11 @@ public class NonSpatialSoundController : MonoBehaviour, IReceiveGlobalSignal
         GlobalMediator.Instance.UnSubscribe(this);
 
     }
-    private AudioSource InitializeAudioSource(AudioClip clip)
+    private AudioSource InitializeAudioSource(AudioClip clip, string mixerGroup)
     {
         AudioSource audioSource = Instantiate(audioSourcePrefab).GetComponent<AudioSource>();
         audioSource.transform.SetParent(transform);
+        audioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups(mixerGroup)[0];
         audioSource.clip = clip;
         audioSource.loop = true;
         audioSource.volume = 0;
