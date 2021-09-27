@@ -45,6 +45,13 @@ public class RuneDestroyer : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSig
 
 	void Update()
 	{
+		//protects in case runeCloud is empty
+		if(runeClouds.Count <= 0 || runeClouds == null)
+		{
+			timeSinceCheck += Time.deltaTime;
+			return;
+		}
+
 		if(timeSinceCheck <= checkIntervall)
 		{
 			timeSinceCheck += Time.deltaTime;
@@ -103,8 +110,7 @@ public class RuneDestroyer : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSig
 					}
 				}
 					break;
-			}
-			
+			}	
 		}
 	}
 

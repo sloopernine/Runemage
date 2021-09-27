@@ -1518,7 +1518,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 393946180691590616, guid: 729a3ca452cbfac47b594fd5f9b9dd4f, type: 3}
       propertyPath: spellTreshold
-      value: 0.7
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 393946180691590617, guid: 729a3ca452cbfac47b594fd5f9b9dd4f, type: 3}
       propertyPath: m_Name
