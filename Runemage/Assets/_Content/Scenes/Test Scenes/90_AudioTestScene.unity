@@ -1626,7 +1626,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3734439390260646678, guid: 37f10db4ea7c37743842a2d2ecb78a39, type: 3}
       propertyPath: maxHealth
-      value: 1
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 3734439390260646681, guid: 37f10db4ea7c37743842a2d2ecb78a39, type: 3}
       propertyPath: m_RootOrder
@@ -1681,6 +1681,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 199602957924515099, guid: 5096e0c3833f6214897d0828518e47d4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5783802766791330597, guid: 5096e0c3833f6214897d0828518e47d4, type: 3}
       propertyPath: m_RootOrder
       value: 18

@@ -100,7 +100,7 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal {
 			runeCloud.InitStartMovement(false, transform.position);
 		}
 
-		GenericSoundController.Instance.Play(WorldSounds.RuneDrawStart, transform.position);
+		GenericSoundController.Instance.Play(WorldSounds.RuneDrawStart, transform.position, false);
 		drawSound.isPlaying = true;
 	}
 
