@@ -13,6 +13,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 	private SphereCollider trigger;
 
 	public float newPositionThresholdDistance;
+	public int minimumPoints = 2;
 
 	public List<Vector3> newLinePointCloudData = new List<Vector3>();
 	public List<Vector3> totalCloudPoints = new List<Vector3>();
@@ -126,7 +127,11 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 	{
 		lifetimeLeft = lifeSpan + lifeTime;
 		
-		if (newLinePointCloudData.Count > 2)
+		if (newLinePointCloudData.Count < minimumPoints)
+		{
+			DestroyRuneCloud();
+		}
+		else
 		{
 			GameObject subLineRendererGameObject = Instantiate(subLineRendererPrefab, transform);
 			LineRenderer subLineRenderer = subLineRendererGameObject.GetComponent<LineRenderer>();
