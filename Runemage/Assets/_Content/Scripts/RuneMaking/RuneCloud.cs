@@ -294,6 +294,12 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 				}
 				break;
 			}
+			
+			case GlobalEvent.RUNECLOUD_DESTROYALL:
+
+				DestroyRuneCloud();
+				
+				break;
 		}
 	}
 }
