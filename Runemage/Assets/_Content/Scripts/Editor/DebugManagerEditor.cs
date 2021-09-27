@@ -66,11 +66,11 @@ public class DebugManagerEditor : Editor
         EditorGUILayout.HelpBox("Calls Destroy(gameObject) on all SpellObjects", MessageType.Info);
         EditorGUILayout.Space();
 
-
-    }
-
-
-
-
-
+		if(GUILayout.Button("Destroy All RuneClouds"))
+		{
+			dm.DestroyAllRuneClouds();
+		}
+		EditorGUILayout.HelpBox("Calls function of RuneDestroyer that destroyes all RuneCloudObjects", MessageType.Info);
+		EditorGUILayout.Space();
+	}
 }
