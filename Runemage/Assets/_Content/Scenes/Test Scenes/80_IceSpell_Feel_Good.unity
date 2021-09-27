@@ -423,6 +423,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5c601de52afd5a4991457060e6783e0, type: 3}
+--- !u!114 &216041171 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6981780818406523760, guid: d5c601de52afd5a4991457060e6783e0, type: 3}
+  m_PrefabInstance: {fileID: 216041170}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29e3e4511966ba94d8ba0b98c6c62f82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &216041172 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6981780818406573038, guid: d5c601de52afd5a4991457060e6783e0, type: 3}
+  m_PrefabInstance: {fileID: 216041170}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29e3e4511966ba94d8ba0b98c6c62f82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &420187677
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -478,6 +500,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 484522791140054251, guid: 50e8e4daa9b724741ac0f154dd01e6a5, type: 3}
+      propertyPath: handVR
+      value: 
+      objectReference: {fileID: 216041172}
     - target: {fileID: 484522791140054251, guid: 50e8e4daa9b724741ac0f154dd01e6a5, type: 3}
       propertyPath: prefabRuneCloud
       value: 
@@ -1439,6 +1465,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4343211114678539196, guid: e4ba35e187bee184fa0d322c0eb20d97, type: 3}
+      propertyPath: handVR
+      value: 
+      objectReference: {fileID: 216041171}
     - target: {fileID: 4343211114678539196, guid: e4ba35e187bee184fa0d322c0eb20d97, type: 3}
       propertyPath: prefabRuneCloud
       value: 
