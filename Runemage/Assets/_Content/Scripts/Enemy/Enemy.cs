@@ -63,6 +63,9 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
         if (canAttack)
         {
             target.TakeDamage(damage, DamageType.enemy);
+            RaycastHit hit;
+            Physics.Raycast(transform.position, transform.forward, out hit);
+            GenericSoundController.Instance.Play(WorldSounds.ShieldHit, hit.point); 
 
         }
     }
