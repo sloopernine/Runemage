@@ -7,24 +7,10 @@ using _Content.Scripts.Data.Containers.GlobalSignal;
 using Singletons;
 
 /// <summary>
-/// The purpose of this script is to periodically look through a scene,
-/// find all of the runeclouds in that scene
-/// (I don't trust the runeclouds to subscribe on their own, since they seems to be breaking)
-/// add them to a list.
-/// (wait, does it need to go through the list then and first find all, and then check if it already have them on the list?
-/// even though we might never have more than 10 runeclouds at any given time that seems scary to have that many searches happening every third second or so...)
-/// then it should wait
-/// then go through the list, look at each runecloud,
-/// if it still exists && has too few points && haven't gotten any more points since last time.
-/// Destroy it.
-/// The check of how many points it had last time might be difficult, how do you pair that up so that it refers to the correct runecloud if
-/// the list shrinks and grows?
-/// Should it be a public var on that runecloud?
-/// Should this object contain instances of a kind of objects, a new kind, that contains a reference to the runecloud and a var that it sets the first time it checks?
-/// 
-/// This class will most likely need to be a singleton. Because there could be a lot of problems if you have more than one of them in a scene.
-/// 
-/// Also, it needs to tell the RuneClouds to destroy themselves using a message sent to the global mediator.
+/// On creation a runecloud adds itself to a list in this script.
+/// Periodically this script goes through the list and checks each runecloud.
+/// if it still exists && has too few points && has lived for too long
+/// It tells it to destroy itself.
 /// </summary>
 public class RuneDestroyer : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSignal
 {
@@ -36,7 +22,21 @@ public class RuneDestroyer : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSig
 	[SerializeField] [Min(0)] int minimumPoints;
 	[SerializeField] private float minRuneCloudAge;
 
+	public static RuneDestroyer Instance;
+	
 	private List<RuneCloud> runeClouds;
+
+	private void Awake()
+	{
+		if (Instance == null)
+		{
+			Instance = this;
+		} 
+		else
+		{
+			Destroy(gameObject);
+		}
+	}
 
 	void Start()
 	{
@@ -83,6 +83,7 @@ public class RuneDestroyer : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSig
 					{
 						if (runeCloud == data.runeCloud)
 						{
+							//finds the RuneCloud in the list and removes it.
 							runeClouds.Remove(runeCloud);
 						}
 					}
@@ -93,9 +94,11 @@ public class RuneDestroyer : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSig
 			{
 				if(globalSignalData is RuneCloudData data)
 				{
+					//tells each and every RuneCloud in the list, tells it to destroy itself and then removes it.
 					foreach (RuneCloud runeCloud in runeClouds)
 					{
 						SendGlobal(GlobalEvent.RUNECLOUD_SELFDESTRUCT, new RuneCloudData(runeCloud));
+						//TODO: Check if there is a problem in that it might destroy itself before having time to find and remove itself?
 						runeClouds.Remove(runeCloud);
 					}
 				}
