@@ -37,7 +37,7 @@ public class EnemyPool : MonoBehaviour , IReceiveGlobalSignal
         Enemy tempEnemy;
         for (int i = 0; i < amoutToPool; i++)
         {
-            tempEnemy = Instantiate(enemyToPool);
+            tempEnemy = Instantiate(enemyToPool, transform);
             tempEnemy.gameObject.SetActive(false);
             pooledEnemies.Add(tempEnemy);
         }      

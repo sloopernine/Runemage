@@ -108,7 +108,12 @@ public class DebugManager : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSign
 
     public void Invulnerability()
     {
-        SendGlobal(GlobalEvent.SHIELD_INVULNERABLE_ON); //Has no effect yet
+        SendGlobal(GlobalEvent.SHIELD_INVULNERABLE_ON);
+    }
+
+    public void Invulnerability_Off()
+    {
+        SendGlobal(GlobalEvent.SHIELD_INVULNERABLE_OFF);
     }
 
     public void ForceNextRound()

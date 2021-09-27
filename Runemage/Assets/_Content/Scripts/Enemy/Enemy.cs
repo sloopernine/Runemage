@@ -9,13 +9,12 @@ using System;
 
 public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlobalSignal
 {
-    private Rigidbody rigidbody;
 
     [SerializeField] float maxHealth;
     [SerializeField] float currentHealth;
 
-    [Header("Freez Settings")]
-    [Tooltip("Procent of the speed value")]
+    [Header("Freeze Settings")]
+    [Tooltip("Per cent of the speed value")]
     [Range(0,1)]
     [SerializeField] float freezedSpeed;
     [SerializeField] float damage;
@@ -23,18 +22,13 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
     public bool isFreezed;
 
     public bool isAttacking;
-
-    [SerializeField] AudioClip spawnSound;
-    [SerializeField] AudioClip deathSound;
-    private AudioSource audioSource;
-
     private EnemyMovement enemyMovement;
 
     [SerializeField] Animator animator;
 
     private void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+
         enemyMovement = GetComponent<EnemyMovement>();
        
         if (animator == null)
