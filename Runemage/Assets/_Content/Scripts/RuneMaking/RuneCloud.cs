@@ -11,7 +11,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 {
 	private LineRenderer lineRenderer;
 	private SphereCollider trigger;
-	private Camera camera;
+	private Camera cameraMain;
 
 	public float newPositionThresholdDistance;
 	public int minimumPoints = 2;
@@ -20,6 +20,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 	public List<Vector3> totalCloudPoints = new List<Vector3>();
 
 	public GameObject subLineRendererPrefab;
+	private List<LineRenderer> sublineRenderers = new List<LineRenderer>();
 
 	public float triggerStartSize;
 	public float triggerSizeModifier;
@@ -43,7 +44,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 	{
 		lineRenderer = GetComponent<LineRenderer>();
 		trigger = GetComponent<SphereCollider>();
-		camera = Camera.main;
+		cameraMain = Camera.main;
 
 		InitStartMovement(true, Vector3.zero);
 		
@@ -84,7 +85,22 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 	private IEnumerator FadeRune()
 	{
 		Debug.Log("FadeCounter Started");
-		yield return new WaitForSeconds(fadeTime);
+		
+		float alpha = 1f;
+
+		while (alpha > 0f)
+		{
+			foreach (var subline in sublineRenderers)
+			{
+				Material sublineMaterial = subline.material;
+				sublineMaterial.color = new Color(sublineMaterial.color.r, sublineMaterial.color.g, sublineMaterial.color.b, alpha);
+			}
+
+			yield return new WaitForSeconds(fadeTime);
+			
+			alpha -= 0.05f;
+		}
+		
 		Debug.Log("Done waiting to Destroy");
 		DestroyRuneCloud();
 	} 
@@ -135,9 +151,10 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 		{
 			GameObject subLineRendererGameObject = Instantiate(subLineRendererPrefab, transform);
 			LineRenderer subLineRenderer = subLineRendererGameObject.GetComponent<LineRenderer>();
-
+			
 			subLineRenderer.positionCount = newLinePointCloudData.Count;
-
+			sublineRenderers.Add(subLineRenderer);
+			
 			int index = 0;
 			
 			foreach (Vector3 point in newLinePointCloudData)
@@ -150,7 +167,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 			
 			for (int i = 0; i < pointArray.Length; i++) 
 			{
-				Vector2 screenPoint = camera.WorldToScreenPoint(totalCloudPoints[i]);
+				Vector2 screenPoint = cameraMain.WorldToScreenPoint(totalCloudPoints[i]);
 				pointArray[i] = new Point(screenPoint.x, screenPoint.y, 0);
 			}
 			
