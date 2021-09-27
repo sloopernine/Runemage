@@ -7,25 +7,31 @@ using Singletons;
 using Data.Enums;
 using _Content.Scripts.Data.Containers.GlobalSignal;
 
-public class RuneCloud : MonoBehaviour, ISendGlobalSignal
+public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 {
 	private LineRenderer lineRenderer;
 	private SphereCollider trigger;
+	private Camera cameraMain;
 
 	public float newPositionThresholdDistance;
+	public int minimumPoints = 2;
 
 	public List<Vector3> newLinePointCloudData = new List<Vector3>();
 	public List<Vector3> totalCloudPoints = new List<Vector3>();
-	
-	public GameObject subLineRendererPrefab;
 
-	//private Result result;
+	public GameObject subLineRendererPrefab;
+	private List<LineRenderer> sublineRenderers = new List<LineRenderer>();
 
 	public float triggerStartSize;
 	public float triggerSizeModifier;
-	
+
 	public float spellballSize;
-	
+
+	[Header("LifeSpan")]
+	[Min(0f)] public float lifeTime;
+	[Min(0.1f)] private float lifetimeLeft;
+	public float lifeSpan;
+
 	[SerializeField] float fadeTime;
 	private Vector3 centroidPosition;
 	private bool isFading;
@@ -38,17 +44,27 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	{
 		lineRenderer = GetComponent<LineRenderer>();
 		trigger = GetComponent<SphereCollider>();
+		cameraMain = Camera.main;
 
 		InitStartMovement(true, Vector3.zero);
 		
 		triggerStartSize = trigger.radius / 2;
+
+		lifetimeLeft = lifeSpan;
+		
+		SendGlobal(GlobalEvent.RUNECLOUD_SPAWNED, new RuneCloudData(this));
+		GlobalMediator.Instance.Subscribe(this);
 	}
 
 	private void Update()
 	{
-		if(isFading)
+		lifeTime += Time.deltaTime;
+		
+		if(lifeTime >= lifetimeLeft)
 		{
-			StartCoroutine(FadeCounter(fadeTime));
+			isFading = true;
+			//StartCoroutine(FadeRune()); Coroutine seems to not work properly, destroys at once for now instead
+			DestroyRuneCloud();
 		}
 	}
 
@@ -67,20 +83,40 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 		}
 	}
 
-	private IEnumerator FadeCounter(float fadeTime)
+	private IEnumerator FadeRune()
 	{
-		isFading = false;
 		Debug.Log("FadeCounter Started");
-		yield return new WaitForSeconds(fadeTime);
+		
+		float alpha = 1f;
+
+		while (alpha > 0f)
+		{
+			foreach (var subline in sublineRenderers)
+			{
+				Material sublineMaterial = subline.material;
+				sublineMaterial.color = new Color(sublineMaterial.color.r, sublineMaterial.color.g, sublineMaterial.color.b, alpha);
+			}
+
+			yield return new WaitForSeconds(fadeTime);
+			
+			alpha -= 0.05f;
+		}
+		
 		Debug.Log("Done waiting to Destroy");
 		DestroyRuneCloud();
 	} 
 
 	public void AddPoint(Vector3 point)
 	{
+		if (isFading)
+		{
+			return;
+		}
+		
+		lifetimeLeft = lifeSpan + lifeTime;
+		
 		Vector3 lastPoint = newLinePointCloudData[newLinePointCloudData.Count - 1];
-		StopAllCoroutines();
-
+		
 		if (Vector3.Distance(point, lastPoint) > newPositionThresholdDistance)
 		{
 			newLinePointCloudData.Add(point);
@@ -108,15 +144,18 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 
 	public void EndDraw()
 	{
-		isFading = true;
-		
-		if (newLinePointCloudData.Count > 2)
+		if (newLinePointCloudData.Count <= minimumPoints)
+		{
+			DestroyRuneCloud();
+		}
+		else
 		{
 			GameObject subLineRendererGameObject = Instantiate(subLineRendererPrefab, transform);
 			LineRenderer subLineRenderer = subLineRendererGameObject.GetComponent<LineRenderer>();
-
+			
 			subLineRenderer.positionCount = newLinePointCloudData.Count;
-
+			sublineRenderers.Add(subLineRenderer);
+			
 			int index = 0;
 			
 			foreach (Vector3 point in newLinePointCloudData)
@@ -129,7 +168,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 			
 			for (int i = 0; i < pointArray.Length; i++) 
 			{
-				Vector2 screenPoint = Camera.main.WorldToScreenPoint(totalCloudPoints[i]);
+				Vector2 screenPoint = cameraMain.WorldToScreenPoint(totalCloudPoints[i]);
 				pointArray[i] = new Point(screenPoint.x, screenPoint.y, 0);
 			}
 			
@@ -149,7 +188,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	{
 		if (result.spell != Spell.None)
 		{
-			SendGlobal(GlobalEvent.CREATE_SPELL_ORIGIN, new RuneData(result, centroidPosition));
+			SendGlobal(GlobalEvent.CREATE_SPELL, new RuneData(result, centroidPosition));
 			StopAllCoroutines();
 			DestroyRuneCloud();
 		}
@@ -216,6 +255,11 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	
 	private void OnTriggerEnter(Collider other)
 	{
+		if (isFading)
+		{
+			return;
+		}
+		
 		if (other.CompareTag("RuneHand"))
 		{
 			other.GetComponent<RuneHand>().SetInRuneCloud(this);
@@ -233,5 +277,23 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal
 	public void SendGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
 	{
 		GlobalMediator.Instance.ReceiveGlobal(eventState, globalSignalData);
+	}
+
+	public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
+	{
+		switch (eventState)
+		{
+			case GlobalEvent.RUNECLOUD_SELFDESTRUCT:
+			{
+				if (globalSignalData is RuneCloudData data)
+				{
+					if (this == data.runeCloud)
+					{
+						this.DestroyRuneCloud();
+					}
+				}
+				break;
+			}
+		}
 	}
 }
