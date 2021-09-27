@@ -4841,7 +4841,7 @@ Transform:
   m_GameObject: {fileID: 7915618189126999260}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.07, y: 0.69, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2690243231220632846}
   - {fileID: 6968297972992572521}
@@ -4876,7 +4876,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: de29e3f99653dd247b97b35181989291, type: 2}
+  - {fileID: 2100000, guid: 71556cf403657354c8b45c718d1eb292, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4908,10 +4908,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.1
-  m_Height: 3
+  m_Radius: 0.025
+  m_Height: 1
   m_Direction: 2
-  m_Center: {x: 0, y: 0, z: -0.39}
+  m_Center: {x: 0, y: 0, z: -0.2}
 --- !u!114 &7915618189126999258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5029,7 +5029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffefbea063cab884ca33e5a449e5c22c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attachmentFlags: 337
+  attachmentFlags: 125
   attachmentOffset: {fileID: 0}
   catchingSpeedThreshold: -1
   releaseVelocityStyle: 3
@@ -5195,7 +5195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c06524ea27814a14680378d6b05a7a05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  centerOfMassOffset: {x: 0, y: 0, z: 0.15}
+  centerOfMassOffset: {x: 0, y: 0, z: 0.3}
   isAwake: 0
   rb: {fileID: 7915618189126999259}
 --- !u!1001 &2512745303647677157
@@ -5211,15 +5211,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bbedf078f049280448a83a350bdb26d6, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.8
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bbedf078f049280448a83a350bdb26d6, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.8
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bbedf078f049280448a83a350bdb26d6, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.8
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bbedf078f049280448a83a350bdb26d6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5264,7 +5264,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: bbedf078f049280448a83a350bdb26d6, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: de29e3f99653dd247b97b35181989291, type: 2}
+      objectReference: {fileID: 2100000, guid: 71556cf403657354c8b45c718d1eb292, type: 2}
     - target: {fileID: 919132149155446097, guid: bbedf078f049280448a83a350bdb26d6, type: 3}
       propertyPath: m_Name
       value: Ice_spear
