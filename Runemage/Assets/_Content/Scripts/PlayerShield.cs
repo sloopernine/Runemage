@@ -7,7 +7,7 @@ using Data.Interfaces;
 using Data.Enums;
 using _Content.Scripts.Data.Containers.GlobalSignal;
 
-public class PlayerShield : MonoBehaviour, ITakeDamage, IReceiveGlobalSignal
+public class PlayerShield : MonoBehaviour, ITakeDamage, IReceiveGlobalSignal, ISendGlobalSignal
 {
     [SerializeField] float maxHealth = 200;
     [SerializeField] float currentHealth;
@@ -81,6 +81,7 @@ public class PlayerShield : MonoBehaviour, ITakeDamage, IReceiveGlobalSignal
         sheildInfoText.enabled = true;
         meshRenderer.enabled = false;
         isBroken = true;
+        SendGlobal(GlobalEvent.LOST_GAMESTATE);
     }
 
     private void RebuildShield()
@@ -146,5 +147,10 @@ public class PlayerShield : MonoBehaviour, ITakeDamage, IReceiveGlobalSignal
         float brokenPoints = (maxHealth - currentHealth) * 0.03f;
         material.SetFloat(brokenProperty, brokenValue);
         material.SetFloat(brokenPointsProperty, brokenPoints);       
+    }
+
+    public void SendGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
+    {
+        GlobalMediator.Instance.ReceiveGlobal(eventState, globalSignalData);
     }
 }

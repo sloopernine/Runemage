@@ -39,6 +39,8 @@ namespace Singletons
         private void Start()
         {
             GlobalMediator.Instance.Subscribe(this);
+
+            currentGameState = GlobalEvent.PAUSED_GAMESTATE;
         }
         
         public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)

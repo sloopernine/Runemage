@@ -67,7 +67,7 @@ public class RunestoneMovement : MonoBehaviour, IReceiveGlobalSignal
         {
             isMoving = false;
         }
-        ParticelEffect();
+        //ParticelEffect(); Prefab is missing particels
     }
 
     private void ParticelEffect()
@@ -88,21 +88,21 @@ public class RunestoneMovement : MonoBehaviour, IReceiveGlobalSignal
             case GlobalEvent.PAUSED_GAMESTATE:
                 if (!alwaysShow)
                 {
-                    MoveTowardsPoint(movePosition);
+                    setPosition = false;
                 }
                 break;
 
             case GlobalEvent.PLAY_GAMESTATE:
                 if (!alwaysShow)
                 {
-                    MoveTowardsPoint(startPosition);
+                    setPosition = true;
                 }
                 break;
 
             case GlobalEvent.WIN_GAMESTATE:
                 if (!alwaysShow)
                 {
-                    MoveTowardsPoint(movePosition);
+                    setPosition = false;
                 }
                 break;
         }

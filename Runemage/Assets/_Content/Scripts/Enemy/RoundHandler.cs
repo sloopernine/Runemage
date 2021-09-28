@@ -7,7 +7,7 @@ using Data.Enums;
 using _Content.Scripts.Data.Containers.GlobalSignal;
 using Singletons;
 
-public class RoundHandler : MonoBehaviour, IReceiveGlobalSignal
+public class RoundHandler : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSignal
 {
     [SerializeField] TextMeshProUGUI roundInformationText;
     [SerializeField] Round[] rounds;
@@ -57,6 +57,7 @@ public class RoundHandler : MonoBehaviour, IReceiveGlobalSignal
 
     private void StartRound(Round round)
     {
+        SendGlobal(GlobalEvent.PLAY_GAMESTATE);
         isRoundDead = false;
         EnemyWave[] enemyWaves = round.enemyWaves;
         waveTimer = round.setWaveTimer;
@@ -110,6 +111,7 @@ public class RoundHandler : MonoBehaviour, IReceiveGlobalSignal
         }
         else
         {
+            SendGlobal(GlobalEvent.WIN_GAMESTATE);
             Debug.Log("2.No more rounds. GZ YOU WON THE GAME");
         }
     }
@@ -148,5 +150,10 @@ public class RoundHandler : MonoBehaviour, IReceiveGlobalSignal
                 break;
 
         }
+    }
+
+    public void SendGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
+    {
+        GlobalMediator.Instance.ReceiveGlobal(eventState, globalSignalData);
     }
 }
