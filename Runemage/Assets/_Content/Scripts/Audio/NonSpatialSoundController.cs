@@ -30,7 +30,7 @@ public class NonSpatialSoundController : MonoBehaviour, IReceiveGlobalSignal
         
         pauseMusic = InitializeAudioSource(pausedMusicClip, "Music");
         ambience = InitializeAudioSource(ambienceClip, "Ambience");
-        playMusic = InitializeAudioSource(playMusicClip, "Music");
+        playMusic = InitializeAudioSource(playMusicClip, "Ambience");
 
         //OnGameStatePaused();
         StartCoroutine(AudioFadeIn(pauseMusic, audioFadeTime));
