@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name = "Blixt4">
+	<Stroke>
+		<Point X = "2,196223" Y = "-259,4626" T = "0" Pressure = "0" />
+		<Point X = "-136,7577" Y = "-533,0413" T = "0" Pressure = "0" />
+		<Point X = "-1125,628" Y = "-2486,813" T = "0" Pressure = "0" />
+		<Point X = "941,8385" Y = "1552,255" T = "0" Pressure = "0" />
+		<Point X = "506,8674" Y = "702,8925" T = "0" Pressure = "0" />
+		<Point X = "421,0346" Y = "537,7931" T = "0" Pressure = "0" />
+		<Point X = "375,8045" Y = "453,3778" T = "0" Pressure = "0" />
+		<Point X = "345,5179" Y = "400,2716" T = "0" Pressure = "0" />
+		<Point X = "380,0475" Y = "401,2102" T = "0" Pressure = "0" />
+		<Point X = "427,5453" Y = "417,3044" T = "0" Pressure = "0" />
+		<Point X = "486,4622" Y = "431" T = "0" Pressure = "0" />
+		<Point X = "586,7007" Y = "441,185" T = "0" Pressure = "0" />
+		<Point X = "713,3391" Y = "443,7549" T = "0" Pressure = "0" />
+		<Point X = "850,9307" Y = "432,2423" T = "0" Pressure = "0" />
+		<Point X = "900,0565" Y = "388,6862" T = "0" Pressure = "0" />
+		<Point X = "690,778" Y = "334,5639" T = "0" Pressure = "0" />
+		<Point X = "570,7173" Y = "308,165" T = "0" Pressure = "0" />
+		<Point X = "514,9535" Y = "293,9484" T = "0" Pressure = "0" />
+		<Point X = "468,5536" Y = "280,9391" T = "0" Pressure = "0" />
+		<Point X = "430,0493" Y = "268,8708" T = "0" Pressure = "0" />
+		<Point X = "398,6261" Y = "258,5261" T = "0" Pressure = "0" />
+		<Point X = "374,1905" Y = "250,3232" T = "0" Pressure = "0" />
+		<Point X = "355,4731" Y = "243,8976" T = "0" Pressure = "0" />
+		<Point X = "331,9285" Y = "235,2012" T = "0" Pressure = "0" />
+		<Point X = "326,097" Y = "223,2995" T = "0" Pressure = "0" />
+	</Stroke>
+</Gesture>

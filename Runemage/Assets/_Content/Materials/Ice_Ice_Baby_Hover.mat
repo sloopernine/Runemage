@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Ice_Ice_Baby_Hover
+  m_Shader: {fileID: -6465566751694194690, guid: 803f67ae1ed0cbb4da316d70d41234b3, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_7a30c6840ec44a418f4825f678a9a52d:
+        m_Texture: {fileID: 2800000, guid: 6a4b8b027bc478a4986d36bf52b1c066, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_993f143f8af9494a987628a1b9cd1484:
+        m_Texture: {fileID: 2800000, guid: 235fe69964f45bb499c97e34ca37ffbc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_9edcf7d43c9449be9852f5513be7a756:
+        m_Texture: {fileID: 2800000, guid: 7ac155cdfd35c254492d8eeefbcae6db, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_a870bab02c3f4b64bfce03253b846205:
+        m_Texture: {fileID: 2800000, guid: 06b33917563bb1b4f9b87f15c0ed992e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_d1565f41637e4eaf9986b9e109201498:
+        m_Texture: {fileID: 2800000, guid: 8755e36dcfc28cf45bebff2897d1d842, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_3c623f1dd8c648b28d829ae737e097e1: 2
+    - Vector1_dbe22ab6cf884f2aaa1468cff49aedea: 1
+    m_Colors:
+    - Color_02161c5636f443288401903f7fa33f10: {r: 0.8873497, g: 5.656854, b: 5.656854, a: 1}
+  m_BuildTextureStacks: []

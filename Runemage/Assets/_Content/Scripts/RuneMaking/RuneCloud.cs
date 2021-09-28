@@ -60,7 +60,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 	{
 		lifeTime += Time.deltaTime;
 		
-		if(lifeTime >= lifetimeLeft)
+		if(lifeTime >= lifetimeLeft && !gameManager.gestureTrainingMode)
 		{
 			isFading = true;
 			//StartCoroutine(FadeRune()); Coroutine seems to not work properly, destroys at once for now instead
@@ -239,11 +239,11 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 
 	public void SaveGestureToXML()
 	{
-		Point[] pointArray = new Point[newLinePointCloudData.Count];
+		Point[] pointArray = new Point[totalCloudPoints.Count];
 		
 		for (int i = 0; i < pointArray.Length; i++) 
 		{
-			Vector2 screenPoint = Camera.main.WorldToScreenPoint(newLinePointCloudData[i]);
+			Vector2 screenPoint = Camera.main.WorldToScreenPoint(totalCloudPoints[i]);
 			pointArray[i] = new Point(screenPoint.x, screenPoint.y, 0);
 		}
 	
