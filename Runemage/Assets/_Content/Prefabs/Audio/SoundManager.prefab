@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5783802766791330597}
   - component: {fileID: 5783802766791330596}
+  - component: {fileID: 4676915173361116849}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -43,5 +44,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 599cfe3e7149e29468d5b5964c288185, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 245b555d26f215c4e8893638f4587911, type: 2}
   voicePoolSize: 24
   audioSourcePrefab: {fileID: 6327118475761378715, guid: 83e7f17f57074044a9ff7446cee2e6f5, type: 3}
+--- !u!114 &4676915173361116849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5783802766791330599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a02fa575b80866a4fa332795366d8d90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 245b555d26f215c4e8893638f4587911, type: 2}
+  pausedMusicClip: {fileID: 8300000, guid: 48e3cdc96ed60e04aaeb2b36bc2d664b, type: 3}
+  ambienceClip: {fileID: 8300000, guid: 1fe38ab928d1c744b82eb9c4a9a2fdee, type: 3}
+  playMusicClip: {fileID: 8300000, guid: 937b06a38010d8046842cf507fea4984, type: 3}
+  audioSourcePrefab: {fileID: 6327118475761378715, guid: 99cc4e06805e2a54c9ebc0364748e7e0, type: 3}
+  audioFadeTime: 4

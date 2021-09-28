@@ -140,12 +140,16 @@ public class SpellObject : PC_Interactable , IDealDamage, IReceiveGlobalSignal
         transform.SetParent(parent);
         transform.position = parent.transform.position;
         transform.forward = parent.forward;
-
     }
 
     public void TurnOnGravity()
     {
         rb.useGravity = true;
+    }
+
+    public void SetKinematic(bool setValue)
+    {
+        rb.isKinematic = setValue;
     }
 
     public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)

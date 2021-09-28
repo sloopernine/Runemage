@@ -188,12 +188,14 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 	{
 		if (result.spell != Spell.None)
 		{
+			GenericSoundController.Instance.Play(WorldSounds.RuneDrawSuccess, transform.position, false);
 			SendGlobal(GlobalEvent.CREATE_SPELL, new RuneData(result, centroidPosition));
 			StopAllCoroutines();
 			DestroyRuneCloud();
 		}
 		else
 		{
+			GenericSoundController.Instance.Play(WorldSounds.RuneDrawFailure, transform.position, false);
 			Debug.Log("No matching rune");
 			isFading = true;
 		}

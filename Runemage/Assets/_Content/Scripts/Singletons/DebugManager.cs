@@ -146,4 +146,16 @@ public class DebugManager : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSign
 
     }
 
+    public void SetGameStatePaused()
+    {
+        SendGlobal(GlobalEvent.PAUSED_GAMESTATE);
+
+    }
+
+    public void SetGameStatePlay()
+    {
+        SendGlobal(GlobalEvent.PLAY_GAMESTATE);
+
+    }
+
 }
