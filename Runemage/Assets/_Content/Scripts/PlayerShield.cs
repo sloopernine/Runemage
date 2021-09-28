@@ -77,6 +77,7 @@ public class PlayerShield : MonoBehaviour, ITakeDamage, IReceiveGlobalSignal
 
     private void BreakSheild()
     {
+        GenericSoundController.Instance.Play(WorldSounds.ShieldBreak, transform.position, false);
         sheildInfoText.enabled = true;
         meshRenderer.enabled = false;
         isBroken = true;

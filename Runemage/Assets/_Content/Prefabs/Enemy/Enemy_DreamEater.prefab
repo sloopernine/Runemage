@@ -4861,9 +4861,7 @@ MonoBehaviour:
   damage: 1
   freezedTime: 5
   isFreezed: 0
-  isAttacking: 1
-  spawnSound: {fileID: 8300000, guid: 918ee1b51fd32d748a66d520586569ba, type: 3}
-  deathSound: {fileID: 8300000, guid: 1dfef04d7ab9ced4093c828025f5bf06, type: 3}
+  canAttack: 1
   animator: {fileID: 1395877387909995654}
 --- !u!54 &2519104055739638626
 Rigidbody:
@@ -5021,7 +5019,6 @@ MonoBehaviour:
   minDistanceToPlayer: 4
   closeEnoughToTarget: 0.5
   useMovement: 1
-  targetMovePosition: {x: 0, y: 0, z: 0}
   currentMoveCommand: 0
 --- !u!95 &1395877387909995654
 Animator:
@@ -5042,6 +5039,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4220034553246320335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4612674559499212803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 600dc7bdc2f49154a862ff903d5b5f50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5531241416734516562
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+
 
 // Call on this to play OneShot Sounds in the world through script
 public class GenericSoundController : MonoBehaviour
 {
+    public AudioMixer audioMixer;
     private static GenericSoundController instance;
     public static GenericSoundController Instance { get => instance; }
 
@@ -87,6 +90,16 @@ public class GenericSoundController : MonoBehaviour
 
         source.clip = soundLibrary[sound][Random.Range(0, soundLibrary[sound].Count)];
         source.transform.position = position;
+        AudioMixerGroup[] channels = audioMixer.FindMatchingGroups(sound.ToString());
+        if (channels.Length > 0)
+        {
+            source.outputAudioMixerGroup = channels[0]; 
+        }
+        else
+        {
+            source.outputAudioMixerGroup = audioMixer.FindMatchingGroups("SFX")[0];
+        }
+
         if (randomizePitch)
         {
             source.pitch = Random.Range(0.7f, 1.3f);

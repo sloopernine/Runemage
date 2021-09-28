@@ -35,6 +35,8 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal {
 
 	private bool inRuneCloud;
 
+	private MovingSound drawSound;
+
 	private void Start()
 	{
 		GlobalMediator.Instance.Subscribe(this);
@@ -42,6 +44,9 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal {
         {
 			Debug.LogError("Can't use PCDraw witout a pc hand transfrom to the hand.");
         }
+
+		drawSound = GetComponentInChildren<MovingSound>();
+		drawSound.isPlaying = false;
 	}
 
 	void Update()
@@ -84,7 +89,7 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal {
 	private void StartMovement(Vector3 position)
 	{	
 		isDrawing = true;
-		
+
 		if (runeCloud == null)
 		{
 			runeCloud = Instantiate(prefabRuneCloud, position, Quaternion.identity).GetComponent<RuneCloud>();
@@ -94,6 +99,9 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal {
 		{
 			runeCloud.InitStartMovement(false, transform.position);
 		}
+
+		GenericSoundController.Instance.Play(WorldSounds.RuneDrawStart, transform.position, false);
+		drawSound.isPlaying = true;
 	}
 
 	private void EndMovement()
@@ -104,6 +112,8 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal {
 		{
 			runeCloud.EndDraw();
 		}
+		drawSound.isPlaying = false;
+
 	}
 
 	private void UpdateMovement(Vector3 position)

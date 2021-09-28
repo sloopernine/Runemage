@@ -21,10 +21,11 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
     [SerializeField] float freezedTime;
     public bool isFreezed;
 
-    public bool isAttacking;
+    public bool canAttack;
     private EnemyMovement enemyMovement;
 
     [SerializeField] Animator animator;
+    private ITakeDamage cachedTarget;
 
     private void Start()
     {
@@ -48,7 +49,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
             return;
         }
         animator.SetTrigger("Damage");
-
+        GenericSoundController.Instance.Play(WorldSounds.EnemyDamage, transform.position);
         if (damageType == DamageType.ice)
         {
             Freeze();
@@ -59,11 +60,13 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
 
     public void DealDamage(ITakeDamage target, float damage, DamageType damageType)
     {
-        if (isAttacking)
+        if (canAttack)
         {
-            animator.SetTrigger("Attack");
-
             target.TakeDamage(damage, DamageType.enemy);
+            RaycastHit hit;
+            Physics.Raycast(transform.position, transform.forward, out hit);
+            GenericSoundController.Instance.Play(WorldSounds.ShieldHit, hit.point); 
+
         }
     }
 
@@ -72,7 +75,7 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
         StopAllCoroutines();
         if (GenericSoundController.Instance != null)
         {
-            GenericSoundController.Instance.Play(WorldSounds.EnemyDeath, transform.position);
+            GenericSoundController.Instance.Play(WorldSounds.EnemyDie, transform.position);
         }
 
         BasicData data = new BasicData(gameObject.tag);
@@ -109,8 +112,19 @@ public abstract class Enemy : MonoBehaviour, ITakeDamage, IDealDamage, ISendGlob
         LayerMask mask = other.gameObject.layer;
         if (target != null && mask == 9)
         {
-            DealDamage(target, damage, DamageType.enemy);
+            if (canAttack)
+            {
+                GenericSoundController.Instance.Play(WorldSounds.EnemyAttack, transform.position);
+                animator.SetTrigger("Attack");
+                cachedTarget = target;
+            }
+            //DealDamage(target, damage, DamageType.enemy);
         }
+    }
+
+    public void AnimationDealDamage()
+    {
+        DealDamage(cachedTarget, damage, DamageType.enemy);
     }
 
     private void Freeze()
