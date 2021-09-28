@@ -64,6 +64,11 @@ public class RoundHandler : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSign
         StartCoroutine(SpawnWaves(enemyWaves));
     }
 
+    public void StartRoundButton()
+    {
+        StartRound(currentRound);
+    }
+
     private IEnumerator SpawnWaves(EnemyWave[] nextWaves)
     {
         foreach (EnemyWave wave in nextWaves)
