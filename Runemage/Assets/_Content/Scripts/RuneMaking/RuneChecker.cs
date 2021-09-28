@@ -10,11 +10,17 @@ public class RuneChecker : MonoBehaviour
 	{
 		get => instance;
 	}
+	
+	public float SpellTreshold 
+	{ 
+	get => spellTreshold;
+	}
 
+	[SerializeField] float spellTreshold;
+	
 	private List<Gesture> trainingSet = new List<Gesture>();
 
-	public float spellTreshold;
-	
+
 	private void Awake()
 	{
 		if (instance == null)

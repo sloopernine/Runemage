@@ -226,6 +226,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioSourceMoving
       objectReference: {fileID: 0}
+    - target: {fileID: 5736689114577303423, guid: f8715b06df18824468b158a430149709, type: 3}
+      propertyPath: speedScaling
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 7079801886125997008, guid: f8715b06df18824468b158a430149709, type: 3}
       propertyPath: m_audioClip
       value: 
