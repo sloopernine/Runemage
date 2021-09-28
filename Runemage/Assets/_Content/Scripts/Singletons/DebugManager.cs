@@ -134,6 +134,12 @@ public class DebugManager : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSign
         SendGlobal(GlobalEvent.SPELLS_DESTROY_ALL);
     }
 
+	public void DestroyAllRuneClouds()
+	{
+		SendGlobal(GlobalEvent.RUNECLOUD_DESTROYALL);
+		Debug.Log("This event destroys all runeclouds.");
+	}
+
     public void ResetShield()
     {
         SendGlobal(GlobalEvent.SHIELD_RESET);

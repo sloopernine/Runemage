@@ -86,31 +86,20 @@ public class RuneDestroyer : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSig
 			{
 				if (globalSignalData is RuneCloudData data)
 				{
-					foreach (RuneCloud runeCloud in runeClouds)
+					if (runeClouds.Count > 0)
 					{
-						if (runeCloud == data.runeCloud)
+						foreach (RuneCloud runeCloud in runeClouds)
 						{
-							//finds the RuneCloud in the list and removes it.
-							runeClouds.Remove(runeCloud);
+							if (runeCloud == data.runeCloud)
+							{
+								//finds the RuneCloud in the list and removes it.
+								runeClouds.Remove(runeCloud);
+							}
 						}
 					}
 				}
 				break;
 			}
-			case GlobalEvent.RUNECLOUD_DESTROYALL:
-			{
-				if(globalSignalData is RuneCloudData data)
-				{
-					//tells each and every RuneCloud in the list, tells it to destroy itself and then removes it.
-					foreach (RuneCloud runeCloud in runeClouds)
-					{
-						SendGlobal(GlobalEvent.RUNECLOUD_SELFDESTRUCT, new RuneCloudData(runeCloud));
-						//TODO: Check if there is a problem in that it might destroy itself before having time to find and remove itself?
-						runeClouds.Remove(runeCloud);
-					}
-				}
-					break;
-			}	
 		}
 	}
 

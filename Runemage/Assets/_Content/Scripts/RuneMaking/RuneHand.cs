@@ -55,10 +55,6 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal {
         {
 			transform.position = poseAction[inputSource].localPosition;
 			isPressed = grabAction.GetState(inputSource);
-			//Okay, so first
-			//Then decide what button holds something,
-			//If you are holding, then you can't draw
-			//Then change so another button is making the drawing so that it is "point with index to draw" basically.
 		}
 		else
         {

@@ -34,11 +34,6 @@ namespace Singletons
             {
                 subscribers[i].ReceiveGlobal(eventState, signalData);
             }
-            // Save this until we know for sure that for loop works better in all cases
-            // foreach (var subscriber in subscribers)
-            // {
-            //     subscriber.ReceiveGlobal(eventState, signalData);
-            // }
         }
 
         public void Subscribe(IReceiveGlobalSignal subscriber)
