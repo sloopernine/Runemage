@@ -14,11 +14,11 @@ public class NonSpatialSoundController : MonoBehaviour, IReceiveGlobalSignal
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] AudioClip pausedMusicClip;
     [SerializeField] AudioClip ambienceClip;
-    //[SerializeField] AudioClip PlayMusic;
+    [SerializeField] AudioClip playMusicClip;
     [SerializeField] GameObject audioSourcePrefab;
     
     private AudioSource pauseMusic;
-    private AudioSource PlayMusic;
+    private AudioSource playMusic;
     private AudioSource ambience;
 
     //used for division so needs to be non-zero
@@ -30,7 +30,10 @@ public class NonSpatialSoundController : MonoBehaviour, IReceiveGlobalSignal
         
         pauseMusic = InitializeAudioSource(pausedMusicClip, "Music");
         ambience = InitializeAudioSource(ambienceClip, "Ambience");
-        OnGameStatePaused();
+        playMusic = InitializeAudioSource(playMusicClip, "Music");
+
+        //OnGameStatePaused();
+        StartCoroutine(AudioFadeIn(pauseMusic, audioFadeTime));
 
     }
 
@@ -78,8 +81,9 @@ public class NonSpatialSoundController : MonoBehaviour, IReceiveGlobalSignal
     private void OnGameStatePaused()
     {
         StopAllCoroutines();
-        StartCoroutine(AudioFadeOut(ambience, audioFadeTime));
-        StartCoroutine(AudioFadeIn(pauseMusic, audioFadeTime));
+        StartCoroutine(AudioFadeOut(pauseMusic, audioFadeTime));
+        StartCoroutine(AudioFadeOut(playMusic, audioFadeTime));
+        StartCoroutine(AudioFadeIn(ambience, audioFadeTime));
 
     }
 
@@ -87,7 +91,8 @@ public class NonSpatialSoundController : MonoBehaviour, IReceiveGlobalSignal
     {
         StopAllCoroutines();
         StartCoroutine(AudioFadeOut(pauseMusic, audioFadeTime));
-        StartCoroutine(AudioFadeIn(ambience, audioFadeTime));
+        StartCoroutine(AudioFadeOut(ambience, audioFadeTime));
+        StartCoroutine(AudioFadeIn(playMusic, audioFadeTime));
 
     }
 

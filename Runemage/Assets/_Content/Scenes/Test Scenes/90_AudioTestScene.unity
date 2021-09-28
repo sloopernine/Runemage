@@ -1685,6 +1685,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4676915173361116849, guid: 5096e0c3833f6214897d0828518e47d4, type: 3}
+      propertyPath: ambienceClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 18fdd01b049c00a49b8188a17d55f4a3, type: 3}
     - target: {fileID: 5783802766791330597, guid: 5096e0c3833f6214897d0828518e47d4, type: 3}
       propertyPath: m_RootOrder
       value: 18
