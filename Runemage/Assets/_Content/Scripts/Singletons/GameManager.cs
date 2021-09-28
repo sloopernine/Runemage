@@ -44,7 +44,7 @@ namespace Singletons
 
             if (usePcInput)
             {
-                Cursor.lockState = CursorLockMode.Locked;
+                //Cursor.lockState = CursorLockMode.Locked;
             }
         }
         
