@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Burn_Baby_Burn
+  m_Shader: {fileID: -6465566751694194690, guid: 803f67ae1ed0cbb4da316d70d41234b3, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_7a30c6840ec44a418f4825f678a9a52d:
+        m_Texture: {fileID: 2800000, guid: 1e1af60a7666a2c439b4afefdf5c0834, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_993f143f8af9494a987628a1b9cd1484:
+        m_Texture: {fileID: 2800000, guid: 27af0af70ef344346a552f9d3f1b9231, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_9edcf7d43c9449be9852f5513be7a756:
+        m_Texture: {fileID: 2800000, guid: 6a5366553fa187f498d349baeba7bb73, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_a870bab02c3f4b64bfce03253b846205:
+        m_Texture: {fileID: 2800000, guid: d7e8339141231c2469464513900f0820, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_d1565f41637e4eaf9986b9e109201498:
+        m_Texture: {fileID: 2800000, guid: 20c84be6a51eb584a99c3325205e7e58, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_3c623f1dd8c648b28d829ae737e097e1: 3.1
+    - Vector1_dbe22ab6cf884f2aaa1468cff49aedea: 1
+    m_Colors:
+    - Color_02161c5636f443288401903f7fa33f10: {r: 5.992157, g: 1.0039216, b: 0, a: 0}
+  m_BuildTextureStacks: []
