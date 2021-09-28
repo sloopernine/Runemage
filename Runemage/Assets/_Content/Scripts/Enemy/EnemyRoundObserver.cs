@@ -5,7 +5,7 @@ using Data.Enums;
 using _Content.Scripts.Data.Containers.GlobalSignal;
 using Singletons;
 
-public class EnemyRoundObserver : MonoBehaviour, IReceiveGlobalSignal
+public class EnemyRoundObserver : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSignal
 {
     private RoundHandler roundHandler;
     private int deadEnemies;
@@ -31,6 +31,8 @@ public class EnemyRoundObserver : MonoBehaviour, IReceiveGlobalSignal
         {
             roundHandler.UpdateRound();
             deadEnemies = 0;
+            
+            SendGlobal(GlobalEvent.PAUSED_GAMESTATE);
         }
     }
 
@@ -55,5 +57,10 @@ public class EnemyRoundObserver : MonoBehaviour, IReceiveGlobalSignal
                 break;
             }            
         }                      
+    }
+
+    public void SendGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
+    {
+        GlobalMediator.Instance.ReceiveGlobal(eventState, globalSignalData);
     }
 }
