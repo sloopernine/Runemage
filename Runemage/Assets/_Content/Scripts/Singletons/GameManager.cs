@@ -41,6 +41,11 @@ namespace Singletons
             GlobalMediator.Instance.Subscribe(this);
 
             currentGameState = GlobalEvent.PAUSED_GAMESTATE;
+
+            if (usePcInput)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
         
         public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
