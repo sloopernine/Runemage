@@ -38,7 +38,6 @@ public class SpellCastOrigin : PC_Interactable
     {
         c.a = 0.5f;
         meshRenderer.material.color = c;
-        //tmp.rectTransform.rotation = transform.rotation;
     }
 
     public void CastSpell(Vector3 position)
