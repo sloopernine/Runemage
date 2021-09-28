@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea6dfbc2e54ad6f4c8c64e7cc1ef9193, type: 3}
   m_Name: Wave 1.3
   m_EditorClassIdentifier: 
-  numberOfSpawners: 2
-  numberOfEnemies: 2
+  numberOfSpawners: 3
+  numberOfEnemies: 1
   enemy: {fileID: 3174619125681143704, guid: 33d5b489d883f2840941e13c26348df5, type: 3}
