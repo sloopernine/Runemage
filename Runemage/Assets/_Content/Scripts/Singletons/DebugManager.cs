@@ -164,4 +164,9 @@ public class DebugManager : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSign
     {
         SendGlobal(GlobalEvent.WIN_GAMESTATE);
     }
+    
+    public void SetGameStateLose()
+    {
+        SendGlobal(GlobalEvent.LOST_GAMESTATE);
+    }
 }
