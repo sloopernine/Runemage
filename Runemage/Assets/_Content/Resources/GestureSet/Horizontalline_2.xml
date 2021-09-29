@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name = "Horizontalline_2">
+	<Stroke>
+		<Point X = "-99,02151" Y = "-16,04133" T = "0" Pressure = "0" />
+		<Point X = "-1114,777" Y = "-424,1126" T = "0" Pressure = "0" />
+		<Point X = "-4240,457" Y = "-1937,298" T = "0" Pressure = "0" />
+		<Point X = "-1595,35" Y = "-913,2717" T = "0" Pressure = "0" />
+		<Point X = "-1342,896" Y = "-1080,718" T = "0" Pressure = "0" />
+		<Point X = "-1217,969" Y = "-1587,637" T = "0" Pressure = "0" />
+		<Point X = "-1765,163" Y = "-3694,178" T = "0" Pressure = "0" />
+		<Point X = "1381,871" Y = "4470,835" T = "0" Pressure = "0" />
+		<Point X = "317,0124" Y = "1439,742" T = "0" Pressure = "0" />
+		<Point X = "186,8387" Y = "855,2312" T = "0" Pressure = "0" />
+		<Point X = "153,3144" Y = "642,6638" T = "0" Pressure = "0" />
+		<Point X = "145,2213" Y = "531,3642" T = "0" Pressure = "0" />
+		<Point X = "148,7134" Y = "454,4254" T = "0" Pressure = "0" />
+		<Point X = "152,3099" Y = "408,1099" T = "0" Pressure = "0" />
+		<Point X = "162,4286" Y = "368,0539" T = "0" Pressure = "0" />
+		<Point X = "49,04547" Y = "439,5071" T = "0" Pressure = "0" />
+	</Stroke>
+</Gesture>
