@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Gesture Name = "Circle_4">
+<Gesture Name = "Fireball_4">
 	<Stroke>
 		<Point X = "319,5256" Y = "504,1524" T = "0" Pressure = "0" />
 		<Point X = "334,724" Y = "565,2869" T = "0" Pressure = "0" />

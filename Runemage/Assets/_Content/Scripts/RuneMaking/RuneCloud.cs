@@ -17,9 +17,6 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 
 	public List<Vector3> pointCloudData = new List<Vector3>();
 	
-	public GameObject subLineRendererPrefab;
-	private List<LineRenderer> sublineRenderers = new List<LineRenderer>();
-	
 	[Header("LifeSpan")]
 	[Min(0f)] public float lifeTime;
 	[Min(0.1f)] private float lifetimeLeft;
@@ -69,16 +66,14 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 	{
 		Debug.Log("FadeCounter Started");
 		
+		Material lineMaterial = lineRenderer.material;
+		
 		float alpha = 1f;
 
 		while (alpha > 0f)
 		{
-			foreach (var subline in sublineRenderers)
-			{
-				Material sublineMaterial = subline.material;
-				sublineMaterial.color = new Color(sublineMaterial.color.r, sublineMaterial.color.g, sublineMaterial.color.b, alpha);
-			}
-
+			lineMaterial.color = new Color(lineMaterial.color.r, lineMaterial.color.g, lineMaterial.color.b, alpha);
+			
 			yield return new WaitForSeconds(fadeTime);
 			
 			alpha -= 0.05f;
