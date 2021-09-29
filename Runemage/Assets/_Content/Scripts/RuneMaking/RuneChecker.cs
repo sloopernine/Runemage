@@ -57,9 +57,17 @@ public class RuneChecker : MonoBehaviour
 
 	private Spell GetSpellEnum(string spellName, float score)
 	{
+		
 		if (score <= spellTreshold)
 		{
 			return Spell.None;
+		}
+		
+		int dividerIndex = spellName.IndexOf(" ", StringComparison.Ordinal);
+		
+		if (dividerIndex >= 0)
+		{
+			spellName = spellName.Substring(0, dividerIndex);
 		}
 		
 		string[] spellNames = Enum.GetNames(typeof(Spell));

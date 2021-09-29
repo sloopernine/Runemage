@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name = "Fireball_1">
+	<Stroke>
+		<Point X = "325,3798" Y = "235,1457" T = "0" Pressure = "0" />
+		<Point X = "339,1714" Y = "233,2768" T = "0" Pressure = "0" />
+		<Point X = "353,2207" Y = "226,7285" T = "0" Pressure = "0" />
+		<Point X = "364,0587" Y = "218,2538" T = "0" Pressure = "0" />
+		<Point X = "371,515" Y = "207,904" T = "0" Pressure = "0" />
+		<Point X = "376,0749" Y = "196,6319" T = "0" Pressure = "0" />
+		<Point X = "378,9217" Y = "184,3335" T = "0" Pressure = "0" />
+		<Point X = "379,6537" Y = "171,685" T = "0" Pressure = "0" />
+		<Point X = "377,9126" Y = "155,5192" T = "0" Pressure = "0" />
+		<Point X = "372,6411" Y = "139,5129" T = "0" Pressure = "0" />
+		<Point X = "363,5548" Y = "124,2887" T = "0" Pressure = "0" />
+		<Point X = "350,533" Y = "112,9118" T = "0" Pressure = "0" />
+		<Point X = "337,8041" Y = "106,3471" T = "0" Pressure = "0" />
+		<Point X = "323,101" Y = "101,2971" T = "0" Pressure = "0" />
+		<Point X = "301,9683" Y = "98,19014" T = "0" Pressure = "0" />
+		<Point X = "286,7042" Y = "101,7813" T = "0" Pressure = "0" />
+		<Point X = "274,0393" Y = "111,1289" T = "0" Pressure = "0" />
+		<Point X = "263,8712" Y = "124,29" T = "0" Pressure = "0" />
+		<Point X = "257,1743" Y = "139,2794" T = "0" Pressure = "0" />
+		<Point X = "253,8448" Y = "156,3451" T = "0" Pressure = "0" />
+		<Point X = "254,3283" Y = "173,3467" T = "0" Pressure = "0" />
+		<Point X = "262,312" Y = "196,0671" T = "0" Pressure = "0" />
+		<Point X = "274,3936" Y = "212,5045" T = "0" Pressure = "0" />
+		<Point X = "290,6457" Y = "225,2327" T = "0" Pressure = "0" />
+		<Point X = "308,0475" Y = "233,0466" T = "0" Pressure = "0" />
+		<Point X = "323,2756" Y = "236,6282" T = "0" Pressure = "0" />
+		<Point X = "338,8586" Y = "234,473" T = "0" Pressure = "0" />
+		<Point X = "350,4678" Y = "228,3473" T = "0" Pressure = "0" />
+		<Point X = "359,4237" Y = "217,3343" T = "0" Pressure = "0" />
+		<Point X = "364,8388" Y = "205,1857" T = "0" Pressure = "0" />
+		<Point X = "367,3135" Y = "191,8389" T = "0" Pressure = "0" />
+		<Point X = "370,3103" Y = "179,8181" T = "0" Pressure = "0" />
+	</Stroke>
+</Gesture>

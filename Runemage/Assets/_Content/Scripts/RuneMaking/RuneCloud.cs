@@ -10,30 +10,19 @@ using _Content.Scripts.Data.Containers.GlobalSignal;
 public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 {
 	private LineRenderer lineRenderer;
-	private SphereCollider trigger;
 	private Camera cameraMain;
 
 	public float newPositionThresholdDistance;
 	public int minimumPoints = 2;
 
-	public List<Vector3> newLinePointCloudData = new List<Vector3>();
-	public List<Vector3> totalCloudPoints = new List<Vector3>();
-
-	public GameObject subLineRendererPrefab;
-	private List<LineRenderer> sublineRenderers = new List<LineRenderer>();
-
-	public float triggerStartSize;
-	public float triggerSizeModifier;
-
-	public float spellballSize;
-
+	public List<Vector3> pointCloudData = new List<Vector3>();
+	
 	[Header("LifeSpan")]
 	[Min(0f)] public float lifeTime;
 	[Min(0.1f)] private float lifetimeLeft;
 	public float lifeSpan;
 
 	[SerializeField] float fadeTime;
-	private Vector3 centroidPosition;
 	private bool isFading;
 
 	private GameManager gameManager = GameManager.Instance;
@@ -43,13 +32,10 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 	private void Start()
 	{
 		lineRenderer = GetComponent<LineRenderer>();
-		trigger = GetComponent<SphereCollider>();
 		cameraMain = Camera.main;
 
-		InitStartMovement(true, Vector3.zero);
+		InitStartMovement();
 		
-		triggerStartSize = trigger.radius / 2;
-
 		lifetimeLeft = lifeSpan;
 		
 		SendGlobal(GlobalEvent.RUNECLOUD_SPAWNED, new RuneCloudData(this));
@@ -68,35 +54,25 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 		}
 	}
 
-	public void InitStartMovement(bool firstInit, Vector3 point)
+	public void InitStartMovement()
 	{
-		if (firstInit)
-		{
-			newLinePointCloudData.Add(transform.position);
-			lineRenderer.positionCount = 1;
-			lineRenderer.SetPosition(0, transform.position);
-		}
-		else
-		{
-			newLinePointCloudData.Add(point);
-			totalCloudPoints.Add(point);
-		}
+		pointCloudData.Add(transform.position);
+		lineRenderer.positionCount = 1;
+		lineRenderer.SetPosition(0, transform.position);
 	}
 
 	private IEnumerator FadeRune()
 	{
 		Debug.Log("FadeCounter Started");
 		
+		Material lineMaterial = lineRenderer.material;
+		
 		float alpha = 1f;
 
 		while (alpha > 0f)
 		{
-			foreach (var subline in sublineRenderers)
-			{
-				Material sublineMaterial = subline.material;
-				sublineMaterial.color = new Color(sublineMaterial.color.r, sublineMaterial.color.g, sublineMaterial.color.b, alpha);
-			}
-
+			lineMaterial.color = new Color(lineMaterial.color.r, lineMaterial.color.g, lineMaterial.color.b, alpha);
+			
 			yield return new WaitForSeconds(fadeTime);
 			
 			alpha -= 0.05f;
@@ -115,60 +91,36 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 		
 		lifetimeLeft = lifeSpan + lifeTime;
 		
-		Vector3 lastPoint = newLinePointCloudData[newLinePointCloudData.Count - 1];
+		Vector3 lastPoint = pointCloudData[pointCloudData.Count - 1];
 		
 		if (Vector3.Distance(point, lastPoint) > newPositionThresholdDistance)
 		{
-			newLinePointCloudData.Add(point);
-			totalCloudPoints.Add(point);
-			lineRenderer.positionCount = newLinePointCloudData.Count;
+			pointCloudData.Add(point);
+			lineRenderer.positionCount = pointCloudData.Count;
 			
-			lineRenderer.SetPosition(0, newLinePointCloudData[0]);
-			lineRenderer.SetPosition(newLinePointCloudData.Count - 1, point);
+			lineRenderer.SetPosition(0, pointCloudData[0]);
+			lineRenderer.SetPosition(pointCloudData.Count - 1, point);
 		}
 		else
 		{
-			lineRenderer.positionCount = newLinePointCloudData.Count;
-			lineRenderer.SetPosition(newLinePointCloudData.Count - 1, point);
-		}
-	
-		float cloudSize = GetCloudSize();
-		
-		trigger.radius = cloudSize * triggerSizeModifier;
-		
-		if(trigger.radius < 0.08f)
-		{
-			trigger.radius = 0.2f;
+			lineRenderer.positionCount = pointCloudData.Count;
+			lineRenderer.SetPosition(pointCloudData.Count - 1, point);
 		}
 	}
 
 	public void EndDraw()
 	{
-		if (newLinePointCloudData.Count <= minimumPoints)
+		if (pointCloudData.Count <= minimumPoints)
 		{
 			DestroyRuneCloud();
 		}
 		else
 		{
-			GameObject subLineRendererGameObject = Instantiate(subLineRendererPrefab, transform);
-			LineRenderer subLineRenderer = subLineRendererGameObject.GetComponent<LineRenderer>();
-			
-			subLineRenderer.positionCount = newLinePointCloudData.Count;
-			sublineRenderers.Add(subLineRenderer);
-			
-			int index = 0;
-			
-			foreach (Vector3 point in newLinePointCloudData)
-			{
-				subLineRenderer.SetPosition(index, point);
-				index++;
-			}
-			
-			Point[] pointArray = new Point[totalCloudPoints.Count];
+			Point[] pointArray = new Point[pointCloudData.Count];
 			
 			for (int i = 0; i < pointArray.Length; i++) 
 			{
-				Vector2 screenPoint = cameraMain.WorldToScreenPoint(totalCloudPoints[i]);
+				Vector2 screenPoint = cameraMain.WorldToScreenPoint(pointCloudData[i]);
 				pointArray[i] = new Point(screenPoint.x, screenPoint.y, 0);
 			}
 			
@@ -179,9 +131,6 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 				ValidateSpell(result);
 			}
 		}
-		
-		lineRenderer.positionCount = 0;
-		newLinePointCloudData.Clear();
 	}
 
 	private void ValidateSpell(Result result)
@@ -189,8 +138,17 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 		if (result.spell != Spell.None)
 		{
 			GenericSoundController.Instance.Play(WorldSounds.RuneDrawSuccess, transform.position, false);
+			
+			Vector3 centroidPosition = Vector3.zero;
+
+			foreach (var point in pointCloudData)
+			{
+				centroidPosition += point;
+			}
+			
+			centroidPosition = centroidPosition / pointCloudData.Count;
+			
 			SendGlobal(GlobalEvent.CREATE_SPELL, new RuneData(result, centroidPosition));
-			StopAllCoroutines();
 			DestroyRuneCloud();
 		}
 		else
@@ -198,6 +156,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 			GenericSoundController.Instance.Play(WorldSounds.RuneDrawFailure, transform.position, false);
 			Debug.Log("No matching rune");
 			isFading = true;
+			DestroyRuneCloud();
 		}
 	}
 
@@ -206,44 +165,14 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 		SendGlobal(GlobalEvent.RUNECLOUD_DESTROYED, new RuneCloudData(this));
 		Destroy(gameObject);
 	}
-
-	private float GetCloudSize()
-	{
-		if (totalCloudPoints.Count <= 2)
-		{
-			return triggerStartSize;
-		}
-		
-		float distance = 0;
-		Vector3 centroid = Vector3.zero;
-
-		foreach (Vector3 point in totalCloudPoints)
-		{
-			float newDistance = Vector3.Distance(transform.position, point);
-			centroid += point;
-			
-			if (distance < newDistance)
-			{
-				distance = newDistance;
-			}
-		}
-
-		centroid = centroid / totalCloudPoints.Count;
-
-		centroidPosition = centroid;
-
-		trigger.center = transform.InverseTransformPoint(centroid);
-		
-		return distance;
-	}
-
+	
 	public void SaveGestureToXML()
 	{
-		Point[] pointArray = new Point[totalCloudPoints.Count];
+		Point[] pointArray = new Point[pointCloudData.Count];
 		
 		for (int i = 0; i < pointArray.Length; i++) 
 		{
-			Vector2 screenPoint = Camera.main.WorldToScreenPoint(totalCloudPoints[i]);
+			Vector2 screenPoint = Camera.main.WorldToScreenPoint(pointCloudData[i]);
 			pointArray[i] = new Point(screenPoint.x, screenPoint.y, 0);
 		}
 	
@@ -253,29 +182,10 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 		
 		string path = Application.dataPath + "/_Content/Resources/GestureSet/" + gestureName + ".xml";
 		GestureIO.WriteGesture(pointArray, gestureName, path);
+		
+		DestroyRuneCloud();
 	}
 	
-	private void OnTriggerEnter(Collider other)
-	{
-		if (isFading)
-		{
-			return;
-		}
-		
-		if (other.CompareTag("RuneHand"))
-		{
-			other.GetComponent<RuneHand>().SetInRuneCloud(this);
-		}
-	}
-
-	private void OnTriggerExit(Collider other)
-	{
-		if (other.CompareTag("RuneHand"))
-		{
-			other.GetComponent<RuneHand>().SetOutsideRuneCloud();
-		}
-	}
-
 	public void SendGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
 	{
 		GlobalMediator.Instance.ReceiveGlobal(eventState, globalSignalData);

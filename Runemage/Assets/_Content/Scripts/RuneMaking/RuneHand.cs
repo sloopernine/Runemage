@@ -86,16 +86,10 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal {
 	{	
 		isDrawing = true;
 
-		if (runeCloud == null)
-		{
-			runeCloud = Instantiate(prefabRuneCloud, position, Quaternion.identity).GetComponent<RuneCloud>();
-			inRuneCloud = true;
-		}
-		else
-		{
-			runeCloud.InitStartMovement(false, transform.position);
-		}
 
+		runeCloud = Instantiate(prefabRuneCloud, position, Quaternion.identity).GetComponent<RuneCloud>();
+		inRuneCloud = true;
+		
 		GenericSoundController.Instance.Play(WorldSounds.RuneDrawStart, transform.position, false);
 		drawSound.isPlaying = true;
 	}
@@ -107,9 +101,11 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal {
 		if (inRuneCloud)
 		{
 			runeCloud.EndDraw();
+			runeCloud = null;
+			inRuneCloud = false;
 		}
+		
 		drawSound.isPlaying = false;
-
 	}
 
 	private void UpdateMovement(Vector3 position)
@@ -119,24 +115,10 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal {
 			runeCloud.AddPoint(position);
 		}
 	}
-
-	public void SetInRuneCloud(RuneCloud runeCloud)
-	{
-		if (this.runeCloud != runeCloud)
-		{
-			EndMovement();
-			SetOutsideRuneCloud();
-		}
-		else
-		{
-			this.runeCloud = runeCloud;
-			inRuneCloud = true;
-		}
-	}
-
+	
 	public void SetOutsideRuneCloud()
 	{
-		this.runeCloud = null;
+		runeCloud = null;
 		inRuneCloud = false;
 	}
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name = "Fireball_4">
+	<Stroke>
+		<Point X = "319,5256" Y = "504,1524" T = "0" Pressure = "0" />
+		<Point X = "334,724" Y = "565,2869" T = "0" Pressure = "0" />
+		<Point X = "364,7898" Y = "639,9124" T = "0" Pressure = "0" />
+		<Point X = "411,3261" Y = "698,0425" T = "0" Pressure = "0" />
+		<Point X = "467,6442" Y = "717,8885" T = "0" Pressure = "0" />
+		<Point X = "511,1517" Y = "688,8684" T = "0" Pressure = "0" />
+		<Point X = "532,4022" Y = "618,4297" T = "0" Pressure = "0" />
+		<Point X = "532,047" Y = "548,2518" T = "0" Pressure = "0" />
+		<Point X = "521,5665" Y = "483,1754" T = "0" Pressure = "0" />
+		<Point X = "505,3011" Y = "426,2256" T = "0" Pressure = "0" />
+		<Point X = "488,0637" Y = "381,8871" T = "0" Pressure = "0" />
+		<Point X = "471,3239" Y = "349,4174" T = "0" Pressure = "0" />
+		<Point X = "456,127" Y = "326,1732" T = "0" Pressure = "0" />
+		<Point X = "441,1661" Y = "308,5219" T = "0" Pressure = "0" />
+		<Point X = "426,3079" Y = "295,0178" T = "0" Pressure = "0" />
+		<Point X = "411,9174" Y = "285,3708" T = "0" Pressure = "0" />
+		<Point X = "395,7445" Y = "279,8032" T = "0" Pressure = "0" />
+		<Point X = "380,3357" Y = "278,8309" T = "0" Pressure = "0" />
+		<Point X = "367,6217" Y = "282,7149" T = "0" Pressure = "0" />
+		<Point X = "355,2601" Y = "290,4499" T = "0" Pressure = "0" />
+		<Point X = "343,9895" Y = "302,7297" T = "0" Pressure = "0" />
+		<Point X = "331,7243" Y = "323,955" T = "0" Pressure = "0" />
+		<Point X = "321,7332" Y = "351,6587" T = "0" Pressure = "0" />
+		<Point X = "314,9966" Y = "386,4939" T = "0" Pressure = "0" />
+		<Point X = "313,1662" Y = "435,4634" T = "0" Pressure = "0" />
+		<Point X = "320,69" Y = "484,777" T = "0" Pressure = "0" />
+	</Stroke>
+</Gesture>

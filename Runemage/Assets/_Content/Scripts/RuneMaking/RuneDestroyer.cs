@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Data.Interfaces;
@@ -62,7 +61,7 @@ public class RuneDestroyer : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSig
 			
 			foreach(RuneCloud runeCloud in runeClouds)
 			{
-				if(runeCloud.lifeTime >= minRuneCloudAge && runeCloud.totalCloudPoints.Count <= minimumPoints)
+				if(runeCloud.lifeTime >= minRuneCloudAge && runeCloud.pointCloudData.Count <= minimumPoints)
 				{
 					SendGlobal(GlobalEvent.RUNECLOUD_SELFDESTRUCT, new RuneCloudData(runeCloud));
 				}
