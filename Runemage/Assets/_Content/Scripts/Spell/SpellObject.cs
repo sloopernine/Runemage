@@ -101,7 +101,8 @@ public class SpellObject : PC_Interactable , IDealDamage, IReceiveGlobalSignal
         if (ExplosionParticlePrefab != null)
         {
             GameObject explosion = Instantiate(ExplosionParticlePrefab, impactPoint, Quaternion.identity);
-            explosion.transform.localScale *= damageRadius;
+            //GameObject debug = Instantiate(debugSpherePrefab, impactPoint, Quaternion.identity);
+            //debug.transform.localScale *= damageRadius;
         }
 
         Collider[] Aoe = Physics.OverlapSphere(impactPoint, damageRadius, layerMask);
