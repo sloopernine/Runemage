@@ -47,7 +47,15 @@ namespace Singletons
                 //Cursor.lockState = CursorLockMode.Locked;
             }
         }
-        
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
+        }
+
         public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
         {
             switch (eventState)
