@@ -122,20 +122,6 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 		}
 		else
 		{
-			GameObject subLineRendererGameObject = Instantiate(subLineRendererPrefab, transform);
-			LineRenderer subLineRenderer = subLineRendererGameObject.GetComponent<LineRenderer>();
-			
-			subLineRenderer.positionCount = pointCloudData.Count;
-			sublineRenderers.Add(subLineRenderer);
-			
-			int index = 0;
-			
-			foreach (Vector3 point in pointCloudData)
-			{
-				subLineRenderer.SetPosition(index, point);
-				index++;
-			}
-			
 			Point[] pointArray = new Point[pointCloudData.Count];
 			
 			for (int i = 0; i < pointArray.Length; i++) 
@@ -151,9 +137,6 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 				ValidateSpell(result);
 			}
 		}
-		
-		lineRenderer.positionCount = 0;
-		pointCloudData.Clear();
 	}
 
 	private void ValidateSpell(Result result)
@@ -162,7 +145,6 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 		{
 			GenericSoundController.Instance.Play(WorldSounds.RuneDrawSuccess, transform.position, false);
 			SendGlobal(GlobalEvent.CREATE_SPELL, new RuneData(result, centroidPosition));
-			StopAllCoroutines();
 			DestroyRuneCloud();
 		}
 		else
@@ -170,6 +152,7 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 			GenericSoundController.Instance.Play(WorldSounds.RuneDrawFailure, transform.position, false);
 			Debug.Log("No matching rune");
 			isFading = true;
+			DestroyRuneCloud();
 		}
 	}
 
