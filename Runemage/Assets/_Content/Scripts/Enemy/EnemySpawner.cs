@@ -50,6 +50,11 @@ public class EnemySpawner : MonoBehaviour
         spawnEnemies = false;
     }
 
+    public void ButtonSpawnEnemies()
+    {
+        SpawnEnemies(enemyPrefab, numberToSpawn);
+    }
+
     private Vector3 RandomPositionOnLine()
     {
         float xRange = endLine.position.x - startLine.position.x;
