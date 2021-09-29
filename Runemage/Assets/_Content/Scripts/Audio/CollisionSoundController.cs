@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+
 
 public class CollisionSoundController : MonoBehaviour
 {
+    public AudioMixer audioMixer;
+
     private static CollisionSoundController instance;
     public static CollisionSoundController Instance { get => instance;}
 
@@ -93,6 +97,7 @@ public class CollisionSoundController : MonoBehaviour
 
         AudioSource source = GetIdleAudioSource();
         source.clip = soundLibrary[mat][Random.Range(0, soundLibrary[mat].Count)];
+        source.outputAudioMixerGroup = audioMixer.FindMatchingGroups("Collisions")[0];
         source.volume = impactVolume;
         source.transform.position = position;
         source.pitch = Random.Range(0.7f, 1.3f);

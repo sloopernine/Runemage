@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5783802766791330597}
   - component: {fileID: 5783802766791330596}
   - component: {fileID: 4676915173361116849}
+  - component: {fileID: 4885342029626241112}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -65,3 +66,20 @@ MonoBehaviour:
   playMusicClip: {fileID: 8300000, guid: 937b06a38010d8046842cf507fea4984, type: 3}
   audioSourcePrefab: {fileID: 6327118475761378715, guid: 99cc4e06805e2a54c9ebc0364748e7e0, type: 3}
   audioFadeTime: 4
+--- !u!114 &4885342029626241112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5783802766791330599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff2a8dd117b9ff43acff7d4e4d543ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 245b555d26f215c4e8893638f4587911, type: 2}
+  voicePoolSize: 24
+  minCollisionVolume: 0.1
+  maxCollisionVelocity: 5
+  audioSourcePrefab: {fileID: 5856088974174590687, guid: 94b9280392c1b954faa89b2047ee2519, type: 3}
