@@ -60,22 +60,7 @@ public class WinGame : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSignal
 				break;
         }
     }
-
-	/// <summary>
-	/// Okay so... we need a function that handles if/when you lose the game.
-	/// So, you could have it here, in game manager
-	/// It could start depending on the game state actually,
-	/// I might want to turn it into a coroutine later actually?
-	/// So, what does it do?
-	/// Well, it should reset the wave etc.
-	/// And it should show that you lost the game.
-	/// So... leave space for killing music
-	/// Kill all enemies?
-	/// Stop all coroutines?
-	/// Blow up suns/planets
-	/// Reset all the stuff.
-	/// Probably use "force reset stuff for this?" - global event.
-	/// </summary>
+    
 	private void OnGameLost()
 	{
 		Debug.Log("Game is preparing to lose");
@@ -86,6 +71,8 @@ public class WinGame : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSignal
 		SendGlobal(GlobalEvent.SET_ROUND, roundNumber);
 		
 		SendGlobal(GlobalEvent.SPELLS_DESTROY_ALL);
+		
+		SendGlobal(GlobalEvent.SHIELD_RESET);
 
 		Debug.Log("Game should now let planets shine too bright.");
 	}

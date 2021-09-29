@@ -116,8 +116,11 @@ public class RoundHandler : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSign
         }
         else
         {
-            SendGlobal(GlobalEvent.WIN_GAMESTATE);
-            Debug.Log("2.No more rounds. GZ YOU WON THE GAME");
+            if (GameManager.Instance.CurrentGameState != GlobalEvent.LOST_GAMESTATE)
+            {
+                SendGlobal(GlobalEvent.WIN_GAMESTATE);
+                Debug.Log("2.No more rounds. GZ YOU WON THE GAME");
+            }
         }
     }
 
