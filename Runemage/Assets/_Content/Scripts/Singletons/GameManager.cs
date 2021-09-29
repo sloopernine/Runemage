@@ -6,80 +6,67 @@ using UnityEngine;
 
 namespace Singletons
 {
-    public class GameManager : MonoBehaviour, IReceiveGlobalSignal
-    {
-        private static GameManager instance;
+	public class GameManager : MonoBehaviour, IReceiveGlobalSignal {
+		private static GameManager instance;
 
-        public static GameManager Instance
-        {
-            get { return instance; }
-        }
-        
-        private GlobalEvent currentGameState;
-        public GlobalEvent CurrentGameState
-        {
-            get { return currentGameState; }
-        }
+		public static GameManager Instance {
+			get { return instance; }
+		}
 
-        public bool gestureTrainingMode;
-        public bool usePcInput;
-        
-        private void Awake()
-        {
-            if (instance == null)
-            {
-                instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
+		private GlobalEvent currentGameState;
+		public GlobalEvent CurrentGameState {
+			get { return currentGameState; }
+		}
 
-        private void Start()
-        {
-            GlobalMediator.Instance.Subscribe(this);
+		public bool gestureTrainingMode;
+		public bool usePcInput;
 
-            currentGameState = GlobalEvent.PAUSED_GAMESTATE;
+		private void Awake() {
+			if (instance == null) {
+				instance = this;
+			} else {
+				Destroy(gameObject);
+			}
+		}
 
-            if (usePcInput)
-            {
-                //Cursor.lockState = CursorLockMode.Locked;
-            }
-        }
+		private void Start() {
+			GlobalMediator.Instance.Subscribe(this);
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                Application.Quit();
-            }
-        }
+			currentGameState = GlobalEvent.PAUSED_GAMESTATE;
 
-        public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
-        {
-            switch (eventState)
-            {
-                case GlobalEvent.WIN_GAMESTATE:
+			if (usePcInput) {
+				//Cursor.lockState = CursorLockMode.Locked;
+			}
+		}
 
-                    currentGameState = GlobalEvent.WIN_GAMESTATE;
-                    break;
+		private void Update() {
+			if (Input.GetKeyDown(KeyCode.Escape)) {
+				Application.Quit();
+			}
+		}
 
-                case GlobalEvent.LOST_GAMESTATE:
+		public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null) {
+			switch (eventState) {
+				case GlobalEvent.WIN_GAMESTATE:
 
-                    currentGameState = GlobalEvent.LOST_GAMESTATE;
-                    break;
-                
-                case GlobalEvent.PAUSED_GAMESTATE:
+					currentGameState = GlobalEvent.WIN_GAMESTATE;
+					break;
 
-                    currentGameState = GlobalEvent.PAUSED_GAMESTATE;
-                    break;
-                
-                case GlobalEvent.PLAY_GAMESTATE:
+				case GlobalEvent.LOST_GAMESTATE:
 
-                    currentGameState = GlobalEvent.PLAY_GAMESTATE;
-                    break;
-            }
-        }
-    }
+					currentGameState = GlobalEvent.LOST_GAMESTATE;
+					break;
+
+				case GlobalEvent.PAUSED_GAMESTATE:
+
+					currentGameState = GlobalEvent.PAUSED_GAMESTATE;
+					break;
+
+				case GlobalEvent.PLAY_GAMESTATE:
+
+					currentGameState = GlobalEvent.PLAY_GAMESTATE;
+					break;
+			}
+		}
+	}
 }
