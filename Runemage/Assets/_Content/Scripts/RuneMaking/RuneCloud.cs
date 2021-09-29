@@ -23,7 +23,6 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 	public float lifeSpan;
 
 	[SerializeField] float fadeTime;
-	private Vector3 centroidPosition;
 	private bool isFading;
 
 	private GameManager gameManager = GameManager.Instance;
@@ -139,6 +138,16 @@ public class RuneCloud : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSignal
 		if (result.spell != Spell.None)
 		{
 			GenericSoundController.Instance.Play(WorldSounds.RuneDrawSuccess, transform.position, false);
+			
+			Vector3 centroidPosition = Vector3.zero;
+
+			foreach (var point in pointCloudData)
+			{
+				centroidPosition += point;
+			}
+			
+			centroidPosition = centroidPosition / pointCloudData.Count;
+			
 			SendGlobal(GlobalEvent.CREATE_SPELL, new RuneData(result, centroidPosition));
 			DestroyRuneCloud();
 		}
