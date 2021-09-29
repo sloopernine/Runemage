@@ -158,4 +158,8 @@ public class DebugManager : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSign
 
     }
 
+    public void SetGameStateWin()
+    {
+        SendGlobal(GlobalEvent.WIN_GAMESTATE);
+    }
 }
