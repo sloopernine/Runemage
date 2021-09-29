@@ -6,22 +6,29 @@ using Data.Interfaces;
 using Singletons;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WinGame : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSignal
 {
+	public Renderer planetRenderer1;
+	public Renderer planetRenderer2;
+	public float planetEmissiveIntensity;
     public GameObject mistObjects;
     public bool winGame;
     public bool loseGame;
 
     private Vector3 startPosition;
     private Vector3 startSize;
-    
+    private static readonly int FrenselPower = Shader.PropertyToID("_FrenselPower");
+
     void Start()
     {
         GlobalMediator.Instance.Subscribe(this);
 
         startPosition = transform.position;
         startSize = transform.localScale;
+
+        planetEmissiveIntensity = 15f;
     }
 
     void Update()
@@ -33,7 +40,7 @@ public class WinGame : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSignal
                 mistObjects.transform.Translate(0f,-0.05f,0f);
             }
 
-            if (mistObjects.transform.localScale.y < 10)
+            if (mistObjects.transform.localScale.x < 10)
             {
                 mistObjects.transform.localScale += new Vector3(0.8f,0,0.8f) * Time.deltaTime;
             }
@@ -41,8 +48,21 @@ public class WinGame : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSignal
 
         if (loseGame)
         {
-	        OnGameLost();
-	        loseGame = false;
+	        if (mistObjects.transform.localScale.x > 0.18f)
+	        {
+		        mistObjects.transform.localScale += new Vector3(-0.2f,0,-0.2f) * Time.deltaTime;
+	        }
+
+	        if (planetEmissiveIntensity > -6f)
+	        {
+		        planetEmissiveIntensity -= 6.5f * Time.deltaTime;
+		        planetRenderer1.material.SetFloat(FrenselPower, planetEmissiveIntensity);
+		        planetRenderer2.material.SetFloat(FrenselPower, planetEmissiveIntensity);
+	        }
+	        else if (planetEmissiveIntensity <= -6f)
+	        {
+		        SceneManager.LoadScene(0);
+	        }
         }
     }
 
@@ -56,6 +76,7 @@ public class WinGame : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSignal
                 break;
 			case GlobalEvent.LOST_GAMESTATE:
 
+				//OnGameLost();
 				loseGame = true;
 				break;
         }
@@ -77,7 +98,8 @@ public class WinGame : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSignal
 		Debug.Log("Game should now let planets shine too bright.");
 	}
 
-	public void SendGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null) {
+	public void SendGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null) 
+	{
 		GlobalMediator.Instance.ReceiveGlobal(eventState, globalSignalData);
 	}
 }
