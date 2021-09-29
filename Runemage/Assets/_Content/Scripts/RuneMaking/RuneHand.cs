@@ -70,7 +70,7 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal {
 
 		if (!isDrawing && isPressed)
 		{
-			StartMovement(transform.position);
+			StartMovement(handVR.skeleton.indexTip.position);
 		}
 		else if (isDrawing && !isPressed)
 		{
@@ -78,7 +78,7 @@ public class RuneHand : MonoBehaviour, IReceiveGlobalSignal {
 		}
 		else if (isDrawing && isPressed)
 		{
-			UpdateMovement(transform.position);
+			UpdateMovement(handVR.skeleton.indexTip.position);
 		}
 	}
 
