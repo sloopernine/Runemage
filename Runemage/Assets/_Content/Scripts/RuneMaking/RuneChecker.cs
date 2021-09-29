@@ -57,6 +57,8 @@ public class RuneChecker : MonoBehaviour
 
 	private Spell GetSpellEnum(string spellName, float score)
 	{
+		string[] splitSpellName = spellName.Split('_');
+		
 		if (score <= spellTreshold)
 		{
 			return Spell.None;
@@ -68,7 +70,7 @@ public class RuneChecker : MonoBehaviour
 		
 		for (int i = 0; i < spellNames.Length; i++)
 		{
-			if (spellName.Contains(spellNames[i]))
+			if (spellNames[i] == splitSpellName[0])
 			{
 				returnValue = (Spell) i;
 			}
