@@ -103,8 +103,8 @@ public class RoundHandler : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSign
     //Later implement a GlobalSignal that signals it is a new round.
     public void UpdateRound()
     {
-
         Debug.Log("0.Update Current Round");
+        SendGlobal(GlobalEvent.PAUSED_GAMESTATE);
         roundIndex++;
         isRoundDead = true;
         roundTotalEnemies = 0;

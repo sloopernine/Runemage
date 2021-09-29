@@ -86,8 +86,20 @@ public class DebugManagerEditor : Editor
         }
         EditorGUILayout.HelpBox("Sets GameManager.CurrentGameState to Play", MessageType.Info);
         EditorGUILayout.Space();
+        
+        if (GUILayout.Button("Set Win"))
+        {
+            dm.SetGameStateWin();
+        }
+        EditorGUILayout.HelpBox("Sets GameManager.CurrentGameState to Win", MessageType.Info);
+        EditorGUILayout.Space();
 
-
+        if (GUILayout.Button("Set Lose"))
+        {
+            dm.SetGameStateLose();
+        }
+        EditorGUILayout.HelpBox("Sets GameManager.CurrentGameState to Lost", MessageType.Info);
+        EditorGUILayout.Space();
     }
 
 }

@@ -31,8 +31,6 @@ public class EnemyRoundObserver : MonoBehaviour, IReceiveGlobalSignal, ISendGlob
         {
             roundHandler.UpdateRound();
             deadEnemies = 0;
-            
-            SendGlobal(GlobalEvent.PAUSED_GAMESTATE);
         }
     }
 
