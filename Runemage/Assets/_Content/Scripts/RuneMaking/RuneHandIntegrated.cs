@@ -41,6 +41,11 @@ public class RuneHandIntegrated : MonoBehaviour, IReceiveGlobalSignal {
 
 	void Update()
 	{
+		if (GameManager.Instance.usePcInput)
+		{
+			return;
+		}
+		
 		isPressed = grabAction.GetState(inputSource);
 		
 		//if player is holding something, you cannot draw a new rune and falls out of update.

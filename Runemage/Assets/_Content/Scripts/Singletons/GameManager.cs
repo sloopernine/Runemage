@@ -31,7 +31,7 @@ namespace Singletons
 
 		private void Start() {
 			GlobalMediator.Instance.Subscribe(this);
-
+			
 			currentGameState = GlobalEvent.PAUSED_GAMESTATE;
 
 			if (usePcInput) {
@@ -48,7 +48,7 @@ namespace Singletons
 		public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null) {
 			switch (eventState) {
 				case GlobalEvent.WIN_GAMESTATE:
-
+					
 					currentGameState = GlobalEvent.WIN_GAMESTATE;
 					break;
 
