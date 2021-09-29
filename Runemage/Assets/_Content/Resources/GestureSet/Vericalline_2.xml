@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name = "Vericalline_2">
+	<Stroke>
+		<Point X = "373,8043" Y = "358,1768" T = "0" Pressure = "0" />
+		<Point X = "374,7689" Y = "364,1661" T = "0" Pressure = "0" />
+		<Point X = "396,6541" Y = "353,2766" T = "0" Pressure = "0" />
+		<Point X = "396,4926" Y = "323,0074" T = "0" Pressure = "0" />
+		<Point X = "394,534" Y = "287,8237" T = "0" Pressure = "0" />
+		<Point X = "391,8104" Y = "253,7559" T = "0" Pressure = "0" />
+		<Point X = "388,9919" Y = "204,6831" T = "0" Pressure = "0" />
+		<Point X = "384,1818" Y = "136,4357" T = "0" Pressure = "0" />
+		<Point X = "379,184" Y = "32,20223" T = "0" Pressure = "0" />
+		<Point X = "368,581" Y = "-155,5176" T = "0" Pressure = "0" />
+		<Point X = "340,037" Y = "-639,1758" T = "0" Pressure = "0" />
+		<Point X = "44,55844" Y = "-4909,504" T = "0" Pressure = "0" />
+		<Point X = "528,5333" Y = "2102,419" T = "0" Pressure = "0" />
+		<Point X = "462,7267" Y = "1127,304" T = "0" Pressure = "0" />
+		<Point X = "441,8072" Y = "863,8399" T = "0" Pressure = "0" />
+		<Point X = "433,2707" Y = "730,1225" T = "0" Pressure = "0" />
+		<Point X = "428,5841" Y = "652,5005" T = "0" Pressure = "0" />
+		<Point X = "425,3973" Y = "587,4451" T = "0" Pressure = "0" />
+		<Point X = "424,6356" Y = "538,8068" T = "0" Pressure = "0" />
+		<Point X = "449,5661" Y = "529,8431" T = "0" Pressure = "0" />
+	</Stroke>
+</Gesture>
