@@ -11,6 +11,7 @@ public class WinGame : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSignal
 {
     public GameObject mistObjects;
     public bool winGame;
+    public bool loseGame;
 
     private Vector3 startPosition;
     private Vector3 startSize;
@@ -37,6 +38,12 @@ public class WinGame : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSignal
                 mistObjects.transform.localScale += new Vector3(0.8f,0,0.8f) * Time.deltaTime;
             }
         }
+
+        if (loseGame)
+        {
+	        OnGameLost();
+	        loseGame = false;
+        }
     }
 
     public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
@@ -44,11 +51,12 @@ public class WinGame : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSignal
         switch (eventState)
         {
             case GlobalEvent.WIN_GAMESTATE:
-                
+
+	            winGame = true;
                 break;
 			case GlobalEvent.LOST_GAMESTATE:
 
-				OnGameLost();
+				loseGame = true;
 				break;
         }
     }
