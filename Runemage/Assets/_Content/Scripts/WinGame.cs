@@ -59,10 +59,6 @@ public class WinGame : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSignal
 		        planetRenderer1.material.SetFloat(FrenselPower, planetEmissiveIntensity);
 		        planetRenderer2.material.SetFloat(FrenselPower, planetEmissiveIntensity);
 	        }
-	        else if (planetEmissiveIntensity <= -6f)
-	        {
-		        SceneManager.LoadScene(0);
-	        }
         }
     }
 
