@@ -15,7 +15,12 @@ ModelImporter:
   - first:
       74: -6711690046485872626
     second: Armature|Damage (1)
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 4bda1753c7057334cad94667d76c4ade, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

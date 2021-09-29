@@ -18,5 +18,5 @@
 
     ShieldHit,
     ShieldBreak,
-
+    StoneMoving
 }

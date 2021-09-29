@@ -67,7 +67,7 @@ public class RunestoneMovement : MonoBehaviour, IReceiveGlobalSignal
         {
             isMoving = false;
         }
-        //ParticelEffect(); Prefab is missing particels
+        ParticelEffect();
     }
 
     private void ParticelEffect()
@@ -89,6 +89,7 @@ public class RunestoneMovement : MonoBehaviour, IReceiveGlobalSignal
                 if (!alwaysShow)
                 {
                     setPosition = false;
+                    GenericSoundController.Instance.Play(WorldSounds.StoneMoving, transform.position);
                 }
                 break;
 
@@ -96,6 +97,7 @@ public class RunestoneMovement : MonoBehaviour, IReceiveGlobalSignal
                 if (!alwaysShow)
                 {
                     setPosition = true;
+                    GenericSoundController.Instance.Play(WorldSounds.StoneMoving, transform.position);
                 }
                 break;
 
@@ -103,6 +105,7 @@ public class RunestoneMovement : MonoBehaviour, IReceiveGlobalSignal
                 if (!alwaysShow)
                 {
                     setPosition = false;
+                    GenericSoundController.Instance.Play(WorldSounds.StoneMoving, transform.position);
                 }
                 break;
         }
