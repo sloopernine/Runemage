@@ -15,10 +15,9 @@ public class RunestoneMovement : MonoBehaviour, IReceiveGlobalSignal
     [Tooltip ("If false runestone moves under ground during play")]
     [SerializeField] bool alwaysShow; 
     private Rigidbody rigidBody;
-
-    //Test bools
-    public bool setPosition;
-    public bool isMoving;
+    private bool setPosition;
+    private bool isMoving;
+    [SerializeField] bool showOnWictory;
     private bool IsMoving { get { return isMoving; } set { if (value == isMoving) return; isMoving = value; } }
 
 
@@ -86,7 +85,7 @@ public class RunestoneMovement : MonoBehaviour, IReceiveGlobalSignal
         switch (eventState)
         {
             case GlobalEvent.PAUSED_GAMESTATE:
-                if (!alwaysShow)
+                if (!alwaysShow && !showOnWictory)
                 {
                     setPosition = false;
                     GenericSoundController.Instance.Play(WorldSounds.StoneMoving, transform.position);
@@ -94,7 +93,7 @@ public class RunestoneMovement : MonoBehaviour, IReceiveGlobalSignal
                 break;
 
             case GlobalEvent.PLAY_GAMESTATE:
-                if (!alwaysShow)
+                if (!alwaysShow && !showOnWictory)
                 {
                     setPosition = true;
                     GenericSoundController.Instance.Play(WorldSounds.StoneMoving, transform.position);
@@ -102,11 +101,12 @@ public class RunestoneMovement : MonoBehaviour, IReceiveGlobalSignal
                 break;
 
             case GlobalEvent.WIN_GAMESTATE:
-                if (!alwaysShow)
+                if (!alwaysShow && showOnWictory)
                 {
-                    setPosition = false;
+                    setPosition = true;
                     GenericSoundController.Instance.Play(WorldSounds.StoneMoving, transform.position);
                 }
+ 
                 break;
         }
     }
