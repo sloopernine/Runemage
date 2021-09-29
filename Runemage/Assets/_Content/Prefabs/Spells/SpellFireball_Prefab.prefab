@@ -134,10 +134,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a25efcd34b2cc41a494da26b29e4ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialLifeTime: 999
+  initialLifeTime: 30
   initialVelocity: 1000
   baseDamage: 100
-  damageRadius: 10
+  damageRadius: 7.5
   debugSpherePrefab: {fileID: 3157122271921523132, guid: 08c4a8379597b5d4a85318c6a15bd154, type: 3}
   ExplosionParticlePrefab: {fileID: 2994049833057877991, guid: bdafa105848a31d4b8915a64b96d5c98, type: 3}
   damageType: 2
