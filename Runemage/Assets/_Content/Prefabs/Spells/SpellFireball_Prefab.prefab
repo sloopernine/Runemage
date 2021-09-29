@@ -143,7 +143,7 @@ MonoBehaviour:
   damageType: 2
   layerMask:
     serializedVersion: 2
-    m_Bits: 1527
+    m_Bits: 3095
 --- !u!114 &6162771881094250842
 MonoBehaviour:
   m_ObjectHideFlags: 0
