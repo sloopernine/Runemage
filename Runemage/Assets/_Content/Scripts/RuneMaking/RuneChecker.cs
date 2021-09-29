@@ -68,7 +68,7 @@ public class RuneChecker : MonoBehaviour
 		
 		for (int i = 0; i < spellNames.Length; i++)
 		{
-			if (spellNames[i] == spellName)
+			if (spellName.Contains(spellNames[i]))
 			{
 				returnValue = (Spell) i;
 			}
