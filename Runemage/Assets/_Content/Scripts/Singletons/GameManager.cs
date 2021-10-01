@@ -37,6 +37,8 @@ namespace Singletons
 			if (usePcInput) {
 				//Cursor.lockState = CursorLockMode.Locked;
 			}
+
+			Cursor.visible = false;
 		}
 
 		private void Update() {
