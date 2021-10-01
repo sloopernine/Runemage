@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Data.Interfaces;
@@ -18,6 +17,8 @@ public class RoundHandler : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSign
     private float waveTimer;
     private int roundTotalEnemies;
     public int getRoundTotalEnemies { get { return roundTotalEnemies; } }
+    
+    public bool showWaveText;
 
     private void Start()
     {
@@ -26,6 +27,11 @@ public class RoundHandler : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSign
         if (rounds != null)
         {
             currentRound = rounds[roundIndex];
+        }
+
+        if (!showWaveText)
+        {
+            roundInformationText.text = "";
         }
     }
 
@@ -46,7 +52,14 @@ public class RoundHandler : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSign
     {
         if (Input.GetKeyDown(KeyCode.N) && isRoundDead)
         {
-            roundInformationText.text = "You started a new Round: " + currentRound.name;
+            if (showWaveText)
+            {
+                roundInformationText.text = "You started a new Round: " + currentRound.name;
+            }
+            else
+            {
+                roundInformationText.text = "";
+            }
             StartRound(currentRound); 
         }
         else if (Input.GetKeyDown(KeyCode.N))
@@ -84,7 +97,14 @@ public class RoundHandler : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSign
     private IEnumerator StartWave(EnemyWave nextWave)
     {
         //Hide text if Debug is inActivated later?
-        roundInformationText.text = "New Wave: " + nextWave.name;
+        if (showWaveText)
+        {
+            roundInformationText.text = "New Wave: " + nextWave.name;
+        }
+        else
+        {
+            roundInformationText.text = "";
+        }
 
         EnemySpawnerHandler spawnerHandler = GetComponent<EnemySpawnerHandler>();
 
@@ -111,7 +131,14 @@ public class RoundHandler : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSign
         if (roundIndex <= numberOfRounds)
         {
             Debug.Log("1.New Round");
-            roundInformationText.text = "Press N to start new Wave";
+            if (showWaveText)
+            {
+                roundInformationText.text = "Press N to start new Wave";
+            }
+            else
+            {
+                roundInformationText.text = "";
+            }
             currentRound = rounds[roundIndex];
         }
         else
@@ -132,11 +159,17 @@ public class RoundHandler : MonoBehaviour, IReceiveGlobalSignal, ISendGlobalSign
         roundIndex = newRoundNumber;
         isRoundDead = true;
         roundTotalEnemies = 0;
-       
-        roundInformationText.text = "Press N to start new Wave";
+
+        if (showWaveText)
+        {
+            roundInformationText.text = "Press N to start new Wave";
+        }
+        else
+        {
+            roundInformationText.text = "";
+        }
+        
         currentRound = rounds[roundIndex];
-
-
     }
 
     public void ReceiveGlobal(GlobalEvent eventState, GlobalSignalBaseData globalSignalData = null)
