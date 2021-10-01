@@ -9,7 +9,10 @@ public class Spell_Ice : SpellObject
         transform.parent = null;
         rb.isKinematic = false;
         rb.AddForce(force);
-        transform.localScale = new Vector3(0.2f, 0.2f, 3f);
+        //transform.localScale = new Vector3(0.2f, 0.2f, 3f);
+        TurnOnGravity();
+        //rb.freezeRotation = true;
+
     }
 
     //public override void Grab(Transform parent)

@@ -131,7 +131,7 @@ public class SpellObject : PC_Interactable , IDealDamage, IReceiveGlobalSignal
         transform.parent = null;
         rb.isKinematic = false;
         //NO! rb.AddForce(force);
-
+        TurnOnGravity();
     }
 
     public override void Grab(Transform parent)
