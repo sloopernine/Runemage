@@ -27,7 +27,7 @@ public class DebugManager : MonoBehaviour, ISendGlobalSignal, IReceiveGlobalSign
         }
         else
         {
-            StartCoroutine(ShowDebugMessage("DebugMode_Off", debugMessageTime));
+            //StartCoroutine(ShowDebugMessage("DebugMode_Off", debugMessageTime));
         }
     }
 
