@@ -764,6 +764,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DebugManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7305354336626221266, guid: 08dae1e37a2f01f4f985c534d1c9d097, type: 3}
+      propertyPath: isDebugMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7305354336626221267, guid: 08dae1e37a2f01f4f985c534d1c9d097, type: 3}
       propertyPath: m_RootOrder
       value: 22
